@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id                String           @id @default(uuid())
+  name              String
+  lastName          String
+  cpf               String           @unique
+  phoneNumber       String           @unique
+  email             String           @unique
+  username          String           @unique
+  password          String
+  avatar            String?
+  birthDate         String?
+  gender            String?          @default("none")
+  isTermsAccepted   Boolean?         @default(false)
+  isAccountVerified Boolean?         @default(false)
+  isAccountLocked   Boolean?         @default(false)
+  created_at        DateTime         @default(now())
+  updated_at        DateTime?
+  UsersAddresses    UsersAddresses[]
+}
+
+model UsersAddresses {
+  id          String    @id @default(uuid())
+  user_id     String?
+  users       Users?    @relation(fields: [user_id], references: [id])
+  addressLine String
+  number      Int
+  city        String
+  district    String
+  state       String
+  zipcode     String
+  complement  String?
+  latitude    String?
+  longitude   String?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?
+}
+
+model Partners {
+  id                String              @id @default(uuid())
+  name              String
+  lastName          String
+  cpf               String              @unique
+  email             String              @unique
+  username          String              @unique
+  password          String
+  avatar            String?
+  birthDate         String?
+  gender            String?             @default("none")
+  isFormalBusiness  Boolean?            @default(false)
+  isTermsAccepted   Boolean?            @default(false)
+  isAccountVerified Boolean?            @default(false)
+  isAccountLocked   Boolean?            @default(false)
+  created_at        DateTime            @default(now())
+  updated_at        DateTime?
+  BusinessLocations BusinessLocations[]
+}
+
+model BusinessLocations {
+  id          String    @id @default(uuid())
+  partner_id  String?
+  partners    Partners? @relation(fields: [partner_id], references: [id])
+  placeName   String?
+  phoneNumber String    @unique
+  cnpj        String?
+  addressLine String
+  number      Int
+  city        String
+  district    String
+  state       String
+  zipcode     String
+  complement  String?
+  latitude    String?
+  longitude   String?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?
+}
