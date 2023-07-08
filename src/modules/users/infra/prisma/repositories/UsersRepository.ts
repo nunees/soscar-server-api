@@ -5,9 +5,7 @@ import { injectable } from "tsyringe";
 
 @injectable()
 export class UsersRepository implements IUsersRepository {
-  constructor() // @inject("PrismaClient")
-  // private prismaClient: PrismaClient
-  {}
+  constructor() {} // private prismaClient: PrismaClient // @inject("PrismaClient")
 
   create({
     id,
@@ -23,6 +21,16 @@ export class UsersRepository implements IUsersRepository {
     throw new Error("Method not implemented.");
   }
   findByCPF(cpf: string): Promise<IUserReturnDTO> {
+    throw new Error("Method not implemented.");
+  }
+
+  findByMobilePhone(mobile_phone: string): Promise<IUserReturnDTO> {
+    throw new Error("Method not implemented.");
+  }
+  findByUsername(username: string): Promise<IUserReturnDTO> {
+    throw new Error("Method not implemented.");
+  }
+  findByEmail(email: string): Promise<IUserReturnDTO> {
     throw new Error("Method not implemented.");
   }
 }

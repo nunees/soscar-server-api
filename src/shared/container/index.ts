@@ -5,7 +5,7 @@ import { UsersRepositoryInMemory } from "@modules/users/repositories/in-memory/U
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 
 container.registerSingleton<IUsersRepository>(
-  "UsersRepository",
+  "UsersRepositoryInMemory",
   UsersRepositoryInMemory
 );
 

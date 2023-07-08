@@ -13,6 +13,7 @@ export class CreateUserController {
       username,
       email,
       password,
+      isPartner,
     } = request.body;
 
     const createUserUseCase = container.resolve(CreateUserUseCase);
@@ -26,6 +27,7 @@ export class CreateUserController {
       username,
       email,
       password,
+      isPartner,
     });
 
     return response.status(201).json(result);

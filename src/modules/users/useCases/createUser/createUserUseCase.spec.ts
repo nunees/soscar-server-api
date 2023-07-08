@@ -24,6 +24,7 @@ describe("Create user suite test", () => {
       email: "felipe@test.com",
       username: "felipe3446",
       password: "casaamarela",
+      isPartner: false,
       created_at: new Date(),
     };
 
@@ -33,23 +34,24 @@ describe("Create user suite test", () => {
     expect(result).toHaveProperty("email");
   });
 
-  it("Should not be able to create a new user with same cpf", async () => {
+  it("Should not be able to create a new user with same CPF", async () => {
     expect(async () => {
-      await usersRepositoryInMemory.create({
-        id: uuid(),
+      await createUserUseCase.execute({
+        id: "zWdPOaCUIT0zVr1IJ2ejncF4T4mOoW48",
         name: "Felipe",
         last_name: "da Silva",
         cpf: "00000000000",
         birth_date: new Date("1993-07-01"),
-        mobile_phone: "11999999999",
+        mobile_phone: "11999999998",
         email: "felipe@test.com",
         username: "felipe3446",
         password: "casaamarela",
+        isPartner: false,
         created_at: new Date(),
       });
 
-      await usersRepositoryInMemory.create({
-        id: uuid(),
+      await createUserUseCase.execute({
+        id: "euLvs3WgELygjkXe0rUM8rLbAmblSIYk",
         name: "Felipe",
         last_name: "da Silva",
         cpf: "00000000000",
@@ -58,6 +60,7 @@ describe("Create user suite test", () => {
         email: "felipe@test.com",
         username: "felipe3446",
         password: "casaamarela",
+        isPartner: false,
         created_at: new Date(),
       });
     }).rejects.toBeInstanceOf(AppError);
@@ -65,20 +68,21 @@ describe("Create user suite test", () => {
 
   it("Should not be able to create a new user with same mobile number", async () => {
     expect(async () => {
-      await usersRepositoryInMemory.create({
+      await createUserUseCase.execute({
         id: uuid(),
         name: "Felipe",
         last_name: "da Silva",
-        cpf: "00000000000",
+        cpf: "00000000001",
         birth_date: new Date("1993-07-01"),
         mobile_phone: "11999999999",
         email: "felipe@test.com",
         username: "felipe3446",
         password: "casaamarela",
+        isPartner: false,
         created_at: new Date(),
       });
 
-      await usersRepositoryInMemory.create({
+      await createUserUseCase.execute({
         id: uuid(),
         name: "Felipe",
         last_name: "da Silva",
@@ -88,6 +92,71 @@ describe("Create user suite test", () => {
         email: "felipe@test.com",
         username: "felipe3446",
         password: "casaamarela",
+        isPartner: false,
+        created_at: new Date(),
+      });
+    }).rejects.toBeInstanceOf(AppError);
+  });
+
+  it("Should not be able to create a new user with same username", async () => {
+    expect(async () => {
+      await createUserUseCase.execute({
+        id: uuid(),
+        name: "Felipe",
+        last_name: "da Silva",
+        cpf: "00000000001",
+        birth_date: new Date("1993-07-01"),
+        mobile_phone: "11999999999",
+        email: "felipe@test.com",
+        username: "felipe3446",
+        password: "casaamarela",
+        isPartner: false,
+        created_at: new Date(),
+      });
+
+      await createUserUseCase.execute({
+        id: uuid(),
+        name: "Felipe",
+        last_name: "da Silva",
+        cpf: "00000000000",
+        birth_date: new Date("1993-07-01"),
+        mobile_phone: "11999999998",
+        email: "felipe@test.com",
+        username: "felipe3446",
+        password: "casaamarela",
+        isPartner: false,
+        created_at: new Date(),
+      });
+    }).rejects.toBeInstanceOf(AppError);
+  });
+
+  it("Should not be able to create a new user with same email", async () => {
+    expect(async () => {
+      await createUserUseCase.execute({
+        id: uuid(),
+        name: "Felipe",
+        last_name: "da Silva",
+        cpf: "00000000001",
+        birth_date: new Date("1993-07-01"),
+        mobile_phone: "11999999999",
+        email: "felipe@test.com",
+        username: "felipe2020",
+        password: "casaamarela",
+        isPartner: false,
+        created_at: new Date(),
+      });
+
+      await createUserUseCase.execute({
+        id: uuid(),
+        name: "Felipe",
+        last_name: "da Silva",
+        cpf: "00000000000",
+        birth_date: new Date("1993-07-01"),
+        mobile_phone: "11999999998",
+        email: "felipe@test.com",
+        username: "felipe3446",
+        password: "casaamarela",
+        isPartner: false,
         created_at: new Date(),
       });
     }).rejects.toBeInstanceOf(AppError);

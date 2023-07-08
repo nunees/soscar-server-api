@@ -14,4 +14,7 @@ export interface IUsersRepository {
     password,
   }: IUserCreateDTO): Promise<IUserReturnDTO>;
   findByCPF(cpf: string): Promise<IUserReturnDTO>;
+  findByMobilePhone(mobile_phone: string): Promise<IUserReturnDTO>;
+  findByUsername(username: string): Promise<IUserReturnDTO>;
+  findByEmail(email: string): Promise<IUserReturnDTO>;
 }

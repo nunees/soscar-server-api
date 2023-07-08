@@ -8,6 +8,7 @@ export interface User {
   username: string;
   email: string;
   password: string;
+  isPartner: boolean;
   created_at?: Date;
   updated_at?: Date;
   avatar?: string;

@@ -1,7 +1,6 @@
 import { IUserCreateDTO } from "@modules/users/dtos/IUserCreateDTO";
 import { IUserReturnDTO } from "@modules/users/dtos/IUserReturnDTO";
 import { User } from "@modules/users/entities/User";
-import { AppError } from "@shared/errors/AppError";
 import { IUsersRepository } from "../IUsersRepository";
 
 export class UsersRepositoryInMemory implements IUsersRepository {
@@ -22,12 +21,8 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     username,
     email,
     password,
+    isPartner,
   }: IUserCreateDTO): Promise<IUserReturnDTO> {
-    const userExist = await this.findByCPF(cpf);
-    if (userExist) {
-      throw new AppError("Usuário já existe!");
-    }
-
     const user = {
       id,
       name,
@@ -38,15 +33,32 @@ export class UsersRepositoryInMemory implements IUsersRepository {
       username,
       email,
       password,
+      isPartner,
       created_at: new Date(),
     };
 
     this.users.push(user);
 
-    return user;
+    return user as IUserReturnDTO;
   }
 
   async findByCPF(cpf: string): Promise<IUserReturnDTO> {
-    return this.users.find((user) => user.cpf === cpf) as IUserReturnDTO;
+    const user = this.users.find((user) => user.cpf === cpf)!;
+    return user as IUserReturnDTO;
+  }
+
+  async findByMobilePhone(mobile_phone: string): Promise<IUserReturnDTO> {
+    const user = this.users.find((user) => user.mobile_phone === mobile_phone)!;
+    return user as IUserReturnDTO;
+  }
+
+  async findByUsername(username: string): Promise<IUserReturnDTO> {
+    const user = this.users.find((user) => user.username === username)!;
+    return user as IUserReturnDTO;
+  }
+
+  async findByEmail(email: string): Promise<IUserReturnDTO> {
+    const user = this.users.find((user) => user.email === email)!;
+    return user as IUserReturnDTO;
   }
 }
