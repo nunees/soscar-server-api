@@ -3,13 +3,16 @@ import express, { NextFunction, Request, Response } from "express";
 import { AppError } from "@shared/errors/AppError";
 
 import "express-async-errors";
+import "reflect-metadata";
+
+import { routes } from "./routes";
+
+import "@shared/container";
 
 const app = express();
 app.use(express.json());
 
-app.get("/", (req: Request, res: Response) => {
-  return res.status(201).json({ ok: "ok" });
-});
+app.use(routes);
 
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {
