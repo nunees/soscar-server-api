@@ -1,4 +1,5 @@
 import { IUserAddressCreateDTO } from "@modules/users/dtos/IUserAddressCreateDTO";
+import { IUserAddressReturnDTO } from "@modules/users/dtos/IUserAddressReturnDTO";
 import { Address } from "@modules/users/entities/Address";
 import { v4 as uuid } from "uuid";
 import { IAddressRepository } from "../IAddressRepository";
@@ -9,6 +10,16 @@ export class AddressesRepositoryInMemory implements IAddressRepository {
   constructor() {
     this.addresses = [];
   }
+  update({
+    address_line,
+    number,
+    district,
+    city,
+    state,
+    zipcode,
+  }: IUserAddressCreateDTO): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
 
   async create({
     user_id,
@@ -18,7 +29,7 @@ export class AddressesRepositoryInMemory implements IAddressRepository {
     city,
     state,
     zipcode,
-  }: IUserAddressCreateDTO): Promise<IUserAddressCreateDTO> {
+  }: IUserAddressCreateDTO): Promise<void> {
     const address = {
       id: uuid(),
       user_id,
@@ -32,7 +43,16 @@ export class AddressesRepositoryInMemory implements IAddressRepository {
     };
 
     this.addresses.push(address);
+  }
 
-    return address;
+  async deleteById(id: string): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  getAddressById(id: string): Promise<IUserAddressReturnDTO> {
+    throw new Error("Method not implemented.");
+  }
+  getAllUserAddress(user_id: string): Promise<IUserAddressReturnDTO[]> {
+    throw new Error("Method not implemented.");
   }
 }

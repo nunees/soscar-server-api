@@ -1,4 +1,4 @@
-export interface IUserAddressReturn {
+export interface IUserAddressReturnDTO {
   id: string;
   user_id: string;
   address_line: string;

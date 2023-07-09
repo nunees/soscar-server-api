@@ -1,48 +1,45 @@
-// import { NextFunction, Request, Response } from "express";
-// import { verify } from "jsonwebtoken";
+import auth from "@config/auth";
+import { UsersTokensRepository } from "@modules/users/infra/prisma/repositories/UsersTokensRepository";
+import { PrismaClient } from "@prisma/client";
+import { AppError } from "@shared/errors/AppError";
+import { NextFunction, Request, Response } from "express";
+import { verify } from "jsonwebtoken";
 
-// import { CustomersTokensRepository } from "@modules/accounts/customers/infra/prisma/repositories/CustomersTokensRepository";
-// import { PrismaClient } from "@prisma/client";
-// import { AppError } from "@shared/errors/AppError";
+interface IPayload {
+  sub: string;
+}
 
-// interface IPayload {
-//   sub: string;
-// }
+export async function ensureAuthenticated(
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
+  const authHeader = request.headers.authorization;
+  const usersTokensRepository = new UsersTokensRepository(new PrismaClient());
 
-// export async function ensureCustomerAuthenticated(
-//   request: Request,
-//   response: Response,
-//   next: NextFunction
-// ) {
-//   const authHeader = request.headers.authorization;
-//   const prismaClient = new PrismaClient();
-//   const customersTokensRepository = new CustomersTokensRepository(prismaClient);
+  if (!authHeader) throw new AppError("Token missing!", 401);
 
-//   if (!authHeader) {
-//     throw new AppError("Usuário não autenticado", 401);
-//   }
+  const [, token] = authHeader.split("");
 
-//   const [, token] = authHeader.split(" ");
+  try {
+    const { sub: user_id } = verify(
+      token,
+      auth.secret_refresh_token
+    ) as IPayload;
 
-//   try {
-//     const { sub: id } = verify(token, process.env.JWT_SECRET) as IPayload;
+    const user = await usersTokensRepository.findByUserIdAndRefreshToken(
+      user_id,
+      token
+    );
 
-//     const customer =
-//       await customersTokensRepository.findByCustomerIdAndRefreshToken(
-//         id,
-//         token
-//       );
+    if (!user) throw new AppError("User does not exists!", 401);
 
-//     if (!customer) {
-//       throw new AppError("Usuário não existe", 401);
-//     }
+    request.user = {
+      id: user_id,
+    };
 
-//     request.customer = {
-//       id,
-//     };
-
-//     return next();
-//   } catch (error) {
-//     throw new AppError("Token invalido", 401);
-//   }
-// }
+    next();
+  } catch {
+    throw new AppError("Invalid Token!", 401);
+  }
+}

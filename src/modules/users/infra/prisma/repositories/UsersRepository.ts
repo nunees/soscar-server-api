@@ -37,7 +37,7 @@ export class UsersRepository implements IUsersRepository {
         birth_date,
         username,
         email,
-        password,
+        password: hashed_password,
         isPartner,
         avatar,
         gender,

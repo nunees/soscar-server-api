@@ -1,9 +1,13 @@
 import { container } from "tsyringe";
 
-// In Memory repositories
+import "@shared/container/providers";
+
+import { AddressesRepository } from "@modules/users/infra/prisma/repositories/AddressesRepository";
 import { UsersRepository } from "@modules/users/infra/prisma/repositories/UsersRepository";
+import { UsersTokensRepository } from "@modules/users/infra/prisma/repositories/UsersTokensRepository";
 import { IAddressRepository } from "@modules/users/repositories/IAddressRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
 import { AddressesRepositoryInMemory } from "@modules/users/repositories/in-memory/AddressesRepositoryInMemory";
 import { UsersRepositoryInMemory } from "@modules/users/repositories/in-memory/UsersRepositoryInMemory";
 import { PrismaClient } from "@prisma/client";
@@ -24,6 +28,16 @@ container.registerSingleton<IAddressRepository>(
 container.registerSingleton<IUsersRepository>(
   "UsersRepository",
   UsersRepository
+);
+
+container.registerSingleton<IAddressRepository>(
+  "AddressesRepository",
+  AddressesRepository
+);
+
+container.registerSingleton<IUsersTokensRepository>(
+  "UsersTokensRepository",
+  UsersTokensRepository
 );
 
 container.register<PrismaClient>("PrismaClient", {
