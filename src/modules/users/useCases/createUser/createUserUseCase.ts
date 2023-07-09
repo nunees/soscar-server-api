@@ -20,12 +20,13 @@ interface IRequest {
 @injectable()
 export class CreateUserUseCase {
   constructor(
-    @inject("UsersRepositoryInMemory")
-    private usersRepositoryInMemory: IUsersRepository
+    // @inject("UsersRepositoryInMemory")
+    // private usersRepositoryInMemory: IUsersRepository
+    @inject("UsersRepository")
+    private usersRepository: IUsersRepository
   ) {}
 
   async execute({
-    id,
     name,
     last_name,
     cpf,
@@ -36,34 +37,31 @@ export class CreateUserUseCase {
     password,
     isPartner,
   }: IRequest): Promise<IUserReturnDTO> {
-    let userExist = await this.usersRepositoryInMemory.findByCPF(cpf);
+    let userExist = await this.usersRepository.findByCPF(cpf);
 
     if (userExist) {
       throw new AppError("CPF já cadastrado!");
     }
 
-    userExist = await this.usersRepositoryInMemory.findByMobilePhone(
-      mobile_phone
-    );
+    userExist = await this.usersRepository.findByMobilePhone(mobile_phone);
 
     if (userExist) {
       throw new AppError("Numero de telefone em uso!");
     }
 
-    userExist = await this.usersRepositoryInMemory.findByUsername(username);
+    userExist = await this.usersRepository.findByUsername(username);
 
     if (userExist) {
       throw new AppError("Nome de usuario em uso!");
     }
 
-    userExist = await this.usersRepositoryInMemory.findByEmail(email);
+    userExist = await this.usersRepository.findByEmail(email);
 
     if (userExist) {
       throw new AppError("Endereco de email em uso!");
     }
 
-    const user = await this.usersRepositoryInMemory.create({
-      id,
+    const user = await this.usersRepository.create({
       name,
       last_name,
       cpf,
