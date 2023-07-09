@@ -4,7 +4,6 @@ import { User } from "@modules/users/entities/User";
 import { IUsersRepository } from "../IUsersRepository";
 
 export class UsersRepositoryInMemory implements IUsersRepository {
-  private static INSTANCE: UsersRepositoryInMemory;
   users: User[] = [];
 
   constructor() {

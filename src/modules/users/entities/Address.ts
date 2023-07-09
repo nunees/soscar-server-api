@@ -1,4 +1,4 @@
-export interface IUserAddressCreateDTO {
+export interface Address {
   id?: string;
   user_id: string;
   address_line: string;
@@ -7,5 +7,6 @@ export interface IUserAddressCreateDTO {
   city: string;
   state: string;
   zipcode: string;
-  created_at?: Date;
+  created_at: Date;
+  updated_at?: Date;
 }

@@ -1,5 +1,5 @@
-export interface IUserAddressCreateDTO {
-  id?: string;
+export interface IUserAddressReturn {
+  id: string;
   user_id: string;
   address_line: string;
   number: number;
@@ -7,5 +7,4 @@ export interface IUserAddressCreateDTO {
   city: string;
   state: string;
   zipcode: string;
-  created_at?: Date;
 }
