@@ -1,5 +1,5 @@
 export interface IUserAddressReturnDTO {
-  id: string;
+  id?: string;
   user_id: string;
   address_line: string;
   number: number;

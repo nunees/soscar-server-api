@@ -14,8 +14,9 @@ interface IRequest {
 
 interface IResponse {
   user: {
+    id: string;
     name: string;
-    email: string;
+    username: string;
   };
   token: string;
   refresh_token: string;
@@ -34,6 +35,7 @@ export class AuthenticateUserUseCase {
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
+
     const {
       expires_in_token,
       secret_token,
@@ -54,12 +56,13 @@ export class AuthenticateUserUseCase {
 
     // Generate token
     const token = sign({}, secret_token, {
-      subject: user.id,
+      subject: user.id as string,
       expiresIn: expires_in_token,
     });
 
+    // Generate refresh token
     const refresh_token = sign({ email }, secret_refresh_token, {
-      subject: user.id,
+      subject: user.id as string,
       expiresIn: expires_in_refresh_token,
     });
 
@@ -74,11 +77,12 @@ export class AuthenticateUserUseCase {
     });
 
     const tokenReturn: IResponse = {
-      token,
       user: {
+        id: user.id as string,
         name: user.name,
-        email: user.email,
+        username: user.username,
       },
+      token,
       refresh_token,
     };
 

@@ -26,14 +26,26 @@ export class UsersTokensRepository implements IUsersTokensRepository {
     return userToken;
   }
 
+  async findByUserId(user_id: string): Promise<IUserTokenReturnDTO> {
+    const userToken = await this.prismaClient.usersTokens.findFirst({
+      where: {
+        user_id,
+      },
+    });
+
+    return userToken as IUserTokenReturnDTO;
+  }
+
   async findByUserIdAndRefreshToken(
     id: string,
     refresh_token: string
   ): Promise<IUserTokenReturnDTO> {
     const userToken = await this.prismaClient.usersTokens.findFirst({
       where: {
-        id,
-        refresh_token,
+        user_id: id,
+        AND: {
+          refresh_token,
+        },
       },
     });
 

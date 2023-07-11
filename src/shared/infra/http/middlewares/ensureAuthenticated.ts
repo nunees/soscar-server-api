@@ -15,31 +15,28 @@ export async function ensureAuthenticated(
   next: NextFunction
 ) {
   const authHeader = request.headers.authorization;
-  const usersTokensRepository = new UsersTokensRepository(new PrismaClient());
+  const prismaCLient = new PrismaClient();
+  const usersTokensRepository = new UsersTokensRepository(prismaCLient);
 
-  if (!authHeader) throw new AppError("Token missing!", 401);
+  if (!authHeader) {
+    throw new AppError("Token missing!", 401);
+  }
 
-  const [, token] = authHeader.split("");
+  const [, token] = authHeader.split(" ");
 
   try {
-    const { sub: user_id } = verify(
-      token,
-      auth.secret_refresh_token
-    ) as IPayload;
+    const { sub: user_id } = verify(token, auth.secret_token) as IPayload;
 
-    const user = await usersTokensRepository.findByUserIdAndRefreshToken(
-      user_id,
-      token
-    );
+    const user = await usersTokensRepository.findByUserId(user_id as string);
 
     if (!user) throw new AppError("User does not exists!", 401);
 
     request.user = {
-      id: user_id,
+      id: user_id as string,
     };
 
-    next();
+    return next();
   } catch {
-    throw new AppError("Invalid Token!", 401);
+    throw new AppError("User not authorized!", 401);
   }
 }

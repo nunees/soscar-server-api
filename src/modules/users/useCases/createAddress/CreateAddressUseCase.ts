@@ -1,9 +1,10 @@
-import { IUserAddressReturn } from "@modules/users/dtos/IUserAddressReturnDTO";
 import { IAddressRepository } from "@modules/users/repositories/IAddressRepository";
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 export interface IRequest {
-  id?: string;
   user_id: string;
   address_line: string;
   number: number;
@@ -11,15 +12,17 @@ export interface IRequest {
   city: string;
   state: string;
   zipcode: string;
-  created_at: Date;
-  updated_at?: Date;
 }
 
 @injectable()
 export class CreateAddressUseCase {
   constructor(
-    @inject("AddressesRepositoryInMemory")
-    private addressesRepositoryInMemory: IAddressRepository
+    @inject("UsersRepository")
+    private usersRepository: IUsersRepository,
+    @inject("AddressesRepository")
+    private addressesRepository: IAddressRepository,
+    @inject("DayJsDateProvider")
+    private dayJsDateProvider: IDateProvider // @inject("AddressesRepositoryInMemory") // private addressesRepositoryInMemory: IAddressRepository
   ) {}
 
   async execute({
@@ -30,8 +33,14 @@ export class CreateAddressUseCase {
     city,
     state,
     zipcode,
-  }: IRequest): Promise<IUserAddressReturn> {
-    const address = await this.addressesRepositoryInMemory.create({
+  }: IRequest): Promise<void> {
+    const userExists = await this.usersRepository.findById(user_id);
+
+    if (!userExists) {
+      throw new AppError("Usuario nao encontrado");
+    }
+
+    const address = await this.addressesRepository.create({
       user_id,
       address_line,
       number,
@@ -39,8 +48,7 @@ export class CreateAddressUseCase {
       city,
       state,
       zipcode,
+      created_at: this.dayJsDateProvider.datenow(),
     });
-
-    return address as IUserAddressReturn;
   }
 }

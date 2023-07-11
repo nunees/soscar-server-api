@@ -35,7 +35,7 @@ export class RefreshTokenUseCase {
     }
 
     // Delete old token
-    await this.usersTokensRepository.deleteById(userToken.user_id);
+    await this.usersTokensRepository.deleteById(String(userToken.id));
 
     // Generate a new token
     const expires_date = this.dayJsDateProvider.addDays(

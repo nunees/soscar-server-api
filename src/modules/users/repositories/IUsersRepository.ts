@@ -17,4 +17,5 @@ export interface IUsersRepository {
   findByMobilePhone(mobile_phone: string): Promise<IUserReturnDTO | null>;
   findByUsername(username: string): Promise<IUserReturnDTO | null>;
   findByEmail(email: string): Promise<IUserReturnDTO | null>;
+  findById(user_id: string): Promise<IUserReturnDTO | null>;
 }

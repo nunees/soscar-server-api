@@ -101,4 +101,14 @@ export class UsersRepository implements IUsersRepository {
       throw new AppError("Não foi possível realizar a consulta");
     }
   }
+
+  async findById(user_id: string): Promise<IUserReturnDTO | null> {
+    const user = await this.prismaClient.users.findUnique({
+      where: {
+        id: user_id,
+      },
+    });
+
+    return user as IUserReturnDTO;
+  }
 }

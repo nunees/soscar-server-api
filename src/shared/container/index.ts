@@ -8,21 +8,19 @@ import { UsersTokensRepository } from "@modules/users/infra/prisma/repositories/
 import { IAddressRepository } from "@modules/users/repositories/IAddressRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
-import { AddressesRepositoryInMemory } from "@modules/users/repositories/in-memory/AddressesRepositoryInMemory";
-import { UsersRepositoryInMemory } from "@modules/users/repositories/in-memory/UsersRepositoryInMemory";
 import { PrismaClient } from "@prisma/client";
 import { prisma } from "@shared/infra/prisma";
 
 // In memory Repositories
-container.registerSingleton<IUsersRepository>(
-  "UsersRepositoryInMemory",
-  UsersRepositoryInMemory
-);
+// container.registerSingleton<IUsersRepository>(
+//   "UsersRepositoryInMemory",
+//   UsersRepositoryInMemory
+// );
 
-container.registerSingleton<IAddressRepository>(
-  "AddressesRepositoryInMemory",
-  AddressesRepositoryInMemory
-);
+// container.registerSingleton<IAddressRepository>(
+//   "AddressesRepositoryInMemory",
+//   AddressesRepositoryInMemory
+// );
 
 // Database repositories
 container.registerSingleton<IUsersRepository>(
