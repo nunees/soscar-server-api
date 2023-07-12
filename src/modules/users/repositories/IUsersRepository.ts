@@ -13,6 +13,7 @@ export interface IUsersRepository {
     email,
     password,
   }: IUserCreateDTO): Promise<IUserReturnDTO>;
+  isUserPartner(user_id: string, isPartner: boolean): Promise<boolean>;
   findByCPF(cpf: string): Promise<IUserReturnDTO | null>;
   findByMobilePhone(mobile_phone: string): Promise<IUserReturnDTO | null>;
   findByUsername(username: string): Promise<IUserReturnDTO | null>;

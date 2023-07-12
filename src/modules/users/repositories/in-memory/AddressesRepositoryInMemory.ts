@@ -10,16 +10,6 @@ export class AddressesRepositoryInMemory implements IAddressRepository {
   constructor() {
     this.addresses = [];
   }
-  update({
-    address_line,
-    number,
-    district,
-    city,
-    state,
-    zipcode,
-  }: IUserAddressCreateDTO): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
 
   async create({
     user_id,
@@ -43,6 +33,17 @@ export class AddressesRepositoryInMemory implements IAddressRepository {
     };
 
     this.addresses.push(address);
+  }
+
+  async update({
+    address_line,
+    number,
+    district,
+    city,
+    state,
+    zipcode,
+  }: IUserAddressCreateDTO): Promise<void> {
+    throw new Error("Method not implemented.");
   }
 
   async deleteById(id: string): Promise<void> {

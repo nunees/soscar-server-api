@@ -2,15 +2,15 @@ import { User } from "@modules/users/entities/User";
 import { UsersRepositoryInMemory } from "@modules/users/repositories/in-memory/UsersRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
 import { v4 as uuid } from "uuid";
-import { CreateUserUseCase } from "./createUserUseCase";
+import { CreateUserUseCaseInMemory } from "./createUserUseCaseInMemory";
 
-let createUserUseCase: CreateUserUseCase;
+let createUserUseCase: CreateUserUseCaseInMemory;
 let usersRepositoryInMemory: UsersRepositoryInMemory;
 
-describe("Create user suite test", () => {
+describe("Create user test", () => {
   beforeEach(() => {
     usersRepositoryInMemory = new UsersRepositoryInMemory();
-    createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
+    createUserUseCase = new CreateUserUseCaseInMemory(usersRepositoryInMemory);
   });
 
   it("Should be able to create a new user", async () => {
@@ -25,6 +25,27 @@ describe("Create user suite test", () => {
       username: "felipe3446",
       password: "casaamarela",
       isPartner: false,
+      created_at: new Date(),
+    };
+
+    const result = await createUserUseCase.execute(user);
+
+    expect(result).toHaveProperty("id");
+    expect(result).toHaveProperty("email");
+  });
+
+  it("Should be able to create a new partner user", async () => {
+    const user: User = {
+      id: uuid(),
+      name: "Felipe",
+      last_name: "da Silva",
+      cpf: "00000000000",
+      birth_date: new Date("1993-07-01"),
+      mobile_phone: "11999999999",
+      email: "felipe@test.com",
+      username: "felipe3446",
+      password: "casaamarela",
+      isPartner: true,
       created_at: new Date(),
     };
 
@@ -130,7 +151,7 @@ describe("Create user suite test", () => {
     }).rejects.toBeInstanceOf(AppError);
   });
 
-  it("Should not be able to create a new user with same email", async () => {
+  it("Should not be able to create a user with same email", async () => {
     expect(async () => {
       await createUserUseCase.execute({
         id: uuid(),
@@ -161,4 +182,39 @@ describe("Create user suite test", () => {
       });
     }).rejects.toBeInstanceOf(AppError);
   });
+
+  /**
+   * TODO: Implementar testes para CPF inválido
+   */
+  it("Should not be able to create a user with invalid CPF", async () => {});
+
+  /**
+   * TODO: Implementar testes para numero de celular inválido
+   */
+  it("Should not be able to create a user with invalid mobile number", async () => {});
+
+  /**
+   * TODO: Implementar testes para data de nascimento inválida
+   */
+  it("Should not be able to create a user with invalid birth date", async () => {});
+
+  /**
+   * TODO: Implementar testes para email inválido
+   */
+  it("Should not be able to create a user with invalid email", async () => {});
+
+  /**
+   * TODO: Implementar testes para username inválido
+   */
+  it("Should not be able to create a user with invalid username", async () => {});
+
+  /**
+   * TODO: Implementar testes para senha inválida
+   */
+  it("Should not be able to create a user with invalid password", async () => {});
+
+  /**
+   * TODO: Implementar testes para isPartner inválido
+   */
+  it("Should not be able to create a user with invalid isPartner", async () => {});
 });

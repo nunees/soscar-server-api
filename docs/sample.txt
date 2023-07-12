@@ -1,0 +1,37 @@
+# Criação de usuário
+
+## Functional Requirements
+
+### -> Usuário (User)
+- [X] Deve ser possível criar um novo usuário a partir de informações fornecidas.
+- [ ] Deve ser possível criar um novo usuário parceiro a partir de informações inseridas.
+
+#### Regras de negócios (user)
+- [ ] O sistema deve armazenar as informações de maneira segura.
+- [ ] O sistema deve validar a existência de usernames (nome de usuário) e emails afim de evitar duplicidade.
+
+- [ ] Deve ser possível editar e atualizar as informações básicas de perfil do usuário.
+- [ ] Deve ser possível alterar a senha e recupera-lá de forma segura.
+- [ ] Deve ser possível fazer o upload de uma imagem de perfil (avatar).
+- [ ] Deve ser possível alterar a foto de perfil do usuário (avatar).
+
+### -> Endereço (Address)
+- [ ] Deve ser possivel cadastrar um novo endereço a partir de informações fornecidas.
+- [ ] Deve ser possível listar todos os endereços de um usuário comum (user).
+- [ ] 
+
+#### Regras de negócios (Address)
+- [ ] O sistema deve validar o endereço fornecido pelo usuário.
+- [ ] Deve ser possível visualizar, editar e deletar endereços existentes.
+- [ ] O usuário deve ter a possibilidade de marcar um endereço como principal.
+
+
+## Non functional Requirements
+- [ ] O sistema deve fornecer instruções claras durante o processo registro e criação de endereço.
+- [ ] O tempo de resposta durante o processo de registro deve ser rápido o bastante para garantir uma experiência agradável.
+- [ ] O sistema deve implementar um sistema de criptográfia forte para proteger os dados dos usuários, incluindo emails e senhas.
+- [ ] Deve-se implementar mecanismos de autenticação para evitar acesso não autorizado a plataforma.
+- [ ] Deve-se implementar mecanismos de segurança para impedir ataques de DDOS, SQL Injection e Refresh Token.
+- [ ] O sistema deve ser capaz de manipular uma grande quantidade de dados sem perder performance.
+- [ ] O sistema deve ter backup e mecanismos de recuperação para garantir integridade e acessibilidade.
+- [ ] O sistema deve ser desenvolvido para garantir escalabilidade.

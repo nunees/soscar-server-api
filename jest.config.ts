@@ -8,7 +8,7 @@ export default {
   clearMocks: true,
   coverageProvider: "v8",
   collectCoverage: true,
-  collectCoverageFrom: ["<rootDir>/src/modules/**/useCases/**/*.ts"],
+  collectCoverageFrom: ["<rootDir>/src/modules/**/useCases/**/__test__/*.ts"],
   coverageDirectory: "coverage",
   coverageReporters: ["text-summary", "lcov"],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {

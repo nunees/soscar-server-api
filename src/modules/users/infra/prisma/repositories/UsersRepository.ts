@@ -12,6 +12,9 @@ export class UsersRepository implements IUsersRepository {
     @inject("PrismaClient")
     private prismaClient: PrismaClient
   ) {}
+  isUserPartner(user_id: string, isPartner: boolean): Promise<boolean> {
+    throw new Error("Method not implemented.");
+  }
 
   async create({
     name,
@@ -49,7 +52,6 @@ export class UsersRepository implements IUsersRepository {
   }
   async findByCPF(cpf: string): Promise<IUserReturnDTO> {
     try {
-      console.log("user");
       const user = await this.prismaClient.users.findUnique({
         where: {
           cpf,

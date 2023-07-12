@@ -1,5 +1,5 @@
 export interface IUserReturnDTO {
-  id?: string | undefined;
+  id?: string;
   name: string;
   last_name: string;
   mobile_phone: string;

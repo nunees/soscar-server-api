@@ -1,6 +1,8 @@
 import { IUserCreateDTO } from "@modules/users/dtos/IUserCreateDTO";
 import { IUserReturnDTO } from "@modules/users/dtos/IUserReturnDTO";
 import { User } from "@modules/users/entities/User";
+import { hash } from "bcrypt";
+import { v4 as uuid } from "uuid";
 import { IUsersRepository } from "../IUsersRepository";
 
 export class UsersRepositoryInMemory implements IUsersRepository {
@@ -11,7 +13,6 @@ export class UsersRepositoryInMemory implements IUsersRepository {
   }
 
   async create({
-    id,
     name,
     last_name,
     cpf,
@@ -22,8 +23,9 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     password,
     isPartner,
   }: IUserCreateDTO): Promise<IUserReturnDTO> {
+    const hashed_password = await hash(password, 8);
     const user = {
-      id,
+      id: uuid(),
       name,
       last_name,
       cpf,
@@ -31,7 +33,7 @@ export class UsersRepositoryInMemory implements IUsersRepository {
       birth_date,
       username,
       email,
-      password,
+      password: hashed_password,
       isPartner,
       created_at: new Date(),
     };
@@ -39,6 +41,16 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     this.users.push(user);
 
     return user as IUserReturnDTO;
+  }
+
+  async isUserPartner(user_id: string, isPartner: boolean): Promise<boolean> {
+    const partner = this.users.find(
+      (user) => user.id === user_id && user.isPartner === isPartner
+    )!;
+    if (partner.isPartner) {
+      return true;
+    }
+    return false;
   }
 
   async findByCPF(cpf: string): Promise<IUserReturnDTO> {
@@ -58,6 +70,11 @@ export class UsersRepositoryInMemory implements IUsersRepository {
 
   async findByEmail(email: string): Promise<IUserReturnDTO> {
     const user = this.users.find((user) => user.email === email)!;
+    return user as IUserReturnDTO;
+  }
+
+  async findById(user_id: string): Promise<IUserReturnDTO | null> {
+    const user = this.users.find((user) => user.id === user_id)!;
     return user as IUserReturnDTO;
   }
 }

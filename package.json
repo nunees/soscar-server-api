@@ -36,7 +36,7 @@
   },
   "scripts": {
     "dev": "ts-node-dev  --exit-child -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "test": "jest --runInBand --detectOpenHandles"
+    "test": "jest --runInBand --detectOpenHandles --verbose"
   },
   "prisma": {
     "schema": "src/shared/infra/prisma/schema.prisma"
