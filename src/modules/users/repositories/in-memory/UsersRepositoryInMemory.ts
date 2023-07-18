@@ -43,7 +43,7 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     return user as IUserReturnDTO;
   }
 
-  async isUserPartner(user_id: string, isPartner: boolean): Promise<boolean> {
+  async isUserPartner(user_id: string, isPartner: boolean): Promise<Boolean> {
     const partner = this.users.find(
       (user) => user.id === user_id && user.isPartner === isPartner
     )!;
@@ -68,12 +68,11 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     return user as IUserReturnDTO;
   }
 
-  async findByEmail(email: string): Promise<IUserReturnDTO> {
-    const user = this.users.find((user) => user.email === email)!;
-    return user as IUserReturnDTO;
+  async findByEmail(email: string): Promise<User> {
+    return this.users.find((user) => user.email === email)!;
   }
 
-  async findById(user_id: string): Promise<IUserReturnDTO | null> {
+  async findById(user_id: string): Promise<IUserReturnDTO> {
     const user = this.users.find((user) => user.id === user_id)!;
     return user as IUserReturnDTO;
   }

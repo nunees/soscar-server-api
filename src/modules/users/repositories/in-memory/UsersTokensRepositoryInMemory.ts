@@ -4,8 +4,12 @@ import { Tokens } from "@modules/users/entities/Tokens";
 import { v4 as uuid } from "uuid";
 import { IUsersTokensRepository } from "../IUsersTokensRepository";
 
-export class UsersTokensRepositoryInMemoy implements IUsersTokensRepository {
+export class UsersTokensRepositoryInMemory implements IUsersTokensRepository {
   tokens: Tokens[] = [];
+
+  constructor() {
+    this.tokens = [];
+  }
 
   async create({
     expires_date,

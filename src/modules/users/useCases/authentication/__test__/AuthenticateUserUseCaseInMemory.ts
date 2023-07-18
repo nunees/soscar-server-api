@@ -1,4 +1,5 @@
 import auth from "@config/auth";
+import { User } from "@modules/users/entities/User";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
@@ -34,43 +35,35 @@ export class AuthenticateUserUseCaseInMemory {
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
-    const user = await this.usersRepositoryInMemory.findByEmail(email);
+    const user: User = await this.usersRepositoryInMemory.findByEmail(email);
 
-    const {
-      expires_in_token,
-      secret_token,
-      secret_refresh_token,
-      expires_in_refresh_token,
-      expires_refresh_token_days,
-    } = auth;
-
-    if (!user) {
-      throw new AppError("Email or password incorret!", 401);
+    if (!user.email) {
+      throw new AppError("Email or password incorrect! 1", 401);
     }
 
     // Verify password
     const passwordMatch = await compare(password, user.password);
     if (!passwordMatch) {
-      throw new AppError("Email or password incorrect!", 401);
+      throw new AppError("Email or password incorrect! 2", 401);
     }
 
     // Generate token
-    const token = sign({}, secret_token, {
+    const token = sign({}, auth.secret_token, {
       subject: user.id as string,
-      expiresIn: expires_in_token,
+      expiresIn: auth.expires_in_token,
     });
 
     // Generate refresh token
-    const refresh_token = sign({ email }, secret_refresh_token, {
+    const refresh_token = sign({ email }, auth.secret_refresh_token, {
       subject: user.id as string,
-      expiresIn: expires_in_refresh_token,
+      expiresIn: auth.expires_in_refresh_token,
     });
 
-    const refresh_token_expires_date = this.dateProvider.addDays(
-      expires_refresh_token_days
+    const refresh_token_expires_date = this.dateProvider?.addDays(
+      auth.expires_refresh_token_days
     );
 
-    await this.usersTokensRepositoryInMemory.create({
+    await this.usersTokensRepositoryInMemory?.create({
       user_id: user.id as string,
       refresh_token,
       expires_date: refresh_token_expires_date,

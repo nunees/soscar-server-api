@@ -34,7 +34,7 @@ export class AuthenticateUserUseCase {
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
-    const user = await this.usersRepository.findByEmail(email);
+    const user = await this.usersRepository?.findByEmail(email);
 
     const {
       expires_in_token,
@@ -45,7 +45,7 @@ export class AuthenticateUserUseCase {
     } = auth;
 
     if (!user) {
-      throw new AppError("Email or password incorret!", 401);
+      throw new AppError("Email or password incorrect!", 401);
     }
 
     // Verify password

@@ -35,13 +35,13 @@ export class CreateUserUseCaseInMemory {
     password,
     isPartner,
   }: IRequest): Promise<IUserReturnDTO> {
-    let userExist = await this.usersRepositoryInMemory.findByCPF(cpf);
+    let userExist = await this.usersRepositoryInMemory?.findByCPF(cpf);
 
     if (userExist) {
       throw new AppError("CPF já cadastrado!");
     }
 
-    userExist = await this.usersRepositoryInMemory.findByMobilePhone(
+    userExist = await this.usersRepositoryInMemory?.findByMobilePhone(
       mobile_phone
     );
 
@@ -49,19 +49,19 @@ export class CreateUserUseCaseInMemory {
       throw new AppError("Numero de telefone em uso!");
     }
 
-    userExist = await this.usersRepositoryInMemory.findByUsername(username);
+    userExist = await this.usersRepositoryInMemory?.findByUsername(username);
 
     if (userExist) {
       throw new AppError("Nome de usuario em uso!");
     }
 
-    userExist = await this.usersRepositoryInMemory.findByEmail(email);
+    userExist = await this.usersRepositoryInMemory?.findByEmail(email);
 
     if (userExist) {
-      throw new AppError("Endereco de email em uso!");
+      throw new AppError("Endereço de email em uso!");
     }
 
-    const user = await this.usersRepositoryInMemory.create({
+    const user = await this.usersRepositoryInMemory?.create({
       name,
       last_name,
       cpf,

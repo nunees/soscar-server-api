@@ -1,5 +1,6 @@
 import { IUserCreateDTO } from "@modules/users/dtos/IUserCreateDTO";
 import { IUserReturnDTO } from "@modules/users/dtos/IUserReturnDTO";
+import { User } from "../entities/User";
 
 export interface IUsersRepository {
   create({
@@ -13,10 +14,10 @@ export interface IUsersRepository {
     email,
     password,
   }: IUserCreateDTO): Promise<IUserReturnDTO>;
-  isUserPartner(user_id: string, isPartner: boolean): Promise<boolean>;
-  findByCPF(cpf: string): Promise<IUserReturnDTO | null>;
-  findByMobilePhone(mobile_phone: string): Promise<IUserReturnDTO | null>;
-  findByUsername(username: string): Promise<IUserReturnDTO | null>;
-  findByEmail(email: string): Promise<IUserReturnDTO | null>;
-  findById(user_id: string): Promise<IUserReturnDTO | null>;
+  isUserPartner(user_id: string, isPartner: boolean): Promise<Boolean>;
+  findByCPF(cpf: string): Promise<IUserReturnDTO>;
+  findByMobilePhone(mobile_phone: string): Promise<IUserReturnDTO>;
+  findByUsername(username: string): Promise<IUserReturnDTO>;
+  findByEmail(email: string): Promise<User>;
+  findById(user_id: string): Promise<IUserReturnDTO>;
 }

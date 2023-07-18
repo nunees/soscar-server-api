@@ -50,10 +50,15 @@ export class AddressesRepositoryInMemory implements IAddressRepository {
     throw new Error("Method not implemented.");
   }
 
-  getAddressById(id: string): Promise<IUserAddressReturnDTO> {
-    throw new Error("Method not implemented.");
+  async findAllAddresses(user_id: string): Promise<IUserAddressReturnDTO[]> {
+    const address = this.addresses.filter(
+      (address) => address.user_id === user_id
+    );
+
+    return address;
   }
-  getAllUserAddress(user_id: string): Promise<IUserAddressReturnDTO[]> {
+
+  async findAddressById(address_id: string): Promise<IUserAddressReturnDTO> {
     throw new Error("Method not implemented.");
   }
 }

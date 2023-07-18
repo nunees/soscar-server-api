@@ -88,7 +88,7 @@ export class AddressesRepository implements IAddressRepository {
     return addresses as IUserAddressReturnDTO;
   }
 
-  async getAllUserAddress(user_id: string): Promise<IUserAddressReturnDTO[]> {
+  async findAllAddresses(user_id: string): Promise<IUserAddressReturnDTO[]> {
     const addresses = await this.prismaClient.usersAddresses.findMany({
       where: {
         user_id,
@@ -99,5 +99,14 @@ export class AddressesRepository implements IAddressRepository {
     });
 
     return addresses as IUserAddressReturnDTO[];
+  }
+
+  async findAddressById(address_id: string): Promise<IUserAddressReturnDTO> {
+    const address = await this.prismaClient.usersAddresses.findUnique({
+      where: {
+        id: address_id,
+      },
+    });
+    return address as IUserAddressReturnDTO;
   }
 }

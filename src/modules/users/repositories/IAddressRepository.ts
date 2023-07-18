@@ -24,6 +24,6 @@ export interface IAddressRepository {
     id: string
   ): Promise<void>;
   deleteById(id: string): Promise<void>;
-  getAddressById(id: string): Promise<IUserAddressReturnDTO>;
-  getAllUserAddress(user_id: string): Promise<IUserAddressReturnDTO[]>;
+  findAddressById(address_id: string): Promise<IUserAddressReturnDTO>;
+  findAllAddresses(user_id: string): Promise<IUserAddressReturnDTO[]>;
 }

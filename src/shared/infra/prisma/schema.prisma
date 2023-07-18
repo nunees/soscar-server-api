@@ -12,25 +12,26 @@ datasource db {
 }
 
 model Users {
-  id                String           @id @default(uuid())
+  id                String              @id @default(uuid())
   name              String
   last_name         String
-  cpf               String           @unique
-  mobile_phone      String           @unique
-  email             String           @unique
-  username          String           @unique
+  cpf               String              @unique
+  mobile_phone      String              @unique
+  email             String              @unique
+  username          String              @unique
   password          String
   avatar            String?
-  birth_date        DateTime?        @db.Date
-  gender            String?          @default("none")
-  isTermsAccepted   Boolean?         @default(false)
-  isAccountVerified Boolean?         @default(false)
-  isAccountLocked   Boolean?         @default(false)
+  birth_date        DateTime?           @db.Date
+  gender            String?             @default("none")
+  isTermsAccepted   Boolean?            @default(false)
+  isAccountVerified Boolean?            @default(false)
+  isAccountLocked   Boolean?            @default(false)
   isPartner         Boolean?
-  created_at        DateTime         @default(now())
+  created_at        DateTime            @default(now())
   updated_at        DateTime?
   UsersAddresses    UsersAddresses[]
   UsersTokens       UsersTokens[]
+  BusinessLocations BusinessLocations[]
 
   @@index([cpf, username, email])
   @@map("users")
@@ -64,4 +65,50 @@ model UsersTokens {
 
   @@index([user_id])
   @@map("users_tokens")
+}
+
+model BusinessLocations {
+  id                 String    @id @default(uuid())
+  user_id            String
+  users              Users     @relation(fields: [user_id], references: [id])
+  cnpj               String
+  business_name      String
+  business_phone     String
+  business_email     String
+  business_expertise Int[]
+  address_line       String
+  number             Int
+  city               String
+  district           String
+  state              String
+  zipcode            String
+  created_at         DateTime  @default(now())
+  updated_at         DateTime?
+
+  @@index([user_id, cnpj, business_name, business_phone, business_email, city, state, zipcode])
+  @@map("business_locations")
+}
+
+// GENERATE BUSINESS TYPES
+model BusinessCategories {
+  id              Int                @id @unique
+  name            String
+  created_at      DateTime           @default(now())
+  updated_at      DateTime?
+  BusinessService BusinessServices[]
+
+  @@index([id, name])
+  @@map("business_categories")
+}
+
+model BusinessServices {
+  id          Int                @id @unique
+  category_id Int
+  category    BusinessCategories @relation(fields: [category_id], references: [id])
+  name        String
+  created_at  DateTime           @default(now())
+  updated_at  DateTime?
+
+  @@index([id, category_id, name])
+  @@map("business_services")
 }
