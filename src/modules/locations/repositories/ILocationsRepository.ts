@@ -1,5 +1,5 @@
 interface IRequest {
-  user_id?: String;
+  user_id;
   cnpj: String;
   business_name: String;
   business_phone: String;
@@ -14,5 +14,18 @@ interface IRequest {
 }
 
 export interface ILocationsRepository {
-  create(): Promise<void>;
+  create({
+    user_id,
+    cnpj,
+    business_name,
+    business_phone,
+    business_email,
+    business_expertise,
+    address_line,
+    number,
+    city,
+    district,
+    state,
+    zipcode,
+  }: IRequest): Promise<void>;
 }

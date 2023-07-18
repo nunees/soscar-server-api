@@ -8,8 +8,10 @@ import "reflect-metadata";
 import { routes } from "./routes";
 
 import "@shared/container";
+import morgan from "morgan";
 
 const app = express();
+app.use(morgan(":method :url :status - :response-time ms"));
 app.use(express.json());
 
 app.use(routes);

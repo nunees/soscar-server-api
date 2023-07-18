@@ -11,6 +11,9 @@ export class UsersRepositoryInMemory implements IUsersRepository {
   constructor() {
     this.users = [];
   }
+  updateAvatar(user_id: string, avatar_file: string): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
 
   async create({
     name,

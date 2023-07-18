@@ -12,6 +12,8 @@ import { AddressesRepositoryInMemory } from "@modules/users/repositories/in-memo
 import { UsersRepositoryInMemory } from "@modules/users/repositories/in-memory/UsersRepositoryInMemory";
 import { PrismaClient } from "@prisma/client";
 import { prisma } from "@shared/infra/prisma";
+import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
+import { LocationsRepository } from "@modules/locations/infra/prisma/repositories/LocationsRepository";
 
 // In memory Repositories
 container.registerSingleton<IUsersRepository>(
@@ -43,6 +45,11 @@ container.registerSingleton<IAddressRepository>(
 container.registerSingleton<IUsersTokensRepository>(
   "UsersTokensRepository",
   UsersTokensRepository
+);
+
+container.registerSingleton<ILocationsRepository>(
+  "LocationsRepository",
+  LocationsRepository
 );
 
 container.register<PrismaClient>("PrismaClient", {

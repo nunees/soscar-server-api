@@ -14,6 +14,7 @@ export interface IUsersRepository {
     email,
     password,
   }: IUserCreateDTO): Promise<IUserReturnDTO>;
+  updateAvatar(user_id: string, avatar_file: string): Promise<void>;
   isUserPartner(user_id: string, isPartner: boolean): Promise<Boolean>;
   findByCPF(cpf: string): Promise<IUserReturnDTO>;
   findByMobilePhone(mobile_phone: string): Promise<IUserReturnDTO>;

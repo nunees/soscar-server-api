@@ -1,5 +1,6 @@
 import { IUserCreateDTO } from "@modules/users/dtos/IUserCreateDTO";
 import { IUserReturnDTO } from "@modules/users/dtos/IUserReturnDTO";
+import { User } from "@modules/users/entities/User";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { PrismaClient } from "@prisma/client";
 import { AppError } from "@shared/errors/AppError";
@@ -12,9 +13,6 @@ export class UsersRepository implements IUsersRepository {
     @inject("PrismaClient")
     private prismaClient: PrismaClient
   ) {}
-  isUserPartner(user_id: string, isPartner: boolean): Promise<boolean> {
-    throw new Error("Method not implemented.");
-  }
 
   async create({
     name,
@@ -90,21 +88,16 @@ export class UsersRepository implements IUsersRepository {
       throw new AppError("Não foi possível realizar a consulta");
     }
   }
-  async findByEmail(email: string): Promise<IUserReturnDTO> {
-    try {
-      const user = await this.prismaClient.users.findUnique({
-        where: {
-          email,
-        },
-      });
-
-      return user as IUserCreateDTO;
-    } catch (error) {
-      throw new AppError("Não foi possível realizar a consulta");
-    }
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.prismaClient.users.findUnique({
+      where: {
+        email,
+      },
+    });
+    return user as User;
   }
 
-  async findById(user_id: string): Promise<IUserReturnDTO | null> {
+  async findById(user_id: string): Promise<IUserReturnDTO> {
     const user = await this.prismaClient.users.findUnique({
       where: {
         id: user_id,
@@ -112,5 +105,33 @@ export class UsersRepository implements IUsersRepository {
     });
 
     return user as IUserReturnDTO;
+  }
+
+  async isUserPartner(user_id: string, isPartner: boolean): Promise<boolean> {
+    const partner = await this.prismaClient.users.findFirst({
+      where: {
+        id: user_id,
+        AND: {
+          isPartner,
+        },
+      },
+    });
+
+    if (!partner) {
+      return false;
+    }
+
+    return true;
+  }
+
+  async updateAvatar(user_id: string, avatar_file: string): Promise<void> {
+    await this.prismaClient.users.update({
+      data: {
+        avatar: avatar_file,
+      },
+      where: {
+        id: user_id,
+      },
+    });
   }
 }

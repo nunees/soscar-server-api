@@ -1,0 +1,66 @@
+import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { AppError } from "@shared/errors/AppError";
+import { inject, injectable } from "tsyringe";
+
+interface IRequest {
+  cnpj: String;
+  business_name: String;
+  business_phone: String;
+  business_email: String;
+  business_expertise: Number[];
+  address_line: String;
+  number: Number;
+  city: String;
+  district: String;
+  state: String;
+  zipcode: String;
+}
+
+@injectable()
+export class CreateLocationUseCase {
+  constructor(
+    @inject("LocationsRepository")
+    private locationsRepository: ILocationsRepository,
+    @inject("UsersRepository")
+    private usersRepository: IUsersRepository
+  ) {}
+
+  async execute(
+    {
+      cnpj,
+      business_name,
+      business_phone,
+      business_email,
+      business_expertise,
+      address_line,
+      number,
+      city,
+      district,
+      state,
+      zipcode,
+    }: IRequest,
+    user_id: string
+  ) {
+    const user = await this.usersRepository.findById(user_id);
+
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    await this.locationsRepository.create({
+      user_id: user.id,
+      cnpj,
+      business_name,
+      business_phone,
+      business_email,
+      business_expertise,
+      address_line,
+      number,
+      city,
+      district,
+      state,
+      zipcode,
+    });
+  }
+}
