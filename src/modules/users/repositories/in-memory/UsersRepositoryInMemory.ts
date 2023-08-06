@@ -11,9 +11,6 @@ export class UsersRepositoryInMemory implements IUsersRepository {
   constructor() {
     this.users = [];
   }
-  updateAvatar(user_id: string, avatar_file: string): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
 
   async create({
     name,
@@ -78,5 +75,13 @@ export class UsersRepositoryInMemory implements IUsersRepository {
   async findById(user_id: string): Promise<IUserReturnDTO> {
     const user = this.users.find((user) => user.id === user_id)!;
     return user as IUserReturnDTO;
+  }
+
+  delete(user_id: string): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  updateAvatar(user_id: string, avatar_file: string): Promise<void> {
+    throw new Error("Method not implemented.");
   }
 }

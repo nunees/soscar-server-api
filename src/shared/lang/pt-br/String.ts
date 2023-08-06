@@ -1,6 +1,7 @@
 export const message = {
   InternalError: "Erro interno! Tente novamente mais tarde.",
   UserNotFound: "Usuário não encontrado!",
+  AddressNotFound: "Endereço não encontrado!",
   UserAlreadyExists: "Usuário já cadastrado!",
   UserAlreadyExistsWithThisCPF: "CPF já cadastrado!",
   UserAlreadyExistsWithThisMobilePhone: "Número de telefone em uso!",

@@ -12,6 +12,7 @@ import { DeleteUserController } from "@modules/users/useCases/deleteUser/DeleteU
 
 import multer from "multer";
 import uploadConfig from "@config/uploadConfig";
+import { UpdateAddressController } from "@modules/users/useCases/updateAddress/UpdateAddressController";
 
 const userRoutes = Router();
 const uploadAvatar = multer(uploadConfig.upload("./public/avatar"));
@@ -19,11 +20,12 @@ const uploadAvatar = multer(uploadConfig.upload("./public/avatar"));
 const createUserController = new CreateUserController();
 const createAddressController = new CreateAddressController();
 const findAllAddressesController = new FindAllAddressesController();
-const findAddress = new FindAddressController();
-const deleteAddress = new DeleteAddressController();
+const findAddressController = new FindAddressController();
+const deleteAddressController = new DeleteAddressController();
 const updateAvatarController = new UpdateAvatarController();
 const fetchAvatarController = new FetchAvatarController();
 const deleteUserController = new DeleteUserController();
+const updateAddressController = new UpdateAddressController();
 
 userRoutes.post("/new", createUserController.handle);
 userRoutes.post(
@@ -38,12 +40,22 @@ userRoutes.get(
   findAllAddressesController.handle
 );
 
-userRoutes.get("/address/:id", ensureAuthenticated, findAddress.handle);
-
 userRoutes.get(
-  "/address/delete/:id",
+  "/address/:id",
   ensureAuthenticated,
-  deleteAddress.handle
+  findAddressController.handle
+);
+
+userRoutes.patch(
+  "/address/:id",
+  ensureAuthenticated,
+  updateAddressController.handle
+);
+
+userRoutes.delete(
+  "/address/:id",
+  ensureAuthenticated,
+  deleteAddressController.handle
 );
 
 userRoutes.patch(

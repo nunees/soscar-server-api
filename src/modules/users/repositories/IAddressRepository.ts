@@ -13,7 +13,6 @@ export interface IAddressRepository {
   }: IUserAddressCreateDTO): Promise<void>;
   update(
     {
-      user_id,
       address_line,
       number,
       district,
@@ -21,9 +20,13 @@ export interface IAddressRepository {
       state,
       zipcode,
     }: IUserAddressCreateDTO,
-    id: string
+    address_id: string,
+    user_id: string
   ): Promise<void>;
   deleteById(id: string): Promise<void>;
-  findAddressById(address_id: string): Promise<IUserAddressReturnDTO>;
+  findAddressById(
+    address_id: string,
+    user_id: string
+  ): Promise<IUserAddressReturnDTO>;
   findAllAddresses(user_id: string): Promise<IUserAddressReturnDTO[]>;
 }

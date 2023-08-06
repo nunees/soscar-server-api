@@ -47,7 +47,6 @@ export class AddressesRepository implements IAddressRepository {
 
   async update(
     {
-      user_id,
       address_line,
       number,
       district,
@@ -55,21 +54,28 @@ export class AddressesRepository implements IAddressRepository {
       state,
       zipcode,
     }: IUserAddressCreateDTO,
-    id: string
+    address_id: string,
+    user_id: string
   ): Promise<void> {
-    await this.prismaClient.usersAddresses.update({
-      data: {
-        address_line,
-        number,
-        district,
-        city,
-        state,
-        zipcode,
-      },
-      where: {
-        id,
-      },
-    });
+    try {
+      await this.prismaClient.usersAddresses.updateMany({
+        data: {
+          address_line,
+          number,
+          district,
+          city,
+          state,
+          zipcode,
+          updated_at: new Date(),
+        },
+        where: {
+          user_id,
+          id: address_id,
+        },
+      });
+    } catch (error) {
+      throw new AppError(message.CreationNotPossible, 401);
+    }
   }
 
   async deleteById(id: string): Promise<void> {
@@ -102,12 +108,22 @@ export class AddressesRepository implements IAddressRepository {
     return addresses as IUserAddressReturnDTO[];
   }
 
-  async findAddressById(address_id: string): Promise<IUserAddressReturnDTO> {
-    const address = await this.prismaClient.usersAddresses.findUnique({
-      where: {
-        id: address_id,
-      },
-    });
-    return address as IUserAddressReturnDTO;
+  async findAddressById(
+    address_id: string,
+    user_id: string
+  ): Promise<IUserAddressReturnDTO> {
+    try {
+      const address = await this.prismaClient.usersAddresses.findFirst({
+        where: {
+          id: address_id,
+          AND: {
+            user_id,
+          },
+        },
+      });
+      return address as IUserAddressReturnDTO;
+    } catch (error) {
+      throw new AppError(message.AddressNotFound, 404);
+    }
   }
 }

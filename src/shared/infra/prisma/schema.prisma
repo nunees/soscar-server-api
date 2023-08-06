@@ -50,7 +50,7 @@ model UsersAddresses {
   created_at   DateTime  @default(now())
   updated_at   DateTime?
 
-  @@index([user_id, city, state, zipcode])
+  @@index([user_id, city, state, zipcode, id])
   @@map("users_addresses")
 }
 
