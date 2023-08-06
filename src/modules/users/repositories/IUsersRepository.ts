@@ -21,4 +21,5 @@ export interface IUsersRepository {
   findByUsername(username: string): Promise<IUserReturnDTO>;
   findByEmail(email: string): Promise<User>;
   findById(user_id: string): Promise<IUserReturnDTO>;
+  delete(user_id: string): Promise<void>;
 }

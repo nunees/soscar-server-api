@@ -40,7 +40,7 @@ model Users {
 model UsersAddresses {
   id           String    @id @default(uuid())
   user_id      String?
-  users        Users?    @relation(fields: [user_id], references: [id])
+  users        Users?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   address_line String
   number       Int
   city         String
@@ -57,7 +57,7 @@ model UsersAddresses {
 model UsersTokens {
   id            String    @id @default(uuid())
   user_id       String
-  users         Users     @relation(fields: [user_id], references: [id])
+  users         Users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   refresh_token String
   expires_date  DateTime  @db.Date
   created_at    DateTime  @default(now())
@@ -70,7 +70,7 @@ model UsersTokens {
 model BusinessLocations {
   id                 String    @id @default(uuid())
   user_id            String
-  users              Users     @relation(fields: [user_id], references: [id])
+  users              Users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   cnpj               String
   business_name      String
   business_phone     String

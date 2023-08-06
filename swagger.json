@@ -1,0 +1,94 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Help Car Documentation",
+    "description": "Documentação da API do Help Car",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Help Car",
+      "url": "https://helpcar.com.br",
+      "email": "contact@helpcar.com.br"
+    }
+  },
+  "paths": {
+    "/user": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Cria um novo usuário",
+        "description": "Cria um novo usuário",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "mobile_phone": {
+                    "type": "string"
+                  },
+                  "birth_date": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "isPartner": {
+                    "type": "boolean"
+                  }
+                },
+                "example": {
+                  "name": "João",
+                  "last_name": "Silva",
+                  "cpf": "12345678910",
+                  "mobile_phone": "11999999999",
+                  "birth_date": "1990-01-01",
+                  "username": "joao.silva",
+                  "email": "joaozinho@test.com",
+                  "password": "senhasecreta",
+                  "isPartner": false
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso"
+          },
+          "500": {
+            "description": "Erro ao criar usuário"
+          }
+        }
+      }
+    }
+  },
+  "defininitions": {},
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

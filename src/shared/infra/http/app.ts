@@ -7,12 +7,19 @@ import "reflect-metadata";
 
 import { routes } from "./routes";
 
-import "@shared/container";
 import morgan from "morgan";
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "../../../../swagger.json";
+
+import "@shared/container";
 
 const app = express();
+
 app.use(morgan(":method :url :status - :response-time ms"));
+
 app.use(express.json());
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(routes);
 

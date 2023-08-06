@@ -156,4 +156,16 @@ export class UsersRepository implements IUsersRepository {
       throw new AppError(message.ErrorFetchingData);
     }
   }
+
+  async delete(user_id: string): Promise<void> {
+    try {
+      await this.prismaClient.users.delete({
+        where: {
+          id: user_id,
+        },
+      });
+    } catch (error) {
+      throw new AppError(message.ErrorFetchingData);
+    }
+  }
 }
