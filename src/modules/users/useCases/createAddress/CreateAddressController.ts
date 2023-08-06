@@ -2,6 +2,7 @@ import { AppError } from "@shared/errors/AppError";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { CreateAddressUseCase } from "./CreateAddressUseCase";
+import { message } from "@shared/lang/pt-br/String";
 
 export class CreateAddressController {
   async handle(request: Request, response: Response): Promise<Response> {
@@ -27,6 +28,6 @@ export class CreateAddressController {
 
     return response
       .status(201)
-      .json({ statusCode: 201, message: "Endereco criado com sucesso!" });
+      .json({ statusCode: 201, message: message.AddressCreated });
   }
 }

@@ -2,19 +2,19 @@ version: "3.7"
 services:
   database:
     image: postgres
-    container_name: database_rentx
+    container_name: database_sosauto
     restart: always
-    ports: 
+    ports:
       - 5432:5432
     environment:
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=helpcar
+      - POSTGRES_DB=sosauto
     volumes:
       - pgdata:/data/postgres
-  app: 
+  app:
     build: .
-    container_name: rentx
+    container_name: sosauto
     ports:
       - 3333:3333
     volumes:

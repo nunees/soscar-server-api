@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
 import { container } from "tsyringe";
+import { Request, Response } from "express";
 import { CreateUserUseCase } from "./createUserUseCase";
 
 export class CreateUserController {
@@ -18,7 +18,7 @@ export class CreateUserController {
 
     const createUserUseCase = container.resolve(CreateUserUseCase);
 
-    await createUserUseCase.execute({
+    const user = await createUserUseCase.execute({
       name,
       last_name,
       cpf,
@@ -30,6 +30,6 @@ export class CreateUserController {
       isPartner,
     });
 
-    return response.status(201).send();
+    return response.status(201).send(user);
   }
 }

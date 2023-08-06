@@ -3,6 +3,7 @@ import { IUserAddressReturnDTO } from "@modules/users/dtos/IUserAddressReturnDTO
 import { IAddressRepository } from "@modules/users/repositories/IAddressRepository";
 import { PrismaClient } from "@prisma/client";
 import { AppError } from "@shared/errors/AppError";
+import { message } from "@shared/lang/pt-br/String";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -28,7 +29,7 @@ export class AddressesRepository implements IAddressRepository {
     });
 
     if (!userExists) {
-      throw new AppError("User not found!", 401);
+      throw new AppError(message.UserNotFound, 401);
     }
 
     await this.prismaClient.usersAddresses.create({

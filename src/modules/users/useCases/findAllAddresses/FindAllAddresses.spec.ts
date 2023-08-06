@@ -1,32 +1,35 @@
 import { UsersRepositoryInMemory } from "@modules/users/repositories/in-memory/UsersRepositoryInMemory";
-import { CreateUserUseCaseInMemory } from "../../createUser/__test__/createUserUseCaseInMemory";
-import { CreateAddressUseCaseInMemory } from "../../createAddress/__test__/CreateAddressUseCaseInMemory";
-import { AddressesRepositoryInMemory } from "@modules/users/repositories/in-memory/AddressesRepositoryInMemory";
-import { User } from "@modules/users/entities/User";
-import { IUserReturnDTO } from "@modules/users/dtos/IUserReturnDTO";
 
-let createUserUseCaseInMemory: CreateUserUseCaseInMemory;
+import { AddressesRepositoryInMemory } from "@modules/users/repositories/in-memory/AddressesRepositoryInMemory";
+import { CreateUserUseCase } from "../createUser/createUserUseCase";
+import { CreateAddressUseCase } from "../createAddress/CreateAddressUseCase";
+import { DayJsDateProvider } from "@shared/container/providers/DateProvider/implementation/DayJsDateProvider";
+
+let createUserUseCase: CreateUserUseCase;
 let usersRepositoryInMemory: UsersRepositoryInMemory;
 
-let createAddressUseCaseInMemory: CreateAddressUseCaseInMemory;
+let createAddressUseCase: CreateAddressUseCase;
 let addressesRepositoryInMemory: AddressesRepositoryInMemory;
 
+let dayJsDateProvider: DayJsDateProvider;
+
 describe("Get User Addresses", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     usersRepositoryInMemory = new UsersRepositoryInMemory();
-    createUserUseCaseInMemory = new CreateUserUseCaseInMemory(
-      usersRepositoryInMemory
-    );
+    createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
+
+    dayJsDateProvider = new DayJsDateProvider();
 
     addressesRepositoryInMemory = new AddressesRepositoryInMemory();
-    createAddressUseCaseInMemory = new CreateAddressUseCaseInMemory(
+    createAddressUseCase = new CreateAddressUseCase(
       usersRepositoryInMemory,
-      addressesRepositoryInMemory
+      addressesRepositoryInMemory,
+      dayJsDateProvider
     );
   });
 
   it("Should be able to get all user addresses", async () => {
-    const user = await createUserUseCaseInMemory?.execute({
+    const user = await createUserUseCase?.execute({
       name: "Felipe",
       last_name: "da Silva",
       cpf: "00000000000",
@@ -38,9 +41,7 @@ describe("Get User Addresses", () => {
       isPartner: false,
     });
 
-    const user_id = user.id as string;
-
-    await createAddressUseCaseInMemory?.execute({
+    await createAddressUseCase?.execute({
       user_id: String(user.id),
       address_line: "Rua tralala",
       number: 55,
@@ -50,7 +51,7 @@ describe("Get User Addresses", () => {
       zipcode: "654654654",
     });
 
-    await createAddressUseCaseInMemory?.execute({
+    await createAddressUseCase?.execute({
       user_id: String(user.id),
       address_line: "Rua patata",
       number: 5667,
@@ -61,7 +62,7 @@ describe("Get User Addresses", () => {
     });
 
     const addresses = await addressesRepositoryInMemory?.findAllAddresses(
-      user_id
+      String(user.id)
     );
 
     expect(addresses).toBeInstanceOf(Array);

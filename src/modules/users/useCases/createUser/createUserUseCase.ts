@@ -1,6 +1,7 @@
 import { IUserReturnDTO } from "@modules/users/dtos/IUserReturnDTO";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
+import { message } from "@shared/lang/pt-br/String";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
@@ -14,14 +15,19 @@ interface IRequest {
   email: string;
   password: string;
   isPartner: boolean;
-  created_at?: Date;
+}
+
+interface IUserCreationResponse {
+  id: string;
+  name: string;
+  last_name: string;
+  email: string;
+  username: string;
 }
 
 @injectable()
 export class CreateUserUseCase {
   constructor(
-    // @inject("UsersRepositoryInMemory")
-    // private usersRepositoryInMemory: IUsersRepository
     @inject("UsersRepository")
     private usersRepository: IUsersRepository
   ) {}
@@ -36,7 +42,7 @@ export class CreateUserUseCase {
     email,
     password,
     isPartner,
-  }: IRequest): Promise<IUserReturnDTO> {
+  }: IRequest): Promise<IUserCreationResponse> {
     let userExist = await this.usersRepository.findByCPF(cpf);
 
     if (userExist) {
@@ -73,6 +79,12 @@ export class CreateUserUseCase {
       isPartner,
     });
 
-    return user as IUserReturnDTO;
+    return {
+      id: String(user.id),
+      name: user.name,
+      last_name: user.last_name,
+      email: user.email,
+      username: user.username,
+    };
   }
 }

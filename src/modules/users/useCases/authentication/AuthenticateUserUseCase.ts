@@ -3,6 +3,7 @@ import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
+import { message } from "@shared/lang/pt-br/String";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
@@ -51,7 +52,7 @@ export class AuthenticateUserUseCase {
     // Verify password
     const passwordMatch = await compare(password, user.password);
     if (!passwordMatch) {
-      throw new AppError("Email or password incorrect!", 401);
+      throw new AppError(message.EmailOrPasswordIncorrect, 401);
     }
 
     // Generate token
@@ -66,11 +67,11 @@ export class AuthenticateUserUseCase {
       expiresIn: expires_in_refresh_token,
     });
 
-    const refresh_token_expires_date = this.dateProvider.addDays(
+    const refresh_token_expires_date = this.dateProvider?.addDays(
       expires_refresh_token_days
     );
 
-    await this.usersTokensRepository.create({
+    await this.usersTokensRepository?.create({
       user_id: user.id as string,
       refresh_token,
       expires_date: refresh_token_expires_date,

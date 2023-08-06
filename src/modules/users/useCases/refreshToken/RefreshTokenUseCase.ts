@@ -2,6 +2,7 @@ import auth from "@config/auth";
 import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
+import { message } from "@shared/lang/pt-br/String";
 import { sign, verify } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
@@ -31,7 +32,7 @@ export class RefreshTokenUseCase {
       );
 
     if (!userToken) {
-      throw new AppError("Refresh token does not exist");
+      throw new AppError(message.RefreshTokenDoesNotExist);
     }
 
     // Delete old token

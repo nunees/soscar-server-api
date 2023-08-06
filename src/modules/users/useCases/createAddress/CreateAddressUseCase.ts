@@ -34,21 +34,25 @@ export class CreateAddressUseCase {
     state,
     zipcode,
   }: IRequest): Promise<void> {
-    const userExists = await this.usersRepository.findById(user_id);
+    const userExists = await this.usersRepository?.findById(user_id);
 
-    if (!userExists) {
-      throw new AppError("Usuario nao encontrado");
+    if (userExists === null || userExists === undefined) {
+      throw new AppError("Usuario nao existe");
     }
 
-    const address = await this.addressesRepository.create({
-      user_id,
-      address_line,
-      number,
-      district,
-      city,
-      state,
-      zipcode,
-      created_at: this.dayJsDateProvider.datenow(),
-    });
+    try {
+      await this.addressesRepository.create({
+        user_id,
+        address_line,
+        number,
+        district,
+        city,
+        state,
+        zipcode,
+        created_at: this.dayJsDateProvider.datenow(),
+      });
+    } catch (error) {
+      throw new AppError("Erro ao criar endereco");
+    }
   }
 }

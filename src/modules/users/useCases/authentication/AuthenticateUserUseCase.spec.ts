@@ -2,24 +2,22 @@ import { UsersRepositoryInMemory } from "@modules/users/repositories/in-memory/U
 import { UsersTokensRepositoryInMemory } from "@modules/users/repositories/in-memory/UsersTokensRepositoryInMemory";
 import { DayJsDateProvider } from "@shared/container/providers/DateProvider/implementation/DayJsDateProvider";
 import { v4 as uuid } from "uuid";
-import { AuthenticateUserUseCaseInMemory } from "./AuthenticateUserUseCaseInMemory";
-import { CreateUserUseCaseInMemory } from "../../createUser/__test__/createUserUseCaseInMemory";
+import { CreateUserUseCase } from "../createUser/createUserUseCase";
+import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
 
-let createUserUseCaseInMemory: CreateUserUseCaseInMemory;
+let createUserUseCase: CreateUserUseCase;
 let usersRepositoryInMemory: UsersRepositoryInMemory;
 
 let usersTokensRepositoryInMemory: UsersTokensRepositoryInMemory;
 let dateProvider: DayJsDateProvider;
 
-let authenticateUserUseCaseInMemory: AuthenticateUserUseCaseInMemory;
+let authenticateUserUseCase: AuthenticateUserUseCase;
 
 describe("Authenticate user test", () => {
   beforeEach(() => {
     usersRepositoryInMemory = new UsersRepositoryInMemory();
-    createUserUseCaseInMemory = new CreateUserUseCaseInMemory(
-      usersRepositoryInMemory
-    );
-    authenticateUserUseCaseInMemory = new AuthenticateUserUseCaseInMemory(
+    createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
+    authenticateUserUseCase = new AuthenticateUserUseCase(
       usersRepositoryInMemory,
       usersTokensRepositoryInMemory,
       dateProvider
@@ -27,7 +25,7 @@ describe("Authenticate user test", () => {
   });
 
   it("Should be able to authenticate a user", async () => {
-    const user = await createUserUseCaseInMemory?.execute({
+    await createUserUseCase?.execute({
       id: uuid(),
       name: "Felipe",
       last_name: "da Silva",
@@ -40,11 +38,12 @@ describe("Authenticate user test", () => {
       isPartner: false,
     });
 
-    const session = await authenticateUserUseCaseInMemory?.execute({
-      email: user.email,
+    const session = await authenticateUserUseCase?.execute({
+      email: "felipe@test.com",
       password: "casaamarela",
     });
 
+    expect(session.user).toHaveProperty("id");
     expect(session).toHaveProperty("token");
   });
 });

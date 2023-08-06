@@ -9,9 +9,10 @@ import { DeleteAddressController } from "@modules/users/useCases/deleteAddress/D
 import { UpdateAvatarController } from "@modules/users/useCases/updateAvatar/UpdateAvatarController";
 import multer from "multer";
 import uploadConfig from "@config/uploadConfig";
+import { FetchAvatarController } from "@modules/users/useCases/fetchAvatar/FetchAvatarController";
 
 const userRoutes = Router();
-const uploadAvatar = multer(uploadConfig.upload("./tmp/avatar"));
+const uploadAvatar = multer(uploadConfig.upload("./public/avatar"));
 
 const createUserController = new CreateUserController();
 const createAddressController = new CreateAddressController();
@@ -19,6 +20,7 @@ const findAllAddressesController = new FindAllAddressesController();
 const findAddress = new FindAddressController();
 const deleteAddress = new DeleteAddressController();
 const updateAvatarController = new UpdateAvatarController();
+const fetchAvatarController = new FetchAvatarController();
 
 userRoutes.post("/new", createUserController.handle);
 userRoutes.post(
@@ -47,5 +49,7 @@ userRoutes.patch(
   uploadAvatar.single("avatar"),
   updateAvatarController.handle
 );
+
+userRoutes.get("/avatar", ensureAuthenticated, fetchAvatarController.handle);
 
 export { userRoutes };

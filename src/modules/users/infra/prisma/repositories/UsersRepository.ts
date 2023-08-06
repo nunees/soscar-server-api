@@ -4,6 +4,7 @@ import { User } from "@modules/users/entities/User";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { PrismaClient } from "@prisma/client";
 import { AppError } from "@shared/errors/AppError";
+import { message } from "@shared/lang/pt-br/String";
 import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
 
@@ -45,9 +46,14 @@ export class UsersRepository implements IUsersRepository {
       },
     });
 
-    user.password = "**********";
-    return user as IUserCreateDTO;
+    return {
+      id: user.id,
+      name: user.name,
+      last_name: user.last_name,
+      email: user.email,
+    } as IUserCreateDTO;
   }
+
   async findByCPF(cpf: string): Promise<IUserReturnDTO> {
     try {
       const user = await this.prismaClient.users.findUnique({
@@ -58,7 +64,7 @@ export class UsersRepository implements IUsersRepository {
 
       return user as IUserCreateDTO;
     } catch (error) {
-      throw new AppError("Não foi possível realizar a consulta");
+      throw new AppError(message.ErrorFetchingData);
     }
   }
 
@@ -72,7 +78,7 @@ export class UsersRepository implements IUsersRepository {
 
       return user as IUserCreateDTO;
     } catch (error) {
-      throw new AppError("Não foi possível realizar a consulta");
+      throw new AppError(message.ErrorFetchingData);
     }
   }
   async findByUsername(username: string): Promise<IUserReturnDTO> {
@@ -85,53 +91,69 @@ export class UsersRepository implements IUsersRepository {
 
       return user as IUserCreateDTO;
     } catch (error) {
-      throw new AppError("Não foi possível realizar a consulta");
+      throw new AppError(message.ErrorFetchingData);
     }
   }
   async findByEmail(email: string): Promise<User> {
-    const user = await this.prismaClient.users.findUnique({
-      where: {
-        email,
-      },
-    });
-    return user as User;
+    try {
+      const user = await this.prismaClient.users.findUnique({
+        where: {
+          email,
+        },
+      });
+      return user as User;
+    } catch (error) {
+      throw new AppError(message.ErrorFetchingData);
+    }
   }
 
   async findById(user_id: string): Promise<IUserReturnDTO> {
-    const user = await this.prismaClient.users.findUnique({
-      where: {
-        id: user_id,
-      },
-    });
+    try {
+      const user = await this.prismaClient.users.findUnique({
+        where: {
+          id: user_id,
+        },
+      });
 
-    return user as IUserReturnDTO;
+      return user as IUserReturnDTO;
+    } catch (error) {
+      throw new AppError(message.ErrorFetchingData);
+    }
   }
 
   async isUserPartner(user_id: string, isPartner: boolean): Promise<boolean> {
-    const partner = await this.prismaClient.users.findFirst({
-      where: {
-        id: user_id,
-        AND: {
-          isPartner,
+    try {
+      const partner = await this.prismaClient.users.findFirst({
+        where: {
+          id: user_id,
+          AND: {
+            isPartner,
+          },
         },
-      },
-    });
+      });
 
-    if (!partner) {
-      return false;
+      if (!partner) {
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      throw new AppError(message.ErrorFetchingData);
     }
-
-    return true;
   }
 
   async updateAvatar(user_id: string, avatar_file: string): Promise<void> {
-    await this.prismaClient.users.update({
-      data: {
-        avatar: avatar_file,
-      },
-      where: {
-        id: user_id,
-      },
-    });
+    try {
+      await this.prismaClient.users.update({
+        data: {
+          avatar: avatar_file,
+        },
+        where: {
+          id: user_id,
+        },
+      });
+    } catch (error) {
+      throw new AppError(message.ErrorFetchingData);
+    }
   }
 }
