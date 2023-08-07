@@ -47,7 +47,7 @@ userRoutes.get(
 );
 
 userRoutes.patch(
-  "/address/:id",
+  "/address/:address_id",
   ensureAuthenticated,
   updateAddressController.handle
 );

@@ -57,7 +57,6 @@ export class UpdateAddressUseCase {
         state,
         zipcode,
       },
-      user_id,
       address_id
     );
   }

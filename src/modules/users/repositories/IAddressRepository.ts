@@ -20,8 +20,7 @@ export interface IAddressRepository {
       state,
       zipcode,
     }: IUserAddressCreateDTO,
-    address_id: string,
-    user_id: string
+    address_id: string
   ): Promise<void>;
   deleteById(id: string): Promise<void>;
   findAddressById(

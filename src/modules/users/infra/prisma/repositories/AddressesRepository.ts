@@ -54,11 +54,10 @@ export class AddressesRepository implements IAddressRepository {
       state,
       zipcode,
     }: IUserAddressCreateDTO,
-    address_id: string,
-    user_id: string
+    address_id: string
   ): Promise<void> {
     try {
-      await this.prismaClient.usersAddresses.updateMany({
+      await this.prismaClient.usersAddresses.update({
         data: {
           address_line,
           number,
@@ -69,12 +68,11 @@ export class AddressesRepository implements IAddressRepository {
           updated_at: new Date(),
         },
         where: {
-          user_id,
           id: address_id,
         },
       });
     } catch (error) {
-      throw new AppError(message.CreationNotPossible, 401);
+      throw new AppError(error, 401);
     }
   }
 

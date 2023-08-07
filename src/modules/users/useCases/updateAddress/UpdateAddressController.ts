@@ -4,7 +4,8 @@ import { UpdateAddressUseCase } from "./UpdateAddressUseCase";
 
 export class UpdateAddressController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.headers || request.params || request.body;
+    const { id } = request.headers;
+
     const { address_id } = request.params;
 
     const { address_line, number, district, city, state, zipcode } =
