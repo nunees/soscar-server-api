@@ -2,7 +2,7 @@ import { ILocationsRepository } from "@modules/locations/repositories/ILocations
 import { PrismaClient } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 
-interface IRequest {
+type IRequest = {
   user_id: string;
   cnpj: string;
   business_name: string;
@@ -15,7 +15,7 @@ interface IRequest {
   district: string;
   state: string;
   zipcode: string;
-}
+};
 
 @injectable()
 export class LocationsRepository implements ILocationsRepository {

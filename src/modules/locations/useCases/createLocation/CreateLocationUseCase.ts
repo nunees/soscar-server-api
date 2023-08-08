@@ -48,6 +48,13 @@ export class CreateLocationUseCase {
       throw new AppError("User not found", 404);
     }
 
+    if (!user.isPartner) {
+      throw new AppError(
+        "Usuários comuns não podem criar endereços comerciais",
+        401
+      );
+    }
+
     await this.locationsRepository.create({
       user_id: user.id,
       cnpj,

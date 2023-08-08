@@ -5,4 +5,5 @@ export interface IUserReturnDTO {
   username: string;
   email: string;
   avatar?: string;
+  isPartner?: boolean;
 }

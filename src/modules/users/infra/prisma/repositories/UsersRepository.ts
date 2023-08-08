@@ -51,6 +51,7 @@ export class UsersRepository implements IUsersRepository {
       name: user.name,
       last_name: user.last_name,
       email: user.email,
+      isPartner: user.isPartner,
     } as IUserCreateDTO;
   }
 

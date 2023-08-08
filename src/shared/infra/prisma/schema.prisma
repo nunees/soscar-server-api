@@ -32,6 +32,7 @@ model Users {
   UsersAddresses    UsersAddresses[]
   UsersTokens       UsersTokens[]
   BusinessLocations BusinessLocations[]
+  UsersVehicles     UsersVehicles[]
 
   @@index([cpf, username, email])
   @@map("users")
@@ -111,4 +112,48 @@ model BusinessServices {
 
   @@index([id, category_id, name])
   @@map("business_services")
+}
+
+model UsersVehicles {
+  id          String         @id @default(uuid())
+  user_id     String
+  users       Users          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  brand_id    Int
+  brand       VehiclesBrands @relation(fields: [brand_id], references: [id])
+  name_id     Int
+  name        VehiclesNames  @relation(fields: [name_id], references: [id])
+  color       String?
+  year        Int
+  plate       String?        @unique
+  engineMiles BigInt?        @default(0)
+  created_at  DateTime       @default(now())
+  updated_at  DateTime?
+
+  @@index([user_id, brand_id, name_id, year, plate])
+  @@map("users_vehicles")
+}
+
+model VehiclesBrands {
+  id            Int             @id @unique
+  name          String
+  created_at    DateTime        @default(now())
+  updated_at    DateTime?
+  VehiclesNames VehiclesNames[]
+  UsersVehicles UsersVehicles[]
+
+  @@index([id, name])
+  @@map("vehicles_brands")
+}
+
+model VehiclesNames {
+  id            Int             @id @unique
+  brand_id      Int
+  brand         VehiclesBrands  @relation(fields: [brand_id], references: [id])
+  name          String
+  created_at    DateTime        @default(now())
+  updated_at    DateTime?
+  UsersVehicles UsersVehicles[]
+
+  @@index([id, brand_id, name])
+  @@map("vehicles_names")
 }

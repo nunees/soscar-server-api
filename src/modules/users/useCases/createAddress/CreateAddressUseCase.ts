@@ -40,6 +40,10 @@ export class CreateAddressUseCase {
       throw new AppError("Usuario nao existe");
     }
 
+    if (userExists.isPartner) {
+      throw new AppError("Parceiros não podem criar endereços domésticos", 401);
+    }
+
     try {
       await this.addressesRepository.create({
         user_id,
