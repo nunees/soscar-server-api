@@ -4,6 +4,8 @@ import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
+  user_id?: string;
+  location_id?: string;
   cnpj: String;
   business_name: String;
   business_phone: String;
@@ -18,45 +20,41 @@ interface IRequest {
 }
 
 @injectable()
-export class CreateLocationUseCase {
+export class UpdateLocationUseCase {
   constructor(
-    @inject("LocationsRepository")
-    private locationsRepository: ILocationsRepository,
     @inject("UsersRepository")
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+    @inject("LocationsRepository")
+    private locationsRepository: ILocationsRepository
   ) {}
 
-  async execute(
-    {
-      cnpj,
-      business_name,
-      business_phone,
-      business_email,
-      business_expertise,
-      address_line,
-      number,
-      city,
-      district,
-      state,
-      zipcode,
-    }: IRequest,
-    user_id: string
-  ) {
-    const user = await this.usersRepository.findById(user_id);
+  async execute({
+    user_id,
+    location_id,
+    cnpj,
+    business_name,
+    business_phone,
+    business_email,
+    business_expertise,
+    address_line,
+    number,
+    city,
+    district,
+    state,
+    zipcode,
+  }: IRequest) {
+    const userExists = await this.usersRepository.findById(String(user_id));
 
-    if (!user) {
-      throw new AppError("User not found", 404);
+    if (!userExists) {
+      throw new AppError("Usuário não encontrado");
     }
 
-    if (!user.isPartner) {
-      throw new AppError(
-        "Usuários comuns não podem criar endereços comerciais",
-        401
-      );
-    }
+    const userLocation = await this.locationsRepository.findById(
+      String(location_id)
+    );
 
-    await this.locationsRepository.create({
-      user_id: String(user.id),
+    await this.locationsRepository.update({
+      location_id: String(location_id),
       cnpj,
       business_name,
       business_phone,

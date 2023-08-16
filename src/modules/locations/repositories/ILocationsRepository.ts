@@ -1,5 +1,8 @@
+import { ICreateLocationDTO } from "../dtos/ICreateLocationDTO";
+
 interface IRequest {
-  user_id;
+  location_id?: string;
+  user_id?: string;
   cnpj: String;
   business_name: String;
   business_phone: String;
@@ -12,7 +15,6 @@ interface IRequest {
   state: String;
   zipcode: String;
 }
-
 export interface ILocationsRepository {
   create({
     user_id,
@@ -28,4 +30,21 @@ export interface ILocationsRepository {
     state,
     zipcode,
   }: IRequest): Promise<void>;
+  delete(location_id: string): Promise<void>;
+  update({
+    location_id,
+    cnpj,
+    business_name,
+    business_phone,
+    business_email,
+    business_expertise,
+    address_line,
+    number,
+    city,
+    district,
+    state,
+    zipcode,
+  }: IRequest): Promise<void>;
+  findById(location_id: string): Promise<Location>;
+  findAll(location_id: string): Promise<Location[]>;
 }
