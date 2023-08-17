@@ -1,3 +1,4 @@
+import { ILocationDTO } from "@modules/locations/dtos/ILocationDTO";
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
@@ -9,8 +10,10 @@ export class FindAllLocationsUseCase {
     private locationsRepository: ILocationsRepository
   ) {}
 
-  async execute(location_id: string): Promise<Location[]> {
-    const locations = await this.locationsRepository.findAll(location_id);
+  async execute(user_id: string): Promise<ILocationDTO[]> {
+    const locations = await this.locationsRepository.findAll(user_id);
+
+    console.log("OK");
 
     if (!locations) throw new AppError("Local não encontrado");
 

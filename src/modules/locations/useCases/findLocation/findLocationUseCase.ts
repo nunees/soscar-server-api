@@ -8,7 +8,7 @@ export class FindLocationUseCase {
   constructor(
     @inject("UsersRepository")
     private usersRepository: IUsersRepository,
-    @inject("LocationRepository")
+    @inject("LocationsRepository")
     private locationRepository: ILocationsRepository
   ) {}
 

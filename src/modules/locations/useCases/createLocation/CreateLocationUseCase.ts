@@ -5,17 +5,17 @@ import { message } from "@shared/lang/pt-br/String";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
-  cnpj: String;
-  business_name: String;
-  business_phone: String;
-  business_email: String;
-  business_expertise: Number[];
-  address_line: String;
-  number: Number;
-  city: String;
-  district: String;
-  state: String;
-  zipcode: String;
+  cnpj: string;
+  business_name: string;
+  business_phone: string;
+  business_email: string;
+  business_expertise: number[];
+  address_line: string;
+  number: number;
+  city: string;
+  district: string;
+  state: string;
+  zipcode: string;
 }
 
 @injectable()
@@ -54,6 +54,15 @@ export class CreateLocationUseCase {
         "Usuários comuns não podem criar endereços comerciais",
         401
       );
+    }
+
+    const addressExists = await this.locationsRepository.addressExists(
+      address_line,
+      number
+    );
+
+    if (addressExists) {
+      throw new AppError("Endereço já cadastrado", 400);
     }
 
     await this.locationsRepository.create({

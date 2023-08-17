@@ -22,7 +22,8 @@ model Users {
   password          String
   avatar            String?
   birth_date        DateTime?           @db.Date
-  gender            String?             @default("none")
+  UsersGenders      UsersGenders?       @relation(fields: [gendersId], references: [id])
+  gendersId         Int?
   isTermsAccepted   Boolean?            @default(false)
   isAccountVerified Boolean?            @default(false)
   isAccountLocked   Boolean?            @default(false)
@@ -36,6 +37,14 @@ model Users {
 
   @@index([cpf, username, email])
   @@map("users")
+}
+
+model UsersGenders {
+  id         Int       @id @unique
+  name       String
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+  Users      Users[]
 }
 
 model UsersAddresses {
@@ -119,9 +128,9 @@ model UsersVehicles {
   user_id     String
   users       Users          @relation(fields: [user_id], references: [id], onDelete: Cascade)
   brand_id    Int
-  brand       VehiclesBrands @relation(fields: [brand_id], references: [id])
+  brand       VehiclesBrands @relation(fields: [brand_id], references: [id], onDelete: Cascade)
   name_id     Int
-  name        VehiclesNames  @relation(fields: [name_id], references: [id])
+  name        VehiclesNames  @relation(fields: [name_id], references: [id], onDelete: Cascade)
   color       String?
   year        Int
   plate       String?        @unique
@@ -149,7 +158,7 @@ model VehiclesBrands {
 model VehiclesNames {
   id            Int             @id @unique
   brand_id      Int
-  brand         VehiclesBrands  @relation(fields: [brand_id], references: [id])
+  brand         VehiclesBrands  @relation(fields: [brand_id], references: [id], onDelete: Cascade)
   name          String
   created_at    DateTime        @default(now())
   updated_at    DateTime?
@@ -157,4 +166,21 @@ model VehiclesNames {
 
   @@index([id, brand_id, name])
   @@map("vehicles_names")
+}
+
+model SystemLogs {
+  id          String    @id @default(uuid())
+  log_type_id Int
+  log_type    LogsTypes @relation(fields: [log_type_id], references: [id], onDelete: Cascade)
+  log         String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?
+}
+
+model LogsTypes {
+  id         Int          @id @unique
+  name       String
+  created_at DateTime     @default(now())
+  updated_at DateTime?
+  SystemLogs SystemLogs[]
 }

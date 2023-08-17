@@ -22,7 +22,22 @@ export class CreateLocationController {
 
     const createLocationUseCase = container.resolve(CreateLocationUseCase);
 
-    await createLocationUseCase.execute(request.body, id);
+    await createLocationUseCase.execute(
+      {
+        cnpj,
+        business_name,
+        business_phone,
+        business_email,
+        business_expertise,
+        address_line,
+        number,
+        city,
+        district,
+        state,
+        zipcode,
+      },
+      id
+    );
 
     return response.status(201).send();
   }

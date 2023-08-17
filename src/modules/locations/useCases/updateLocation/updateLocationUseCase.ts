@@ -6,17 +6,17 @@ import { inject, injectable } from "tsyringe";
 interface IRequest {
   user_id?: string;
   location_id?: string;
-  cnpj: String;
-  business_name: String;
-  business_phone: String;
-  business_email: String;
-  business_expertise: Number[];
-  address_line: String;
-  number: Number;
-  city: String;
-  district: String;
-  state: String;
-  zipcode: String;
+  cnpj: string;
+  business_name: string;
+  business_phone: string;
+  business_email: string;
+  business_expertise: number[];
+  address_line: string;
+  number: number;
+  city: string;
+  district: string;
+  state: string;
+  zipcode: string;
 }
 
 @injectable()
@@ -53,19 +53,21 @@ export class UpdateLocationUseCase {
       String(location_id)
     );
 
-    await this.locationsRepository.update({
-      location_id: String(location_id),
-      cnpj,
-      business_name,
-      business_phone,
-      business_email,
-      business_expertise,
-      address_line,
-      number,
-      city,
-      district,
-      state,
-      zipcode,
-    });
+    await this.locationsRepository.update(
+      {
+        cnpj,
+        business_name,
+        business_phone,
+        business_email,
+        business_expertise,
+        address_line,
+        number,
+        city,
+        district,
+        state,
+        zipcode,
+      },
+      String(location_id)
+    );
   }
 }

@@ -1,12 +1,18 @@
 import { CreateLocationController } from "@modules/locations/useCases/createLocation/CreateLocationController";
 import { Router } from "express";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
-import { FindAllController } from "@modules/locations/useCases/findAll/FindAllController";
+import { DeleteLocationController } from "@modules/locations/useCases/deleteLocation/deleteLocationController";
+import { FindAllLocationsController } from "@modules/locations/useCases/findAllLocations/findAllLocationsController";
+import { FindLocationController } from "@modules/locations/useCases/findLocation/findLocationController";
+import { UpdateLocationController } from "@modules/locations/useCases/updateLocation/updateLocationController";
 
 const partnerLocationsRoutes = Router();
 
 const createLocationController = new CreateLocationController();
-const findAllController = new FindAllController();
+const deleteLocationController = new DeleteLocationController();
+const findAllLocationsController = new FindAllLocationsController();
+const findLocationController = new FindLocationController();
+const updateLocationController = new UpdateLocationController();
 
 partnerLocationsRoutes.post(
   "/",
@@ -14,10 +20,28 @@ partnerLocationsRoutes.post(
   createLocationController.handle
 );
 
-partnerLocationsRoutes.get(
-  "/all",
+partnerLocationsRoutes.delete(
+  "/:location_id",
   ensureAuthenticated,
-  findAllController.handle
+  deleteLocationController.handle
+);
+
+partnerLocationsRoutes.put(
+  "/:location_id",
+  ensureAuthenticated,
+  updateLocationController.handle
+);
+
+partnerLocationsRoutes.get(
+  "/:location_id",
+  ensureAuthenticated,
+  findLocationController.handle
+);
+
+partnerLocationsRoutes.get(
+  "/",
+  ensureAuthenticated,
+  findAllLocationsController.handle
 );
 
 export { partnerLocationsRoutes };

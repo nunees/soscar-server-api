@@ -8,7 +8,7 @@ export class FindAllLocationsController {
 
     const findAllLocationsUseCase = container.resolve(FindAllLocationsUseCase);
 
-    const locations = await findAllLocationsUseCase.execute(id as string);
+    const locations = await findAllLocationsUseCase.execute(String(id));
 
     return response.status(200).json(locations);
   }
