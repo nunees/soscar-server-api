@@ -7,8 +7,8 @@ export interface IUserCreateDTO {
   birth_date: Date;
   username: string;
   email: string;
-  password: string;
-  isPartner: boolean;
-  avatar?: string;
-  gender?: string;
+  password?: string;
+  isPartner?: boolean;
+  avatar?: string | null;
+  genderId?: number;
 }

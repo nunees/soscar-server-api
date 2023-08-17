@@ -12,6 +12,7 @@ interface IRequest {
   mobile_phone: string;
   birth_date: Date;
   username: string;
+  genderId: number;
   email: string;
   password: string;
   isPartner: boolean;
@@ -40,6 +41,7 @@ export class CreateUserUseCase {
     birth_date,
     username,
     email,
+    genderId,
     password,
     isPartner,
   }: IRequest): Promise<IUserCreationResponse> {
@@ -74,6 +76,7 @@ export class CreateUserUseCase {
       mobile_phone,
       birth_date,
       username,
+      genderId,
       email,
       password,
       isPartner,

@@ -13,6 +13,7 @@ import { DeleteUserController } from "@modules/users/useCases/deleteUser/DeleteU
 import multer from "multer";
 import uploadConfig from "@config/uploadConfig";
 import { UpdateAddressController } from "@modules/users/useCases/updateAddress/UpdateAddressController";
+import { UpdateUserController } from "@modules/users/useCases/updateUser/UpdateUserController";
 
 const userRoutes = Router();
 const uploadAvatar = multer(uploadConfig.upload("./public/avatar"));
@@ -26,6 +27,7 @@ const updateAvatarController = new UpdateAvatarController();
 const fetchAvatarController = new FetchAvatarController();
 const deleteUserController = new DeleteUserController();
 const updateAddressController = new UpdateAddressController();
+const updateUserController = new UpdateUserController();
 
 userRoutes.post("/new", createUserController.handle);
 userRoutes.post(
@@ -64,6 +66,8 @@ userRoutes.patch(
   uploadAvatar.single("avatar"),
   updateAvatarController.handle
 );
+
+userRoutes.patch("/", ensureAuthenticated, updateUserController.handle);
 
 userRoutes.get("/avatar", ensureAuthenticated, fetchAvatarController.handle);
 

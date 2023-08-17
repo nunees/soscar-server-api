@@ -22,8 +22,8 @@ model Users {
   password          String
   avatar            String?
   birth_date        DateTime?           @db.Date
-  UsersGenders      UsersGenders?       @relation(fields: [gendersId], references: [id])
-  gendersId         Int?
+  UsersGenders      UsersGenders?       @relation(fields: [genderId], references: [id])
+  genderId          Int?
   isTermsAccepted   Boolean?            @default(false)
   isAccountVerified Boolean?            @default(false)
   isAccountLocked   Boolean?            @default(false)
@@ -45,6 +45,9 @@ model UsersGenders {
   created_at DateTime  @default(now())
   updated_at DateTime?
   Users      Users[]
+
+  @@index([id, name])
+  @@map("users_genders")
 }
 
 model UsersAddresses {
@@ -134,7 +137,7 @@ model UsersVehicles {
   color       String?
   year        Int
   plate       String?        @unique
-  engineMiles BigInt?        @default(0)
+  engineMiles Int            @default(0)
   created_at  DateTime       @default(now())
   updated_at  DateTime?
 
@@ -172,9 +175,13 @@ model SystemLogs {
   id          String    @id @default(uuid())
   log_type_id Int
   log_type    LogsTypes @relation(fields: [log_type_id], references: [id], onDelete: Cascade)
+  path        String?   @default("none")
   log         String
   created_at  DateTime  @default(now())
   updated_at  DateTime?
+
+  @@index([id, log_type_id, path])
+  @@map("system_logs")
 }
 
 model LogsTypes {
@@ -183,4 +190,7 @@ model LogsTypes {
   created_at DateTime     @default(now())
   updated_at DateTime?
   SystemLogs SystemLogs[]
+
+  @@index([id, name])
+  @@map("logs_types")
 }

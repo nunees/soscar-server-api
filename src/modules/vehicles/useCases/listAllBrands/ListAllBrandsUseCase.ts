@@ -1,15 +1,16 @@
-import { ICreateVehicleDTO } from "@modules/vehicles/dtos/ICreateVehicleDTO";
+import { IListAllBrands } from "@modules/vehicles/dtos/IListAllBrands";
 import { IVehiclesRepository } from "@modules/vehicles/repositories/IVehiclesRepository";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
-export class CreateVehicleUseCase {
+export class ListAllBrandsUseCase {
   constructor(
     @inject("VehiclesRepository")
     private vehiclesRepository: IVehiclesRepository
   ) {}
 
-  async execute(vehicle: ICreateVehicleDTO): Promise<void> {
-    await this.vehiclesRepository.create(vehicle);
+  async execute(): Promise<IListAllBrands[]> {
+    const brands = await this.vehiclesRepository.listAllBrands();
+    return brands;
   }
 }

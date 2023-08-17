@@ -52,7 +52,8 @@
   },
   "scripts": {
     "dev": "ts-node-dev  --exit-child -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "test": "jest --runInBand --detectOpenHandles --verbose"
+    "test": "jest --runInBand --detectOpenHandles --verbose",
+    "db:delete": "ts-node-dev ./src/shared/infra/prisma/scripts/reset_db.ts"
   },
   "prisma": {
     "schema": "src/shared/infra/prisma/schema.prisma",

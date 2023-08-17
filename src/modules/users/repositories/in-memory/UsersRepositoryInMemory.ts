@@ -23,7 +23,7 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     password,
     isPartner,
   }: IUserCreateDTO): Promise<IUserReturnDTO> {
-    const hashed_password = await hash(password, 8);
+    const hashed_password = await hash(String(password), 8);
     const user = {
       id: uuid(),
       name,
@@ -34,7 +34,7 @@ export class UsersRepositoryInMemory implements IUsersRepository {
       username,
       email,
       password: hashed_password,
-      isPartner,
+      isPartner: isPartner || false,
       created_at: new Date(),
     };
 
@@ -82,6 +82,10 @@ export class UsersRepositoryInMemory implements IUsersRepository {
   }
 
   updateAvatar(user_id: string, avatar_file: string): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  update(user_id: string, user: IUserCreateDTO): Promise<void> {
     throw new Error("Method not implemented.");
   }
 }

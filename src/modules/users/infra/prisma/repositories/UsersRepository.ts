@@ -6,6 +6,7 @@ import { PrismaClient } from "@prisma/client";
 import { AppError } from "@shared/errors/AppError";
 import { message } from "@shared/lang/pt-br/String";
 import { hash } from "bcrypt";
+import e from "express";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -26,9 +27,9 @@ export class UsersRepository implements IUsersRepository {
     password,
     isPartner,
     avatar,
-    gender,
+    genderId,
   }: IUserCreateDTO): Promise<IUserReturnDTO> {
-    const hashed_password = await hash(password, 8);
+    const hashed_password = await hash(String(password), 8);
 
     const user = await this.prismaClient.users.create({
       data: {
@@ -42,7 +43,7 @@ export class UsersRepository implements IUsersRepository {
         password: hashed_password,
         isPartner,
         avatar,
-        gender,
+        genderId,
       },
     });
 
@@ -52,7 +53,7 @@ export class UsersRepository implements IUsersRepository {
       last_name: user.last_name,
       email: user.email,
       isPartner: user.isPartner,
-    } as IUserCreateDTO;
+    } as IUserReturnDTO;
   }
 
   async findByCPF(cpf: string): Promise<IUserReturnDTO> {
@@ -63,7 +64,7 @@ export class UsersRepository implements IUsersRepository {
         },
       });
 
-      return user as IUserCreateDTO;
+      return user as IUserReturnDTO;
     } catch (error) {
       throw new AppError(message.ErrorFetchingData);
     }
@@ -77,7 +78,7 @@ export class UsersRepository implements IUsersRepository {
         },
       });
 
-      return user as IUserCreateDTO;
+      return user as IUserReturnDTO;
     } catch (error) {
       throw new AppError(message.ErrorFetchingData);
     }
@@ -90,7 +91,7 @@ export class UsersRepository implements IUsersRepository {
         },
       });
 
-      return user as IUserCreateDTO;
+      return user as IUserReturnDTO;
     } catch (error) {
       throw new AppError(message.ErrorFetchingData);
     }
@@ -165,6 +166,34 @@ export class UsersRepository implements IUsersRepository {
           id: user_id,
         },
       });
+    } catch (error) {
+      throw new AppError(message.ErrorFetchingData);
+    }
+  }
+
+  async update(user_id: string, user: IUserCreateDTO): Promise<void> {
+    try {
+      await this.prismaClient.users
+        .update({
+          data: {
+            name: user.name,
+            last_name: user.last_name,
+            cpf: user.cpf,
+            mobile_phone: user.mobile_phone,
+            birth_date: user.birth_date,
+            username: user.username,
+            email: user.email,
+            isPartner: user.isPartner,
+            avatar: user.avatar,
+            genderId: user.genderId,
+          },
+          where: {
+            id: user_id,
+          },
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } catch (error) {
       throw new AppError(message.ErrorFetchingData);
     }
