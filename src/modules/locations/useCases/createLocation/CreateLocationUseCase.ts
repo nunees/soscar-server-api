@@ -1,6 +1,7 @@
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
+import { message } from "@shared/lang/pt-br/String";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
@@ -45,7 +46,7 @@ export class CreateLocationUseCase {
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError("User not found", 404);
+      throw new AppError(message.UserNotFound, 404);
     }
 
     if (!user.isPartner) {

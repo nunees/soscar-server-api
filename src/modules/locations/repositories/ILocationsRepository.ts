@@ -1,8 +1,6 @@
-import { ICreateLocationDTO } from "../dtos/ICreateLocationDTO";
-
-interface IRequest {
-  location_id?: string;
-  user_id?: string;
+type IRequest = {
+  user_id: string;
+  location_id: string;
   cnpj: String;
   business_name: String;
   business_phone: String;
@@ -14,7 +12,7 @@ interface IRequest {
   district: String;
   state: String;
   zipcode: String;
-}
+};
 export interface ILocationsRepository {
   create({
     user_id,

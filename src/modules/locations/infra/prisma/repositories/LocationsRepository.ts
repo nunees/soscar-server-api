@@ -21,6 +21,8 @@ type IRequest = {
   zipcode: string;
 };
 
+type IResponse = IRequest;
+
 @injectable()
 export class LocationsRepository implements ILocationsRepository {
   constructor(
@@ -60,6 +62,7 @@ export class LocationsRepository implements ILocationsRepository {
     });
   }
 
+<<<<<<< Updated upstream
   async delete(location_id: string): Promise<void> {
     try {
       await this.prismaClient.businessLocations.delete({
@@ -129,5 +132,23 @@ export class LocationsRepository implements ILocationsRepository {
     });
 
     return locations as unknown as Location[];
+=======
+  async findAll(user_id: string): Promise<IResponse[]> {
+    try {
+      const locations = await this.prismaClient.businessLocations.findMany({
+        where: {
+          user_id,
+        },
+        orderBy: {
+          created_at: "desc",
+        },
+      });
+
+      console.log(locations);
+      return locations;
+    } catch (error) {
+      throw new AppError("Erro ao buscar endereços comerciais", 500);
+    }
+>>>>>>> Stashed changes
   }
 }
