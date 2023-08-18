@@ -10,13 +10,15 @@ export interface ILocationsRepository {
     business_name,
     business_phone,
     business_email,
-    business_expertise,
     address_line,
     number,
     city,
     district,
     state,
     zipcode,
+    payment_methods,
+    business_categories,
+    business_description,
   }: ICreateLocationDTO): Promise<void>;
   delete(location_id: string): Promise<void>;
   update(
@@ -24,13 +26,15 @@ export interface ILocationsRepository {
       business_name,
       business_phone,
       business_email,
-      business_expertise,
       address_line,
       number,
       city,
       district,
       state,
       zipcode,
+      payment_methods,
+      business_categories,
+      business_description,
     }: IUpdateLocationDTO,
     location_id: string
   ): Promise<void>;

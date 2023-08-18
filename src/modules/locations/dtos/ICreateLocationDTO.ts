@@ -4,11 +4,14 @@ export interface ICreateLocationDTO {
   business_name: string;
   business_phone: string;
   business_email: string;
-  business_expertise: number[];
   address_line: string;
   number: number;
   city: string;
   district: string;
   state: string;
   zipcode: string;
+  location_id?: string;
+  payment_methods: number[];
+  business_categories: number[];
+  business_description: string | null;
 }

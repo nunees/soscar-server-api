@@ -12,13 +12,15 @@ export class UpdateLocationController {
       business_name,
       business_phone,
       business_email,
-      business_expertise,
       address_line,
       number,
       city,
       district,
       state,
       zipcode,
+      payment_methods,
+      business_categories,
+      business_description,
     } = request.body;
 
     const updateLocationUseCase = container.resolve(UpdateLocationUseCase);
@@ -30,13 +32,15 @@ export class UpdateLocationController {
       business_name,
       business_phone,
       business_email,
-      business_expertise,
       address_line,
       number,
       city,
       district,
       state,
       zipcode,
+      payment_methods,
+      business_categories,
+      business_description,
     });
 
     return response.status(200).send();

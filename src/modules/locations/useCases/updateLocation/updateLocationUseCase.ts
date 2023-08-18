@@ -10,13 +10,15 @@ interface IRequest {
   business_name: string;
   business_phone: string;
   business_email: string;
-  business_expertise: number[];
   address_line: string;
   number: number;
   city: string;
   district: string;
   state: string;
   zipcode: string;
+  payment_methods: number[],
+  business_categories: number[],
+  business_description: string | null,
 }
 
 @injectable()
@@ -35,13 +37,15 @@ export class UpdateLocationUseCase {
     business_name,
     business_phone,
     business_email,
-    business_expertise,
     address_line,
     number,
     city,
     district,
     state,
     zipcode,
+    payment_methods,
+    business_categories,
+    business_description,
   }: IRequest) {
     const userExists = await this.usersRepository.findById(String(user_id));
 
@@ -59,13 +63,15 @@ export class UpdateLocationUseCase {
         business_name,
         business_phone,
         business_email,
-        business_expertise,
         address_line,
         number,
         city,
         district,
         state,
         zipcode,
+        payment_methods,
+        business_categories,
+        business_description,
       },
       String(location_id)
     );

@@ -483,6 +483,52 @@ async function main() {
         { id: 5, name: "Warning" },
       ],
     });
+
+    console.log("\n\n🌱 Seeding insurance companies to database...");
+    await prisma.insuranceCompanies.deleteMany();
+    await prisma.insuranceCompanies.createMany({
+      data: [
+        {id: 1, name: "Azul Seguros", created_at: new Date()},
+        {id: 2, name: "Bradesco Seguros", created_at: new Date()},
+        {id: 3, name: "Caixa Seguradora", created_at: new Date()},
+        {id: 4, name: "HDI Seguros", created_at: new Date()},
+        {id: 5, name: "Itaú Seguros", created_at: new Date()},
+        {id: 6, name: "Liberty Seguros", created_at: new Date()},
+        {id: 7, name: "Mapfre Seguros", created_at: new Date()},
+        {id: 8, name: "Porto Seguro", created_at: new Date()},
+        {id: 9, name: "SulAmérica Seguros", created_at: new Date()},
+        {id: 10, name: "Tokio Marine Seguradora", created_at: new Date()},
+        {id: 11, name: "Outro", created_at: new Date()},
+      ]
+    });
+
+    console.log("\n\n🌱 Seeding car insurance types to database...");
+    await prisma.insuranceTypes.deleteMany();
+    await prisma.insuranceTypes.createMany({
+      data: [
+        {id: 1, name: "Acidentes com proprietário", created_at: new Date()},
+        {id: 2, name: "Acidentes com terceiros", created_at: new Date()},
+        {id: 3, name: "Assistência 24 horas", created_at: new Date()},
+        {id: 4, name: "Carro reserva", created_at: new Date()},
+        {id: 5, name: "Danos a terceiros", created_at: new Date()},
+        {id: 6, name: "Furto e roubo", created_at: new Date()},
+        {id: 7, name: "Incêndio", created_at: new Date()},
+        {id: 8, name: "Outro", created_at: new Date()},
+      ]
+    });
+
+    console.log("\n\n🌱 Seeding document types to database...");
+    await prisma.documentsTypes.deleteMany();
+    await prisma.documentsTypes.createMany({
+      data: [
+        {id: 1, name: "image", created_at: new Date()},
+        {id: 2, name: "application", created_at: new Date()},
+        {id: 3, name: "video", created_at: new Date()},
+        {id: 4, name: "audio", created_at: new Date()},
+      ]
+    });
+
+
   } catch (error) {
     throw new Error(error);
   }

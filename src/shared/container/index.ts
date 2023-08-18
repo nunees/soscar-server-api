@@ -18,6 +18,8 @@ import { IGendersRepository } from "@modules/users/repositories/IGendersReposito
 import { GendersReposotory } from "@modules/users/infra/prisma/repositories/GendersRepository";
 import { IVehiclesRepository } from "@modules/vehicles/repositories/IVehiclesRepository";
 import { VehiclesRepository } from "@modules/vehicles/infra/prisma/repositories/VehiclesRepository";
+import { IQuotesRepository } from "@modules/quote/repositories/IQuotesRepository";
+import { QuotesRepository } from "@modules/quote/infra/prisma/repositories/QuotesRepository";
 
 // In memory Repositories
 container.registerSingleton<IUsersRepository>(
@@ -64,6 +66,11 @@ container.registerSingleton<ILocationsRepository>(
 container.registerSingleton<IVehiclesRepository>(
   "VehiclesRepository",
   VehiclesRepository
+);
+
+container.registerSingleton<IQuotesRepository>(
+  "QuotesRepository",
+  QuotesRepository
 );
 
 container.register<PrismaClient>("PrismaClient", {

@@ -1,7 +1,6 @@
 import { ICreateLocationDTO } from "@modules/locations/dtos/ICreateLocationDTO";
 import { ILocationDTO } from "@modules/locations/dtos/ILocationDTO";
 import { IUpdateLocationDTO } from "@modules/locations/dtos/IUpdateLocationDTO";
-import { Location } from "@modules/locations/entities/Location";
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
 import { PrismaClient } from "@prisma/client";
 import { AppError } from "@shared/errors/AppError";
@@ -20,13 +19,15 @@ export class LocationsRepository implements ILocationsRepository {
     business_name,
     business_phone,
     business_email,
-    business_expertise,
     address_line,
     number,
     city,
     district,
     state,
     zipcode,
+    payment_methods,
+    business_categories,
+    business_description,
   }: ICreateLocationDTO): Promise<void> {
     await this.prismaClient.businessLocations.create({
       data: {
@@ -35,14 +36,16 @@ export class LocationsRepository implements ILocationsRepository {
         business_name,
         business_phone,
         business_email,
-        business_expertise,
         address_line,
         number,
         city,
         district,
         state,
         zipcode,
-      },
+        payment_methods,
+        business_categories,
+        business_description,
+        },
     });
   }
 
@@ -57,18 +60,22 @@ export class LocationsRepository implements ILocationsRepository {
       throw new AppError(error);
     }
   }
+
+
   async update(
     {
       business_name,
       business_phone,
       business_email,
-      business_expertise,
       address_line,
       number,
       city,
       district,
       state,
       zipcode,
+      payment_methods,
+      business_categories,
+      business_description,
     }: IUpdateLocationDTO,
     location_id: string
   ): Promise<void> {
@@ -81,13 +88,15 @@ export class LocationsRepository implements ILocationsRepository {
           business_name,
           business_phone,
           business_email,
-          business_expertise,
           address_line,
           number,
           city,
           district,
           state,
           zipcode,
+          payment_methods,
+          business_categories,
+          business_description,
         },
       });
     } catch (error) {

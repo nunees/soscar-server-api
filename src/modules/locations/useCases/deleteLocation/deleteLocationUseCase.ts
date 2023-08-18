@@ -2,26 +2,26 @@ import { ILocationsRepository } from "@modules/locations/repositories/ILocations
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { inject, injectable } from "tsyringe";
 
-injectable();
-export class DeleteLocationUseCase {
+@injectable()
+export class DeleteLocationUseCase{
   constructor(
+    @inject("LocationsRepository")
+    private locationsRepository: ILocationsRepository,
     @inject("UsersRepository")
-    private usersRepository: IUsersRepository,
-    @inject("LocationRepository")
-    private locationRepository: ILocationsRepository
-  ) {}
+    private usersRepository: IUsersRepository
+  ){}
 
-  async execute(id: string, location_id: string): Promise<void> {
-    const userExists = await this.usersRepository.findById(id);
+  async execute(user_id: string, location_id: string): Promise<void>{
+    const userExists = await this.usersRepository.findById(user_id);
 
-    if (!userExists) throw new Error("Usuário não encontrado");
-
-    const location = await this.locationRepository.findById(location_id);
-
-    if (!location) {
-      throw new Error("Local não encontrado");
+    if(!userExists){
+      throw new Error("User does not exists");
     }
 
-    await this.locationRepository.delete(id);
+    if(!userExists.isPartner){
+      throw new Error("User is not a partner");
+    }
+
+    await this.locationsRepository.delete(location_id);
   }
 }

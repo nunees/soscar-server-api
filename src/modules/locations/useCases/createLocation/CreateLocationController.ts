@@ -4,20 +4,22 @@ import { CreateLocationUseCase } from "./CreateLocationUseCase";
 
 export class CreateLocationController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.user;
+    const { id } = request.headers;
 
     const {
       cnpj,
       business_name,
       business_phone,
       business_email,
-      business_expertise,
       address_line,
       number,
       city,
       district,
       state,
       zipcode,
+      payment_methods,
+      business_categories,
+      business_description,
     } = request.body;
 
     const createLocationUseCase = container.resolve(CreateLocationUseCase);
@@ -28,15 +30,17 @@ export class CreateLocationController {
         business_name,
         business_phone,
         business_email,
-        business_expertise,
         address_line,
         number,
         city,
         district,
         state,
         zipcode,
+        payment_methods,
+        business_categories,
+        business_description,
       },
-      id
+      String(id)
     );
 
     return response.status(201).send();

@@ -34,6 +34,7 @@ model Users {
   UsersTokens       UsersTokens[]
   BusinessLocations BusinessLocations[]
   UsersVehicles     UsersVehicles[]
+  UserQuotes        UserQuotes[]
 
   @@index([cpf, username, email])
   @@map("users")
@@ -81,34 +82,53 @@ model UsersTokens {
 }
 
 model BusinessLocations {
-  id                 String    @id @default(uuid())
-  user_id            String
-  users              Users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  cnpj               String
-  business_name      String
-  business_phone     String
-  business_email     String
-  business_expertise Int[]
-  address_line       String
-  number             Int
-  city               String
-  district           String
-  state              String
-  zipcode            String
-  created_at         DateTime  @default(now())
-  updated_at         DateTime?
+  id                          String                        @id @default(uuid())
+  user_id                     String
+  users                       Users                         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  cnpj                        String
+  business_name               String
+  business_phone              String
+  business_email              String
+  address_line                String
+  number                      Int
+  city                        String
+  district                    String
+  state                       String
+  zipcode                     String
+  payment_methods             Int[]
+  business_categories         Int[]
+  business_description        String?
+  created_at                  DateTime                      @default(now())
+  updated_at                  DateTime?
+  LocationsBusinessCategories LocationsBusinessCategories[]
 
   @@index([user_id, cnpj, business_name, business_phone, business_email, city, state, zipcode])
   @@map("business_locations")
 }
 
+model LocationsBusinessCategories {
+  id                 String            @id @default(uuid())
+  business_location  String
+  business_locations BusinessLocations @relation(fields: [business_location], references: [id], onDelete: Cascade)
+
+  business_category   Int
+  business_categories BusinessCategories @relation(fields: [business_category], references: [id], onDelete: Cascade)
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  @@index([business_location, business_category])
+  @@map("locations_business_categories")
+}
+
 // GENERATE BUSINESS TYPES
 model BusinessCategories {
-  id              Int                @id @unique
-  name            String
-  created_at      DateTime           @default(now())
-  updated_at      DateTime?
-  BusinessService BusinessServices[]
+  id                          Int                           @id @unique
+  name                        String
+  created_at                  DateTime                      @default(now())
+  updated_at                  DateTime?
+  BusinessService             BusinessServices[]
+  LocationsBusinessCategories LocationsBusinessCategories[]
 
   @@index([id, name])
   @@map("business_categories")
@@ -121,6 +141,7 @@ model BusinessServices {
   name        String
   created_at  DateTime           @default(now())
   updated_at  DateTime?
+  UserQuotes  UserQuotes[]
 
   @@index([id, category_id, name])
   @@map("business_services")
@@ -140,6 +161,7 @@ model UsersVehicles {
   engineMiles Int            @default(0)
   created_at  DateTime       @default(now())
   updated_at  DateTime?
+  UserQuotes  UserQuotes[]
 
   @@index([user_id, brand_id, name_id, year, plate])
   @@map("users_vehicles")
@@ -169,6 +191,109 @@ model VehiclesNames {
 
   @@index([id, brand_id, name])
   @@map("vehicles_names")
+}
+
+model InsuranceCompanies {
+  id         Int          @id @unique
+  name       String
+  created_at DateTime     @default(now())
+  updated_at DateTime?
+  UserQuotes UserQuotes[]
+
+  @@index([id, name])
+  @@map("insurance_companies")
+}
+
+model InsuranceTypes {
+  id         Int          @id @unique
+  name       String
+  created_at DateTime     @default(now())
+  updated_at DateTime?
+  UserQuotes UserQuotes[]
+
+  @@index([id, name])
+  @@map("insurance_types")
+}
+
+model UserQuotes {
+  id String @id @default(uuid())
+
+  is_juridical Boolean @default(false)
+
+  user_id String
+  users   Users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  vehicle_id String
+  vehicles   UsersVehicles @relation(fields: [vehicle_id], references: [id], onDelete: Cascade)
+
+  insurance_type_id Int?
+  insurance_type    InsuranceTypes? @relation(fields: [insurance_type_id], references: [id], onDelete: Cascade)
+
+  insurance_company_id Int?
+  insurance_company    InsuranceCompanies? @relation(fields: [insurance_company_id], references: [id], onDelete: Cascade)
+
+  service_type    BusinessServices? @relation(fields: [service_type_id], references: [id])
+  service_type_id Int?
+
+  franchise_price Float?
+  service_price   Float?
+
+  user_notes    String?
+  partner_notes String?
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  UserQuotesDocuments UserQuotesDocuments[]
+  QuotesDocuments     QuotesDocuments[]
+
+  @@index([user_id, vehicle_id, insurance_type_id, insurance_company_id])
+  @@map("user_quotes")
+}
+
+model QuotesDocuments {
+  quote_id String
+  quote    UserQuotes @relation(fields: [quote_id], references: [id], onDelete: Cascade)
+
+  document_id String
+  document    UserQuotesDocuments @relation(fields: [document_id], references: [id], onDelete: Cascade)
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  @@id([quote_id, document_id])
+  @@index([quote_id, document_id])
+  @@map("quotes_documents")
+}
+
+model UserQuotesDocuments {
+  id String @id @default(uuid())
+
+  user_quote_id String
+  user_quote    UserQuotes @relation(fields: [user_quote_id], references: [id], onDelete: Cascade)
+
+  document_type_id Int
+  document_type    DocumentsTypes @relation(fields: [document_type_id], references: [id], onDelete: Cascade)
+
+  document_url String[] @default([])
+
+  created_at      DateTime          @default(now())
+  updated_at      DateTime?
+  QuotesDocuments QuotesDocuments[]
+
+  @@index([user_quote_id, document_type_id])
+  @@map("user_quotes_documents")
+}
+
+model DocumentsTypes {
+  id                  Int                   @id @unique
+  name                String
+  created_at          DateTime              @default(now())
+  updated_at          DateTime?
+  UserQuotesDocuments UserQuotesDocuments[]
+
+  @@index([id, name])
+  @@map("documents_types")
 }
 
 model SystemLogs {

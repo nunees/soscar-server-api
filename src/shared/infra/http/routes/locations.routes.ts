@@ -1,10 +1,11 @@
 import { CreateLocationController } from "@modules/locations/useCases/createLocation/CreateLocationController";
 import { Router } from "express";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
-import { DeleteLocationController } from "@modules/locations/useCases/deleteLocation/deleteLocationController";
+
 import { FindAllLocationsController } from "@modules/locations/useCases/findAllLocations/findAllLocationsController";
 import { FindLocationController } from "@modules/locations/useCases/findLocation/findLocationController";
 import { UpdateLocationController } from "@modules/locations/useCases/updateLocation/updateLocationController";
+import { DeleteLocationController } from "@modules/locations/useCases/deleteLocation/deleteLocationController";
 
 const partnerLocationsRoutes = Router();
 
