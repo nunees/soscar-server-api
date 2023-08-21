@@ -8,6 +8,7 @@ import { ListAllBrandsController } from "@modules/vehicles/useCases/listAllBrand
 import { FindVehicleController } from "@modules/vehicles/useCases/findVehicle/FindVehicleController";
 import { ListAllVehiclesNamesController } from "@modules/vehicles/useCases/listAllVehiclesNames/listAllVehiclesNamesController";
 import { FindModelNameByIdController } from "@modules/vehicles/useCases/findModelNameById/findModelNameByIdController";
+import { ListAllInsurancesController } from "@modules/vehicles/useCases/listAllInsurances/listAllInsurancesController";
 
 const vehiclesRoutes = Router();
 
@@ -19,6 +20,7 @@ const listALlBrandsController = new ListAllBrandsController();
 const listAllVehiclesNamesController = new ListAllVehiclesNamesController();
 const findVehicleController = new FindVehicleController();
 const findModelNameByIdController = new FindModelNameByIdController();
+const listAllInsurancesController = new ListAllInsurancesController();
 
 
 vehiclesRoutes.get(
@@ -26,7 +28,8 @@ vehiclesRoutes.get(
   ensureAuthenticated,
   listALlBrandsController.handle
 );
-vehiclesRoutes.get("/names", ensureAuthenticated, listAllVehiclesNamesController.handle);
+vehiclesRoutes.get("/insurances/all",  listAllInsurancesController.handle);
+vehiclesRoutes.get("/names", ensureAuthenticated, listAllInsurancesController.handle);
 vehiclesRoutes.get("/names/:brand_id", ensureAuthenticated, findModelNameByIdController.handle);
 vehiclesRoutes.post("/", ensureAuthenticated, createVechicleController.handle);
 vehiclesRoutes.get("/",  ensureAuthenticated, fetchAllController.handle);

@@ -1,4 +1,5 @@
 import { ICreateVehicleDTO } from "@modules/vehicles/dtos/ICreateVehicleDTO";
+import { IInsuranceDTO } from "@modules/vehicles/dtos/IInsuranceDTO";
 import { IListAllBrands } from "@modules/vehicles/dtos/IListAllBrands";
 import { IListAllVehiclesNamesDTO } from "@modules/vehicles/dtos/IListAllVehiclesNamesDTO";
 import { IReturnVehicleDTO } from "@modules/vehicles/dtos/IReturnVehicleDTO";
@@ -14,7 +15,6 @@ export class VehiclesRepository implements IVehiclesRepository {
     private prismaClient: PrismaClient
   ) {}
 
-
   async create(vehicle: ICreateVehicleDTO): Promise<void> {
     await this.prismaClient.usersVehicles.create({
       data: {
@@ -25,6 +25,9 @@ export class VehiclesRepository implements IVehiclesRepository {
         year: vehicle.year,
         plate: vehicle.plate || null,
         engineMiles: Number(vehicle.engineMiles),
+        notes: vehicle.notes || null,
+        photo: vehicle.photo || null,
+        isPrimary: vehicle.isPrimary,
         created_at: new Date(),
       },
     });
@@ -130,4 +133,11 @@ export class VehiclesRepository implements IVehiclesRepository {
       throw new AppError("Não há veículos cadastrados!");
     }
   }
+
+  async listAllInsurances(): Promise<IInsuranceDTO[]> {
+    const insurances = await this.prismaClient.insuranceCompanies.findMany();
+    return insurances;
+  }
+
+
 }

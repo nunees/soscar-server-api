@@ -158,6 +158,9 @@ model UsersVehicles {
   color       String?
   year        Int
   plate       String?        @unique
+  notes       String?
+  photo       String?
+  isPrimary   Boolean        @default(false)
   engineMiles Int            @default(0)
   created_at  DateTime       @default(now())
   updated_at  DateTime?

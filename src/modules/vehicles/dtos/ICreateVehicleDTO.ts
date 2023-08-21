@@ -7,4 +7,7 @@ export interface ICreateVehicleDTO {
   year: number;
   plate?: string | null;
   engineMiles: number | null;
+  notes: string | null;
+  photo: string | null;
+  isPrimary?: boolean | false;
 }
