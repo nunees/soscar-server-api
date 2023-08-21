@@ -11,4 +11,5 @@ export interface IVehiclesRepository {
   update(vehicle: ICreateVehicleDTO): Promise<void>;
   listAllBrands(): Promise<IListAllBrands[]>;
   listAllVehiclesNames(): Promise<IListAllVehiclesNamesDTO[]>;
+  findModelNameById(brand_id: number): Promise<IListAllVehiclesNamesDTO[]>;
 }

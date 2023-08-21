@@ -10,10 +10,15 @@ import { routes } from "./routes";
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from "../../../../swagger.json";
+import cors from "cors";
 
 import "@shared/container";
 
 const app = express();
+
+app.use(cors({
+  origin: "*",
+}));
 
 app.use(morgan(":method :url :status - :response-time ms"));
 

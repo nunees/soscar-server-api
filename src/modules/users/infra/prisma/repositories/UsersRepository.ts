@@ -6,7 +6,6 @@ import { PrismaClient } from "@prisma/client";
 import { AppError } from "@shared/errors/AppError";
 import { message } from "@shared/lang/pt-br/String";
 import { hash } from "bcrypt";
-import e from "express";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -28,6 +27,7 @@ export class UsersRepository implements IUsersRepository {
     isPartner,
     avatar,
     genderId,
+    isTermsAccepted,
   }: IUserCreateDTO): Promise<IUserReturnDTO> {
     const hashed_password = await hash(String(password), 8);
 
@@ -44,6 +44,7 @@ export class UsersRepository implements IUsersRepository {
         isPartner,
         avatar,
         genderId,
+        isTermsAccepted,
       },
     });
 

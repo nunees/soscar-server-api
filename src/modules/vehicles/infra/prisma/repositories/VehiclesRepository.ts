@@ -14,6 +14,7 @@ export class VehiclesRepository implements IVehiclesRepository {
     private prismaClient: PrismaClient
   ) {}
 
+
   async create(vehicle: ICreateVehicleDTO): Promise<void> {
     await this.prismaClient.usersVehicles.create({
       data: {
@@ -112,7 +113,21 @@ export class VehiclesRepository implements IVehiclesRepository {
       const vehiclesNames = await this.prismaClient.vehiclesNames.findMany();
       return vehiclesNames;
     } catch (error) {
-      throw new AppError(error.message);
+      throw new AppError("Não há veículos cadastrados!");
+    }
+  }
+
+  async findModelNameById(brand_id: number): Promise<IListAllVehiclesNamesDTO[]> {
+    try{
+      const models = await this.prismaClient.vehiclesNames.findMany({
+        where: {
+          brand_id,
+        }
+      })
+
+      return models;
+    }catch(error){
+      throw new AppError("Não há veículos cadastrados!");
     }
   }
 }

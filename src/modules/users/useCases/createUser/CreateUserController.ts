@@ -15,6 +15,7 @@ export class CreateUserController {
       email,
       password,
       isPartner,
+      isTermsAccepted,
     } = request.body;
 
     const createUserUseCase = container.resolve(CreateUserUseCase);
@@ -30,6 +31,7 @@ export class CreateUserController {
       email,
       password,
       isPartner,
+      isTermsAccepted,
     });
 
     return response.status(201).send(user);

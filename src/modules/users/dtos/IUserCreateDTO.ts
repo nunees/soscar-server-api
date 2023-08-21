@@ -11,4 +11,5 @@ export interface IUserCreateDTO {
   isPartner?: boolean;
   avatar?: string | null;
   genderId?: number;
+  isTermsAccepted: boolean;
 }

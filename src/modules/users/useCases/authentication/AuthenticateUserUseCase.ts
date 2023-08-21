@@ -18,6 +18,7 @@ interface IResponse {
     id: string;
     name: string;
     username: string;
+    isPartner: boolean;
   };
   token: string;
   refresh_token: string;
@@ -46,7 +47,7 @@ export class AuthenticateUserUseCase {
     } = auth;
 
     if (!user) {
-      throw new AppError("Email or password incorrect!", 401);
+      throw new AppError("Email ou senha incorretos", 401);
     }
 
     // Verify password
@@ -82,6 +83,7 @@ export class AuthenticateUserUseCase {
         id: user.id as string,
         name: user.name,
         username: user.username,
+        isPartner: user.isPartner,
       },
       token,
       refresh_token,

@@ -16,6 +16,7 @@ interface IRequest {
   email: string;
   password: string;
   isPartner: boolean;
+  isTermsAccepted: boolean,
 }
 
 interface IUserCreationResponse {
@@ -24,6 +25,7 @@ interface IUserCreationResponse {
   last_name: string;
   email: string;
   username: string;
+  isPartner: boolean | undefined;
 }
 
 @injectable()
@@ -44,7 +46,9 @@ export class CreateUserUseCase {
     genderId,
     password,
     isPartner,
+    isTermsAccepted,
   }: IRequest): Promise<IUserCreationResponse> {
+
     let userExist = await this.usersRepository.findByCPF(cpf);
 
     if (userExist) {
@@ -80,6 +84,7 @@ export class CreateUserUseCase {
       email,
       password,
       isPartner,
+      isTermsAccepted,
     });
 
     return {
@@ -88,6 +93,7 @@ export class CreateUserUseCase {
       last_name: user.last_name,
       email: user.email,
       username: user.username,
+      isPartner: user.isPartner,
     };
   }
 }

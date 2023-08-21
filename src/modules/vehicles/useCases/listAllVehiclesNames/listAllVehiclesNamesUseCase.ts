@@ -11,6 +11,7 @@ export class ListAllVehiclesNamesUseCase {
 
   async execute(): Promise<IListAllVehiclesNamesDTO[]> {
     const vehicles = await this.vehiclesRepository.listAllVehiclesNames();
+
     return vehicles;
   }
 }

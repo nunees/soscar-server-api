@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { ListAllBrandsUseCase } from "../listAllBrands/ListAllBrandsUseCase";
-import { ListAllVehiclesNamesUseCase } from "./ListAllVehiclesNamesUseCase";
+import { ListAllVehiclesNamesUseCase } from "./listAllVehiclesNamesUseCase";
 
 export class ListAllVehiclesNamesController {
   async handle(request: Request, response: Response): Promise<Response> {
