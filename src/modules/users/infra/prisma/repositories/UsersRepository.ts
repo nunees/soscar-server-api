@@ -30,35 +30,42 @@ export class UsersRepository implements IUsersRepository {
     genderId,
     isTermsAccepted,
   }: IUserCreateDTO): Promise<IUserReturnDTO> {
-    const hashed_password = await hash(String(password), 8);
 
-    const user = await this.prismaClient.users.create({
-      data: {
-        name,
-        last_name,
-        cpf,
-        mobile_phone,
-        birth_date,
-        username,
-        email,
-        password: hashed_password,
-        isPartner,
-        avatar,
-        genderId,
-        isTermsAccepted,
-      },
-    });
+    try{
+      const hashed_password = await hash(String(password), 8);
 
-    return {
-      id: user.id,
-      name: user.name,
-      last_name: user.last_name,
-      email: user.email,
-      isPartner: user.isPartner,
-    } as IUserReturnDTO;
+      const user = await this.prismaClient.users.create({
+        data: {
+          name,
+          last_name,
+          cpf,
+          mobile_phone,
+          birth_date,
+          username,
+          email,
+          password: hashed_password,
+          isPartner,
+          avatar,
+          genderId,
+          isTermsAccepted,
+        },
+      });
+
+      return {
+        id: user.id,
+        name: user.name,
+        last_name: user.last_name,
+        email: user.email,
+        isPartner: user.isPartner,
+      } as IUserReturnDTO;
+    }catch(error){
+      console.log(error);
+      throw new AppError(error.message);
+    }
   }
 
   async findByCPF(cpf: string): Promise<IUserReturnDTO> {
+
     try {
       const user = await this.prismaClient.users.findUnique({
         where: {
@@ -68,6 +75,7 @@ export class UsersRepository implements IUsersRepository {
 
       return user as IUserReturnDTO;
     } catch (error) {
+      console.log(error)
       throw new AppError(message.ErrorFetchingData);
     }
   }
@@ -79,9 +87,9 @@ export class UsersRepository implements IUsersRepository {
           mobile_phone,
         },
       });
-
       return user as IUserReturnDTO;
     } catch (error) {
+      console.log(error)
       throw new AppError(message.ErrorFetchingData);
     }
   }

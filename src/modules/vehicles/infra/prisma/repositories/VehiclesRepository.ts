@@ -15,22 +15,35 @@ export class VehiclesRepository implements IVehiclesRepository {
     private prismaClient: PrismaClient
   ) {}
 
-  async create(vehicle: ICreateVehicleDTO): Promise<void> {
+  async create({
+    user_id,
+    brand_id,
+    name_id,
+    color,
+    year,
+    plate,
+    insurance_id,
+    notes,
+    isPrimary,
+  }: ICreateVehicleDTO): Promise<void> {
+   try{
     await this.prismaClient.usersVehicles.create({
       data: {
-        user_id: vehicle.user_id,
-        brand_id: vehicle.brand_id,
-        name_id: vehicle.name_id,
-        color: vehicle.color,
-        year: vehicle.year,
-        plate: vehicle.plate || null,
-        engineMiles: Number(vehicle.engineMiles),
-        notes: vehicle.notes || null,
-        photo: vehicle.photo || null,
-        isPrimary: vehicle.isPrimary,
-        created_at: new Date(),
-      },
+        user_id,
+        brand_id,
+        name_id,
+        color,
+        year,
+        plate,
+        notes,
+        insuranceCompaniesId: insurance_id,
+        isPrimary,
+      }
     });
+   }catch(error){
+    console.log(error.message);
+    throw new AppError(error.message);
+   }
   }
 
   async fetchAll(user_id: string): Promise<IReturnVehicleDTO[]> {
@@ -138,6 +151,24 @@ export class VehiclesRepository implements IVehiclesRepository {
     const insurances = await this.prismaClient.insuranceCompanies.findMany();
     return insurances;
   }
+
+  async findFavoriteCar(user_id: string): Promise<IReturnVehicleDTO[]> {
+    const vehicles = await this.prismaClient.usersVehicles.findMany({
+      where: {
+        user_id,
+        AND: {
+          isPrimary: true,
+        },
+
+      },
+      include: {
+        brand: true,
+      }
+    })
+
+    return vehicles as IReturnVehicleDTO[];
+  }
+
 
 
 }

@@ -10,6 +10,6 @@ export class FetchAllController {
 
     const vechicles = await fetchAllUseCase.execute(String(id));
 
-    return response.status(201).json(vechicles);
+    return response.status(200).json(vechicles);
   }
 }

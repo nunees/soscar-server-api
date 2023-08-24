@@ -14,4 +14,5 @@ export interface IVehiclesRepository {
   listAllVehiclesNames(): Promise<IListAllVehiclesNamesDTO[]>;
   listAllInsurances(): Promise<IInsuranceDTO[]>;
   findModelNameById(brand_id: number): Promise<IListAllVehiclesNamesDTO[]>;
+  findFavoriteCar(user_id: string): Promise<IReturnVehicleDTO[]>;
 }

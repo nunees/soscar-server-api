@@ -160,11 +160,16 @@ model UsersVehicles {
   plate       String?        @unique
   notes       String?
   photo       String?
+
+  insuranceCompaniesId Int  @default(12)
+  InsuranceCompanies   InsuranceCompanies @relation(fields: [insuranceCompaniesId], references: [id], onDelete: Cascade)
+
   isPrimary   Boolean        @default(false)
-  engineMiles Int            @default(0)
-  created_at  DateTime       @default(now())
-  updated_at  DateTime?
-  UserQuotes  UserQuotes[]
+  engineMiles Int?           @default(0)
+
+  created_at           DateTime            @default(now())
+  updated_at           DateTime?
+  UserQuotes           UserQuotes[]
 
   @@index([user_id, brand_id, name_id, year, plate])
   @@map("users_vehicles")
@@ -197,11 +202,12 @@ model VehiclesNames {
 }
 
 model InsuranceCompanies {
-  id         Int          @id @unique
-  name       String
-  created_at DateTime     @default(now())
-  updated_at DateTime?
-  UserQuotes UserQuotes[]
+  id            Int             @id @unique
+  name          String
+  created_at    DateTime        @default(now())
+  updated_at    DateTime?
+  UsersVehicles UsersVehicles[]
+  UserQuotes    UserQuotes[]
 
   @@index([id, name])
   @@map("insurance_companies")

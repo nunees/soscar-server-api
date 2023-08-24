@@ -3,10 +3,11 @@ export interface Vehicle {
   user_id: string;
   brand_id: number;
   name_id: number;
-  color: string;
+  color: string | null;
   year: number;
-  plate: string;
-  engineMiles: number;
-  create_at: Date;
+  plate: string | null;
+  engineMiles: number | null;
+  insurance_id: number | null;
+  create_at: Date | null;
   updated_at: Date | null;
 }

@@ -1,7 +1,5 @@
-import { IUserReturnDTO } from "@modules/users/dtos/IUserReturnDTO";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
-import { message } from "@shared/lang/pt-br/String";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {

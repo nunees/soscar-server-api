@@ -3,11 +3,12 @@ export interface ICreateVehicleDTO {
   user_id: string;
   brand_id: number;
   name_id: number;
-  color: string | null;
+  color?: string | null;
   year: number;
   plate?: string | null;
-  engineMiles: number | null;
-  notes: string | null;
-  photo: string | null;
+  engineMiles?: number | null;
+  insurance_id?: number | undefined;
+  notes?: string | null;
+  photo?: string | null;
   isPrimary?: boolean | false;
 }

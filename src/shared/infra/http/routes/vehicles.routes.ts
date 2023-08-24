@@ -28,6 +28,7 @@ vehiclesRoutes.get(
   ensureAuthenticated,
   listALlBrandsController.handle
 );
+vehiclesRoutes.get("/favorites", ensureAuthenticated, fetchAllController.handle);
 vehiclesRoutes.get("/insurances/all",  listAllInsurancesController.handle);
 vehiclesRoutes.get("/names", ensureAuthenticated, listAllInsurancesController.handle);
 vehiclesRoutes.get("/names/:brand_id", ensureAuthenticated, findModelNameByIdController.handle);

@@ -18,25 +18,25 @@ async function main() {
     await prisma.vehiclesBrands.deleteMany();
     await prisma.vehiclesBrands.createMany({
       data: [
-        { id: 1, name: "Audi", icon: "audi.svg" },
-        { id: 2, name: "BMW", icon: "bmw.svg" },
-        { id: 3, name: "Chevrolet", icon: "chevrolet.svg" },
-        { id: 4, name: "Citroën", icon: "citroen.svg" },
-        { id: 5, name: "Fiat", icon: "fiat.svg" },
-        { id: 6, name: "Ford", icon: "ford.svg" },
-        { id: 7, name: "Honda", icon: "honda.svg" },
-        { id: 8, name: "Hyundai", icon: "hyundai.svg" },
-        { id: 9, name: "Jeep", icon: "jeep.svg" },
-        { id: 10, name: "Kia", icon: "kia.svg" },
-        { id: 11, name: "Mercedes-Benz", icon: "mercedes.svg" },
-        { id: 12, name: "Mitsubishi", icon: "mitsubishi.svg" },
-        { id: 13, name: "Nissan", icon: "nissan.svg" },
-        { id: 14, name: "Peugeot", icon: "peugeot.svg" },
-        { id: 15, name: "Renault", icon: "renault.svg" },
-        { id: 16, name: "Toyota", icon: "toyota.svg" },
-        { id: 17, name: "Volkswagen", icon: "volkswagen.svg" },
-        { id: 18, name: "Volvo", icon: "volvo.svg" },
-        { id: 19, name: "Outro", icon: "car.svg" },
+        { id: 1, name: "Audi", icon: "audi.png" },
+        { id: 2, name: "BMW", icon: "bmw.png" },
+        { id: 3, name: "Chevrolet", icon: "chevrolet.png" },
+        { id: 4, name: "Citroën", icon: "citroen.png" },
+        { id: 5, name: "Fiat", icon: "fiat.png" },
+        { id: 6, name: "Ford", icon: "ford.png" },
+        { id: 7, name: "Honda", icon: "honda.png" },
+        { id: 8, name: "Hyundai", icon: "hyundai.png" },
+        { id: 9, name: "Jeep", icon: "jeep.png" },
+        { id: 10, name: "Kia", icon: "kia.png" },
+        { id: 11, name: "Mercedes-Benz", icon: "mercedes.png" },
+        { id: 12, name: "Mitsubishi", icon: "mitsubishi.png" },
+        { id: 13, name: "Nissan", icon: "nissan.png" },
+        { id: 14, name: "Peugeot", icon: "peugeot.png" },
+        { id: 15, name: "Renault", icon: "renault.png" },
+        { id: 16, name: "Toyota", icon: "toyota.png" },
+        { id: 17, name: "Volkswagen", icon: "volkswagen.png" },
+        { id: 18, name: "Volvo", icon: "volvo.png" },
+        { id: 19, name: "Outro", icon: "car.png" },
       ],
     });
 
@@ -499,6 +499,7 @@ async function main() {
         {id: 9, name: "SulAmérica Seguros", created_at: new Date()},
         {id: 10, name: "Tokio Marine Seguradora", created_at: new Date()},
         {id: 11, name: "Outro", created_at: new Date()},
+        {id: 12, name: "Não tenho seguro", created_at: new Date()},
       ]
     });
 

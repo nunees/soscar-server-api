@@ -5,7 +5,7 @@ import { CreateVehicleUseCase } from "./CreateVehicleUseCase";
 export class CreateVechicleController {
   async handle(request: Request, response: Response) {
     const { id } = request.headers;
-    const { brand_id, name_id, color, year, plate, engineMiles, notes, photo, isPrimary } = request.body;
+    const { brand_id, name_id, color, year, plate, notes, isPrimary, insurance_id } = request.body;
 
     const createVehicleUseCase = container.resolve(CreateVehicleUseCase);
 
@@ -16,9 +16,8 @@ export class CreateVechicleController {
       color,
       year,
       plate,
-      engineMiles,
+      insurance_id: insurance_id || 12,
       notes: notes || null,
-      photo: photo || null,
       isPrimary: isPrimary || false,
     });
 
