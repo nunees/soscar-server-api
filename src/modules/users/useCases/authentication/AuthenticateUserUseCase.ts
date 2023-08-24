@@ -47,7 +47,7 @@ export class AuthenticateUserUseCase {
     } = auth;
 
     if (!user) {
-      throw new AppError("Email ou senha incorretos", 401);
+      throw new AppError("Email e/ou senha incorretos", 401);
     }
 
     // Verify password

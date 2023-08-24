@@ -2,6 +2,7 @@ import { IUserTokenCreateDTO } from "@modules/users/dtos/IUserTokenCreateDTO";
 import { IUserTokenReturnDTO } from "@modules/users/dtos/IUserTokenReturnDTO";
 import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
 import { PrismaClient } from "@prisma/client";
+import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -10,6 +11,7 @@ export class UsersTokensRepository implements IUsersTokensRepository {
     @inject("PrismaClient")
     private prismaClient: PrismaClient
   ) {}
+
 
   async create({
     expires_date,
@@ -71,4 +73,6 @@ export class UsersTokensRepository implements IUsersTokensRepository {
       },
     });
   }
+
+
 }

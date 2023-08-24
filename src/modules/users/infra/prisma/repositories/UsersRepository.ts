@@ -1,5 +1,6 @@
 import { IUserCreateDTO } from "@modules/users/dtos/IUserCreateDTO";
 import { IUserReturnDTO } from "@modules/users/dtos/IUserReturnDTO";
+import { IUpdateUserDTO } from "@modules/users/dtos/IUserUpdateDTO";
 import { User } from "@modules/users/entities/User";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { PrismaClient } from "@prisma/client";
@@ -172,31 +173,37 @@ export class UsersRepository implements IUsersRepository {
     }
   }
 
-  async update(user_id: string, user: IUserCreateDTO): Promise<void> {
+  async fetchUserProfile(user_id: string): Promise<User> {
     try {
-      await this.prismaClient.users
-        .update({
-          data: {
-            name: user.name,
-            last_name: user.last_name,
-            cpf: user.cpf,
-            mobile_phone: user.mobile_phone,
-            birth_date: user.birth_date,
-            username: user.username,
-            email: user.email,
-            isPartner: user.isPartner,
-            avatar: user.avatar,
-            genderId: user.genderId,
-          },
-          where: {
-            id: user_id,
-          },
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const user = await this.prismaClient.users.findUnique({
+        where: {
+          id: user_id,
+        }
+      });
+
+      return user as User;
     } catch (error) {
       throw new AppError(message.ErrorFetchingData);
+    }
+  }
+
+ async update(user_id: string, user: IUpdateUserDTO): Promise<void> {
+    try{
+      await this.prismaClient.users.update({
+        where: {
+          id: user_id,
+        },
+        data: {
+          name: user.name,
+          last_name: user.last_name,
+          username: user.username,
+          mobile_phone: user.mobile_phone,
+          birth_date: user.birth_date,
+        }
+      });
+    }catch(error){
+      console.log(error.message);
+      throw new AppError("Erro ao atualizar usuário!")
     }
   }
 }

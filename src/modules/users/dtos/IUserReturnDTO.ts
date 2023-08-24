@@ -6,6 +6,7 @@ export interface IUserReturnDTO {
   name: string;
   last_name: string;
   username: string;
+  password: string | null;
   email: string;
   avatar?: string;
   isPartner?: boolean;

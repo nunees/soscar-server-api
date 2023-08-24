@@ -6,22 +6,20 @@ import { message } from "@shared/lang/pt-br/String";
 
 export class FetchAvatarController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.headers || request.params || request.body;
+    const { id } = request.params || request.user;
 
     const fetchAvatarUseCase = container.resolve(FetchAvatarUseCase);
 
     try {
       const avatar = await fetchAvatarUseCase.execute(String(id));
 
-      const path = `./avatar/${avatar}`;
-
-      console.log(path);
+      if(!avatar) throw new AppError("Avatar não encontrado", 404);
 
       return response.status(200).sendFile(avatar, {
         root: "./public/avatar",
       }) as any;
     } catch (error) {
-      throw new AppError(message.InternalError, 500);
+      throw new AppError("Avatar não encontrado", 404);
     }
   }
 }

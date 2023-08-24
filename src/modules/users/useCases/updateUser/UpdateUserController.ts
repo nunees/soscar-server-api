@@ -8,14 +8,9 @@ export class UpdateUserController {
     const {
       name,
       last_name,
-      cpf,
       mobile_phone,
       birth_date,
       username,
-      email,
-      genderId,
-      isPartner,
-      avatar,
     } = request.body;
 
     const updateUserUseCase = container.resolve(UpdateUserUseCase);
@@ -23,14 +18,9 @@ export class UpdateUserController {
     await updateUserUseCase.execute(String(id), {
       name,
       last_name,
-      cpf,
       mobile_phone,
-      birth_date: new Date(birth_date),
-      username,
-      email,
-      genderId,
-      isPartner,
-      avatar,
+      birth_date,
+      username
     });
 
     return response.status(201).send();
