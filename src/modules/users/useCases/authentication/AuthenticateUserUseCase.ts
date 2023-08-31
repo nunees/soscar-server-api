@@ -19,6 +19,8 @@ interface IResponse {
     name: string;
     username: string;
     isPartner: boolean;
+    avatar: string;
+    email: string;
   };
   token: string;
   refresh_token: string;
@@ -84,6 +86,8 @@ export class AuthenticateUserUseCase {
         name: user.name,
         username: user.username,
         isPartner: user.isPartner,
+        avatar: user.avatar || "profile.png",
+        email: user.email,
       },
       token,
       refresh_token,

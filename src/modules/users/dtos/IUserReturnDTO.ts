@@ -8,7 +8,7 @@ export interface IUserReturnDTO {
   username: string;
   password: string | null;
   email: string;
-  avatar?: string;
+  avatar: string;
   isPartner?: boolean;
   genderId?: number;
 }

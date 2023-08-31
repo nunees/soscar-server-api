@@ -8,18 +8,18 @@ export class UpdateAvatarController {
       const { id } = request.user;
       const avatar_file = request.file?.filename as string;
 
-      console.log(avatar_file);
-
       const updateAvatarUseCase = container.resolve(UpdateAvatarUseCase);
 
-      await updateAvatarUseCase.execute({
+      const avatar = await updateAvatarUseCase.execute({
         user_id: id,
         avatar_file,
       });
+
+      console.log("Return of avatar: " + avatar.avatar);
+
+      return response.status(200).json(avatar);
     } catch (err) {
       return response.status(400).json({ error: err.message });
     }
-
-    return response.status(204).send();
   }
 }

@@ -1,6 +1,5 @@
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { inject, injectable } from "tsyringe";
-import { message } from "@shared/lang/pt-br/String";
 
 @injectable()
 export class FetchAvatarUseCase {
@@ -9,13 +8,13 @@ export class FetchAvatarUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute(user_id: string): Promise<string> {
-    const user = await this.usersRepository.findById(user_id);
+  async execute(id: string, avatar_id: string): Promise<string> {
+    const avatar = await this.usersRepository.fetchAvatar(id, avatar_id);
 
-    if (!user) {
-      throw new Error(message.UserNotFound);
+    if(!avatar){
+      throw new Error("Avatar não encontrado");
     }
 
-    return user.avatar as string;
+    return avatar;
   }
 }

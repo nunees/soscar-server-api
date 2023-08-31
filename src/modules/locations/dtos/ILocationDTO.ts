@@ -1,4 +1,5 @@
 export interface ILocationDTO {
+  id?: string;
   user_id?: string;
   location_id?: string;
   cnpj: string;

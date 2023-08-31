@@ -80,7 +80,7 @@ userRoutes.patch("/", ensureAuthenticated, updateUserController.handle);
 
 userRoutes.put("/password/update", ensureAuthenticated, updatePasswordController.handle);
 
-userRoutes.get("/avatar/:id", fetchAvatarController.handle);
+userRoutes.get("/avatar/:user_id/:avatar_file", fetchAvatarController.handle);
 
 userRoutes.get("/delete", ensureAuthenticated, deleteUserController.handle);
 

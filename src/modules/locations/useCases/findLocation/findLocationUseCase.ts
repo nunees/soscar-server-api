@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
 import { AppError } from "@shared/errors/AppError";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { ILocationDTO } from "@modules/locations/dtos/ILocationDTO";
 
 @injectable()
 export class FindLocationUseCase {
@@ -12,7 +13,7 @@ export class FindLocationUseCase {
     private locationRepository: ILocationsRepository
   ) {}
 
-  async execute(id: string, location_id: string) {
+  async execute(id: string, location_id: string): Promise<ILocationDTO> {
     const userExists = await this.usersRepository.findById(id);
 
     if (!userExists) throw new AppError("Usuário não encontrado");

@@ -1,3 +1,4 @@
+import { IAvatarDTO } from "@modules/users/dtos/IAvatarDTO";
 import { IUserCreateDTO } from "@modules/users/dtos/IUserCreateDTO";
 import { IUserReturnDTO } from "@modules/users/dtos/IUserReturnDTO";
 import { IUpdateUserDTO } from "@modules/users/dtos/IUserUpdateDTO";
@@ -8,6 +9,7 @@ import { AppError } from "@shared/errors/AppError";
 import { message } from "@shared/lang/pt-br/String";
 import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
+import { idText } from "typescript";
 
 @injectable()
 export class UsersRepository implements IUsersRepository {
@@ -15,6 +17,19 @@ export class UsersRepository implements IUsersRepository {
     @inject("PrismaClient")
     private prismaClient: PrismaClient
   ) {}
+
+  async fetchAvatar(id: string, avatar_file: string): Promise<string> {
+    const avatar = await this.prismaClient.users.findFirst({
+      where: {
+        id,
+        AND: {
+          avatar: avatar_file,
+        }
+      }
+    });
+
+    return avatar?.avatar || "profile.png" as string;
+  }
 
   async create({
     name,
@@ -45,7 +60,7 @@ export class UsersRepository implements IUsersRepository {
           email,
           password: hashed_password,
           isPartner,
-          avatar,
+          avatar: avatar || "profile.png",
           genderId,
           isTermsAccepted,
         },
@@ -57,6 +72,7 @@ export class UsersRepository implements IUsersRepository {
         last_name: user.last_name,
         email: user.email,
         isPartner: user.isPartner,
+        avatar: user.avatar,
       } as IUserReturnDTO;
     }catch(error){
       console.log(error);
@@ -154,9 +170,9 @@ export class UsersRepository implements IUsersRepository {
     }
   }
 
-  async updateAvatar(user_id: string, avatar_file: string): Promise<void> {
+  async updateAvatar(user_id: string, avatar_file: string): Promise<IAvatarDTO> {
     try {
-      await this.prismaClient.users.update({
+      const avatar = await this.prismaClient.users.update({
         data: {
           avatar: avatar_file,
         },
@@ -164,6 +180,10 @@ export class UsersRepository implements IUsersRepository {
           id: user_id,
         },
       });
+      return {
+        user_id: avatar.id,
+        avatar: avatar.avatar,
+      } as IAvatarDTO;
     } catch (error) {
       throw new AppError(message.ErrorFetchingData);
     }
@@ -195,9 +215,10 @@ export class UsersRepository implements IUsersRepository {
     }
   }
 
- async update(user_id: string, user: IUpdateUserDTO): Promise<void> {
+ async update(user_id: string, user: IUpdateUserDTO): Promise<IUserReturnDTO> {
+  console.log({user});
     try{
-      await this.prismaClient.users.update({
+      const result = await this.prismaClient.users.update({
         where: {
           id: user_id,
         },
@@ -209,6 +230,8 @@ export class UsersRepository implements IUsersRepository {
           birth_date: user.birth_date,
         }
       });
+
+      return result as IUserReturnDTO;
     }catch(error){
       console.log(error.message);
       throw new AppError("Erro ao atualizar usuário!")

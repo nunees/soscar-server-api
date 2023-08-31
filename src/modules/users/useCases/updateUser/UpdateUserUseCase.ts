@@ -1,4 +1,5 @@
 import { IUserCreateDTO } from "@modules/users/dtos/IUserCreateDTO";
+import { IUserReturnDTO } from "@modules/users/dtos/IUserReturnDTO";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { inject, injectable } from "tsyringe";
 
@@ -24,7 +25,7 @@ export class UpdateUserUseCase {
     mobile_phone,
     username,
     birth_date,
-  }: IRequest): Promise<void> {
+  }: IRequest): Promise<IUserReturnDTO> {
 
     const userExists = await this.usersRepository.findById(user_id);
 
@@ -32,12 +33,14 @@ export class UpdateUserUseCase {
       throw new Error("Usuario não existe!");
     }
 
-    await this.usersRepository.update(user_id, {
+    const user = await this.usersRepository.update(user_id, {
       name,
       last_name,
       mobile_phone,
       username,
       birth_date,
     });
+
+    return user;
   }
 }

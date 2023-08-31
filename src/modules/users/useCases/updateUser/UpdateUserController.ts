@@ -15,7 +15,7 @@ export class UpdateUserController {
 
     const updateUserUseCase = container.resolve(UpdateUserUseCase);
 
-    await updateUserUseCase.execute(String(id), {
+    const user = await updateUserUseCase.execute(String(id), {
       name,
       last_name,
       mobile_phone,
@@ -23,6 +23,6 @@ export class UpdateUserController {
       username
     });
 
-    return response.status(201).send();
+    return response.status(201).send(user);
   }
 }
