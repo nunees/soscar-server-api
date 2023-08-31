@@ -5,7 +5,7 @@ import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
-export class GendersReposotory implements IGendersRepository {
+export class GendersRepository implements IGendersRepository {
   constructor(
     @inject("PrismaClient")
     private prismaClient: PrismaClient
@@ -13,6 +13,7 @@ export class GendersReposotory implements IGendersRepository {
 
   async fetch(): Promise<Genders[]> {
     try {
+      console.log("GendersRepository")
       const genders = await this.prismaClient.usersGenders.findMany();
 
       return genders;

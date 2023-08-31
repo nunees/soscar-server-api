@@ -15,17 +15,17 @@ import { prisma } from "@shared/infra/prisma";
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
 import { LocationsRepository } from "@modules/locations/infra/prisma/repositories/LocationsRepository";
 import { IGendersRepository } from "@modules/users/repositories/IGendersRepository";
-import { GendersReposotory } from "@modules/users/infra/prisma/repositories/GendersRepository";
+import { GendersRepository } from "@modules/users/infra/prisma/repositories/GendersRepository";
 import { IVehiclesRepository } from "@modules/vehicles/repositories/IVehiclesRepository";
 import { VehiclesRepository } from "@modules/vehicles/infra/prisma/repositories/VehiclesRepository";
 import { IQuotesRepository } from "@modules/quote/repositories/IQuotesRepository";
 import { QuotesRepository } from "@modules/quote/infra/prisma/repositories/QuotesRepository";
 
 // In memory Repositories
-container.registerSingleton<IUsersRepository>(
-  "UsersRepositoryInMemory",
-  UsersRepositoryInMemory
-);
+// container.registerSingleton<IUsersRepository>(
+//   "UsersRepositoryInMemory",
+//   UsersRepositoryInMemory
+// );
 
 container.registerSingleton<IAddressRepository>(
   "AddressesRepositoryInMemory",
@@ -55,7 +55,7 @@ container.registerSingleton<IUsersTokensRepository>(
 
 container.registerSingleton<IGendersRepository>(
   "GendersRepository",
-  GendersReposotory
+  GendersRepository
 );
 
 container.registerSingleton<ILocationsRepository>(

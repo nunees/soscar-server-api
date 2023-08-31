@@ -35,6 +35,7 @@ model Users {
   BusinessLocations BusinessLocations[]
   UsersVehicles     UsersVehicles[]
   UserQuotes        UserQuotes[]
+  UserSchedules     UserSchedules[]
 
   @@index([cpf, username, email])
   @@map("users")
@@ -135,41 +136,43 @@ model BusinessCategories {
 }
 
 model BusinessServices {
-  id          Int                @id @unique
-  category_id Int
-  category    BusinessCategories @relation(fields: [category_id], references: [id])
-  name        String
-  created_at  DateTime           @default(now())
-  updated_at  DateTime?
-  UserQuotes  UserQuotes[]
+  id            Int                @id @unique
+  category_id   Int
+  category      BusinessCategories @relation(fields: [category_id], references: [id])
+  name          String
+  created_at    DateTime           @default(now())
+  updated_at    DateTime?
+  UserQuotes    UserQuotes[]
+  UserSchedules UserSchedules[]
 
   @@index([id, category_id, name])
   @@map("business_services")
 }
 
 model UsersVehicles {
-  id          String         @id @default(uuid())
-  user_id     String
-  users       Users          @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  brand_id    Int
-  brand       VehiclesBrands @relation(fields: [brand_id], references: [id], onDelete: Cascade)
-  name_id     Int
-  name        VehiclesNames  @relation(fields: [name_id], references: [id], onDelete: Cascade)
-  color       String?
-  year        Int
-  plate       String?        @unique
-  notes       String?
-  photo       String?
+  id       String         @id @default(uuid())
+  user_id  String
+  users    Users          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  brand_id Int
+  brand    VehiclesBrands @relation(fields: [brand_id], references: [id], onDelete: Cascade)
+  name_id  Int
+  name     VehiclesNames  @relation(fields: [name_id], references: [id], onDelete: Cascade)
+  color    String?
+  year     Int
+  plate    String?        @unique
+  notes    String?
+  photo    String?
 
-  insuranceCompaniesId Int  @default(12)
+  insuranceCompaniesId Int                @default(12)
   InsuranceCompanies   InsuranceCompanies @relation(fields: [insuranceCompaniesId], references: [id], onDelete: Cascade)
 
-  isPrimary   Boolean        @default(false)
-  engineMiles Int?           @default(0)
+  isPrimary   Boolean @default(false)
+  engineMiles Int?    @default(0)
 
-  created_at           DateTime            @default(now())
-  updated_at           DateTime?
-  UserQuotes           UserQuotes[]
+  created_at    DateTime        @default(now())
+  updated_at    DateTime?
+  UserQuotes    UserQuotes[]
+  UserSchedules UserSchedules[]
 
   @@index([user_id, brand_id, name_id, year, plate])
   @@map("users_vehicles")
@@ -249,6 +252,7 @@ model UserQuotes {
 
   user_notes    String?
   partner_notes String?
+  photos        String[] @default([])
 
   created_at DateTime  @default(now())
   updated_at DateTime?
@@ -292,6 +296,28 @@ model UserQuotesDocuments {
 
   @@index([user_quote_id, document_type_id])
   @@map("user_quotes_documents")
+}
+
+model UserSchedules {
+  id String @id @default(uuid())
+
+  user_id String
+  users   Users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  vehicle_id String
+  vehicles   UsersVehicles @relation(fields: [vehicle_id], references: [id], onDelete: Cascade)
+
+  service_type    BusinessServices? @relation(fields: [service_type_id], references: [id])
+  service_type_id Int?
+
+  date DateTime @db.Date
+  time String
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  @@index([user_id, vehicle_id, service_type_id, date, time])
+  @@map("user_schedules")
 }
 
 model DocumentsTypes {

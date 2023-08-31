@@ -16,6 +16,7 @@ import { UpdateAddressController } from "@modules/users/useCases/updateAddress/U
 import { UpdateUserController } from "@modules/users/useCases/updateUser/UpdateUserController";
 import { FetchUserProfileController } from "@modules/users/useCases/fetchUserProfile/fetchUserProfileController";
 import { UpdatePasswordController } from "@modules/users/useCases/updatePassword/updatePasswordController";
+import { FetchGendersController } from "@modules/users/useCases/fetchGenders/fetchGendersController";
 
 const userRoutes = Router();
 const uploadAvatar = multer(uploadConfig.upload("./public/avatar"));
@@ -32,7 +33,10 @@ const updateAddressController = new UpdateAddressController();
 const updateUserController = new UpdateUserController();
 const fetchUserProfileController = new FetchUserProfileController();
 const updatePasswordController = new UpdatePasswordController();
+const fetchGendersController = new FetchGendersController();
 
+
+userRoutes.get("/genders", fetchGendersController.handle);
 userRoutes.post("/new", createUserController.handle);
 userRoutes.post(
   "/address/new",
@@ -83,5 +87,7 @@ userRoutes.put("/password/update", ensureAuthenticated, updatePasswordController
 userRoutes.get("/avatar/:user_id/:avatar_file", fetchAvatarController.handle);
 
 userRoutes.get("/delete", ensureAuthenticated, deleteUserController.handle);
+
+
 
 export { userRoutes };
