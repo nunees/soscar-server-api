@@ -1,3 +1,4 @@
+import { ILocationDTO } from "@modules/locations/dtos/ILocationDTO";
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
@@ -46,31 +47,23 @@ export class CreateLocationUseCase {
       business_description,
     }: IRequest,
     user_id: string
-  ):Promise<void> {
-    const user = await this.usersRepository.findById(user_id);
+  ):Promise<ILocationDTO> {
+    try {
+      const user = await this.usersRepository.findById(user_id);
 
-    if (!user) {
-      throw new AppError(message.UserNotFound, 404);
-    }
+      if (!user) {
+        throw new AppError("Usuario não encontrado", 404);
+      }
 
-    if (!user.isPartner) {
-      throw new AppError(
-        "Usuários comuns não podem criar endereços comerciais",
-        401
-      );
-    }
+      if (!user.isPartner) {
+        throw new AppError(
+          "Usuários comuns não podem criar endereços comerciais",
+          401
+        );
+      }
 
-    const addressExists = await this.locationsRepository.addressExists(
-      address_line,
-      number
-    );
-
-    if (addressExists) {
-      throw new AppError("Endereço já cadastrado", 400);
-    }
-
-    await this.locationsRepository.create({
-      user_id: String(user.id),
+    const location = await this.locationsRepository.create({
+      user_id,
       cnpj,
       business_name,
       business_phone,
@@ -85,5 +78,13 @@ export class CreateLocationUseCase {
       business_categories,
       business_description,
     });
+
+
+    return location
+  }
+     catch (error) {
+      throw new AppError("Erro ao criar localização: ", error);
+    }
+
   }
 }

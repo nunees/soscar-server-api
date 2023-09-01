@@ -99,9 +99,12 @@ model BusinessLocations {
   payment_methods             Int[]
   business_categories         Int[]
   business_description        String?
+  photos                      String[]                      @default([])
   created_at                  DateTime                      @default(now())
   updated_at                  DateTime?
   LocationsBusinessCategories LocationsBusinessCategories[]
+  PaymentMethods              PaymentMethods?               @relation(fields: [paymentMethodsId], references: [id])
+  paymentMethodsId            Int?
 
   @@index([user_id, cnpj, business_name, business_phone, business_email, city, state, zipcode])
   @@map("business_locations")
@@ -329,6 +332,17 @@ model DocumentsTypes {
 
   @@index([id, name])
   @@map("documents_types")
+}
+
+model PaymentMethods {
+  id                Int                 @id @unique
+  name              String
+  created_at        DateTime            @default(now())
+  updated_at        DateTime?
+  BusinessLocations BusinessLocations[]
+
+  @@index([id, name])
+  @@map("payment_methods")
 }
 
 model SystemLogs {

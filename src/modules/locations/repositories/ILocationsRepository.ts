@@ -19,7 +19,7 @@ export interface ILocationsRepository {
     payment_methods,
     business_categories,
     business_description,
-  }: ICreateLocationDTO): Promise<void>;
+  }: ICreateLocationDTO): Promise<ILocationDTO>;
   delete(location_id: string): Promise<void>;
   update(
     {
@@ -40,5 +40,6 @@ export interface ILocationsRepository {
   ): Promise<void>;
   findById(location_id: string): Promise<ILocationDTO>;
   findAll(user_id: string): Promise<ILocationDTO[]>;
-  addressExists(address_line: string, number: number): Promise<ILocationDTO>;
+  addressExists(address_line: string, number: number): Promise<boolean | null>;
+  uploadPhotos( location_id: string, photos: string[]): Promise<void>;
 }

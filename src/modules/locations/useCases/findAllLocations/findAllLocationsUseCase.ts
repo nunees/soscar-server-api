@@ -13,8 +13,6 @@ export class FindAllLocationsUseCase {
   async execute(user_id: string): Promise<ILocationDTO[]> {
     const locations = await this.locationsRepository.findAll(user_id);
 
-    console.log("OK");
-
     if (!locations) throw new AppError("Local não encontrado");
 
     return locations;

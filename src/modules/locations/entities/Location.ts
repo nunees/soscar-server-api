@@ -15,6 +15,7 @@ export interface Location {
   payment_methods: number[];
   business_categories: number[];
   business_description: string;
+  photos: string[] | null;
   created_at?: Date;
   updated_at?: Date;
 }

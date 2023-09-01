@@ -1,5 +1,5 @@
 export interface ICreateLocationDTO {
-  user_id?: string;
+  user_id?: string | undefined;
   cnpj: string;
   business_name: string;
   business_phone: string;

@@ -28,25 +28,36 @@ export class LocationsRepository implements ILocationsRepository {
     payment_methods,
     business_categories,
     business_description,
-  }: ICreateLocationDTO): Promise<void> {
-    await this.prismaClient.businessLocations.create({
-      data: {
-        user_id: String(user_id),
-        cnpj,
-        business_name,
-        business_phone,
-        business_email,
-        address_line,
-        number,
-        city,
-        district,
-        state,
-        zipcode,
-        payment_methods,
-        business_categories,
-        business_description,
-        },
-    });
+
+  }: ICreateLocationDTO): Promise<ILocationDTO> {
+    try{
+      const location = await this.prismaClient.businessLocations.create({
+        data: {
+          users: {
+            connect: {
+              id: user_id,
+            }
+          },
+          cnpj,
+          business_name,
+          business_phone,
+          business_email,
+          address_line,
+          number,
+          city,
+          district,
+          state,
+          zipcode,
+          payment_methods,
+          business_categories,
+          business_description,
+          },
+      });
+
+      return location;
+    }catch(error){
+      throw new AppError("Erro ao criar localização: " + error);
+    }
   }
 
   async delete(location_id: string): Promise<void> {
@@ -137,18 +148,33 @@ export class LocationsRepository implements ILocationsRepository {
   async addressExists(
     address_line: string,
     number: number
-  ): Promise<ILocationDTO> {
-    try {
+  ): Promise<boolean | null> {
       const location = await this.prismaClient.businessLocations.findFirst({
         where: {
           address_line,
-          number,
-        },
+          AND: {
+            number,
+          }
+        }
       });
 
-      return location as ILocationDTO;
-    } catch (error) {
-      throw new AppError(error);
-    }
+      if(location) {
+        return true
+      };
+
+      return false;
+
   }
+
+  async uploadPhotos(location_id: string, photos: string[]): Promise<void> {
+    await this.prismaClient.businessLocations.update({
+      where: {
+        id: location_id,
+      },
+      data: {
+        photos,
+      }
+    });
+  }
+
 }

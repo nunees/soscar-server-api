@@ -1,10 +1,11 @@
 import { Response, Request } from "express";
 import { container } from "tsyringe";
-import { CreateLocationUseCase } from "./CreateLocationUseCase";
+import { CreateLocationUseCase } from "./createLocationUseCase";
 
 export class CreateLocationController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.headers;
+    try{
+      const { id } = request.headers;
 
     const {
       cnpj,
@@ -24,7 +25,7 @@ export class CreateLocationController {
 
     const createLocationUseCase = container.resolve(CreateLocationUseCase);
 
-    await createLocationUseCase.execute(
+    const location = await createLocationUseCase.execute(
       {
         cnpj,
         business_name,
@@ -43,6 +44,11 @@ export class CreateLocationController {
       String(id)
     );
 
-    return response.status(201).send();
+    return response.status(201).json(location);
+  }
+    catch(error){
+      return response.status(400).json({error: error.message});
+    }
+
   }
 }
