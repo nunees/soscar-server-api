@@ -1,8 +1,6 @@
 import { Router } from "express";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 
-import multer from "multer";
-import uploadConfig from "@config/uploadConfig";
 
 import { CreateLocationController } from "@modules/locations/useCases/createLocation/createLocationController";
 import { FindAllLocationsController } from "@modules/locations/useCases/findAllLocations/findAllLocationsController";
@@ -10,6 +8,9 @@ import { FindLocationController } from "@modules/locations/useCases/findLocation
 import { UpdateLocationController } from "@modules/locations/useCases/updateLocation/updateLocationController";
 import { DeleteLocationController } from "@modules/locations/useCases/deleteLocation/deleteLocationController";
 
+import multer from "multer";
+import uploadConfig from "@config/uploadConfig";
+import { UpdateBusinessPhotoController } from "@modules/locations/useCases/updateBusinessPhotos/updateBusinessPhotoController";
 
 const partnerLocationsRoutes = Router();
 const uploadAvatar = multer(uploadConfig.upload("./public/locations"));
@@ -19,6 +20,7 @@ const deleteLocationController = new DeleteLocationController();
 const findAllLocationsController = new FindAllLocationsController();
 const findLocationController = new FindLocationController();
 const updateLocationController = new UpdateLocationController();
+const updateBusinessPhotoController = new UpdateBusinessPhotoController();
 
 
 // GET
@@ -51,11 +53,12 @@ partnerLocationsRoutes.patch(
 );
 
 
+// PUT
 partnerLocationsRoutes.patch(
-  "/:location_id/photos",
+  "/:location_id/upload",
   ensureAuthenticated,
-  uploadAvatar.array("photos"),
-  updateLocationController.handle
+  uploadAvatar.array("photo", 5),
+  updateBusinessPhotoController.handle
 );
 
 
