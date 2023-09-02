@@ -44,7 +44,7 @@ export class CreateLocationController {
       String(id)
     );
 
-    return response.status(201).json(location);
+    return response.status(201).json({message: "Endereço comercial criado com sucesso!"});
   }
     catch(error){
       return response.status(400).json({error: error.message});

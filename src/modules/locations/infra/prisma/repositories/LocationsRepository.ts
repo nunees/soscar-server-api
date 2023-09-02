@@ -166,13 +166,15 @@ export class LocationsRepository implements ILocationsRepository {
 
   }
 
-  async uploadPhotos(location_id: string, photos: string[]): Promise<void> {
+  async uploadPhotos(location_id: string, photo_file: string): Promise<void> {
+    console.log("Upload de fotos: ", photo_file)
+
     await this.prismaClient.businessLocations.update({
       where: {
         id: location_id,
       },
       data: {
-        photos,
+        photos: photo_file
       }
     });
   }

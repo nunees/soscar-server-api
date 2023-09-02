@@ -44,6 +44,13 @@ partnerLocationsRoutes.post(
   createLocationController.handle
 );
 
+partnerLocationsRoutes.patch(
+  "/upload/new/:location_id",
+  ensureAuthenticated,
+  uploadAvatar.single("photo"),
+  updateBusinessPhotoController.handle
+);
+
 
 // PATCH
 partnerLocationsRoutes.patch(
@@ -54,12 +61,7 @@ partnerLocationsRoutes.patch(
 
 
 // PUT
-partnerLocationsRoutes.patch(
-  "/:location_id/upload",
-  ensureAuthenticated,
-  uploadAvatar.array("photo", 5),
-  updateBusinessPhotoController.handle
-);
+
 
 
 // DELETE

@@ -41,5 +41,5 @@ export interface ILocationsRepository {
   findById(location_id: string): Promise<ILocationDTO>;
   findAll(user_id: string): Promise<ILocationDTO[]>;
   addressExists(address_line: string, number: number): Promise<boolean | null>;
-  uploadPhotos( location_id: string, photos: string[]): Promise<void>;
+  uploadPhotos( location_id: string, photo_file: string): Promise<void>;
 }
