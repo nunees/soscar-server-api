@@ -5,6 +5,7 @@ import { UpdateBusinessPhotoUseCase } from "./UpdateBusinessPhotoUseCase";
 export class UpdateBusinessPhotoController{
   async handle(request: Request, response: Response): Promise<Response>{
     try{
+      console.log("OK")
       const { location_id } = request.params;
       const photo_file = request.file?.filename;
 

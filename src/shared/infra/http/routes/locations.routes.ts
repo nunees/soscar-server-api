@@ -11,6 +11,10 @@ import { DeleteLocationController } from "@modules/locations/useCases/deleteLoca
 import multer from "multer";
 import uploadConfig from "@config/uploadConfig";
 import { UpdateBusinessPhotoController } from "@modules/locations/useCases/updateBusinessPhotos/updateBusinessPhotoController";
+import { FetchAllLocationsPhotosController } from "@modules/locations/useCases/fetchAllLoactionsPhotos/fetchAllLocationsPhotosController";
+import { DeletePhotoController } from "@modules/locations/useCases/deletePhoto/deletePhotoController";
+import { FindLocationsByServiceController } from "@modules/locations/useCases/findLocationsByService/findLocationsByServiceController";
+
 
 const partnerLocationsRoutes = Router();
 const uploadAvatar = multer(uploadConfig.upload("./public/locations"));
@@ -21,6 +25,9 @@ const findAllLocationsController = new FindAllLocationsController();
 const findLocationController = new FindLocationController();
 const updateLocationController = new UpdateLocationController();
 const updateBusinessPhotoController = new UpdateBusinessPhotoController();
+const fetchAllLocationsPhotosController = new FetchAllLocationsPhotosController();
+const deletePhotoController = new DeletePhotoController();
+const findLocationByServiceController = new FindLocationsByServiceController();
 
 
 // GET
@@ -34,6 +41,17 @@ partnerLocationsRoutes.get(
   "/",
   ensureAuthenticated,
   findAllLocationsController.handle
+);
+
+partnerLocationsRoutes.get(
+  "/photo/:location_id/:photo_file",
+  fetchAllLocationsPhotosController.handle
+);
+
+partnerLocationsRoutes.get(
+  "/services/:serviceId",
+  ensureAuthenticated,
+  findLocationByServiceController.handle
 );
 
 
@@ -70,5 +88,13 @@ partnerLocationsRoutes.delete(
   ensureAuthenticated,
   deleteLocationController.handle
 );
+
+partnerLocationsRoutes.delete(
+  "/photo/:photo_id",
+  ensureAuthenticated,
+  deletePhotoController.handle
+);
+
+
 
 export { partnerLocationsRoutes };

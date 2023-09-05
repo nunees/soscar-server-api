@@ -42,4 +42,7 @@ export interface ILocationsRepository {
   findAll(user_id: string): Promise<ILocationDTO[]>;
   addressExists(address_line: string, number: number): Promise<boolean | null>;
   uploadPhotos( location_id: string, photo_file: string): Promise<void>;
+  fetchPhotos(location_id: string, photo_file: string): Promise<string>;
+  deletePhoto(photo_id: string): Promise<void>;
+  findLocationByService(service_id: number): Promise<Location[] | null>;
 }

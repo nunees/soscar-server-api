@@ -1,7 +1,7 @@
 export interface ILocationDTO {
   id?: string;
-  user_id?: string;
   location_id?: string;
+  user_id?: string;
   cnpj: string;
   business_name: string;
   business_phone: string;
@@ -14,5 +14,18 @@ export interface ILocationDTO {
   zipcode: string;
   payment_methods: number[];
   business_categories: number[];
-  business_description: string | null;
+  business_description: string | null | undefined;
+  LocationsPhotos?: {
+    id?: string;
+    location_id?: string | null;
+    photo: string;
+    created_at: Date | null;
+    updated_at: Date | null;
+  }[];
+  users?:{
+    id?: string;
+    name: string;
+    email: string;
+    avatar: string;
+  }
 }

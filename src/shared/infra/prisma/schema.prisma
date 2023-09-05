@@ -36,6 +36,7 @@ model Users {
   UsersVehicles     UsersVehicles[]
   UserQuotes        UserQuotes[]
   UserSchedules     UserSchedules[]
+  Messages          Messages[]
 
   @@index([cpf, username, email])
   @@map("users")
@@ -100,11 +101,13 @@ model BusinessLocations {
   business_categories         Int[]
   business_description        String?
   photos                      String[]                      @default([])
+  active                      Boolean                       @default(true)
   created_at                  DateTime                      @default(now())
   updated_at                  DateTime?
   LocationsBusinessCategories LocationsBusinessCategories[]
   PaymentMethods              PaymentMethods?               @relation(fields: [paymentMethodsId], references: [id])
   paymentMethodsId            Int?
+  LocationsPhotos             LocationsPhotos[]
 
   @@index([user_id, cnpj, business_name, business_phone, business_email, city, state, zipcode])
   @@map("business_locations")
@@ -316,11 +319,27 @@ model UserSchedules {
   date DateTime @db.Date
   time String
 
-  created_at DateTime  @default(now())
-  updated_at DateTime?
+  created_at     DateTime         @default(now())
+  updated_at     DateTime?
+  SchedulesFiles SchedulesFiles[]
 
   @@index([user_id, vehicle_id, service_type_id, date, time])
   @@map("user_schedules")
+}
+
+model SchedulesFiles {
+  id String @id @default(uuid())
+
+  schedule_id String
+  schedule    UserSchedules @relation(fields: [schedule_id], references: [id], onDelete: Cascade)
+
+  file_url String
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  @@index([schedule_id])
+  @@map("schedules_files")
 }
 
 model DocumentsTypes {
@@ -367,4 +386,36 @@ model LogsTypes {
 
   @@index([id, name])
   @@map("logs_types")
+}
+
+model Messages {
+  id String @id @default(uuid())
+
+  sender_id String
+  sender    Users  @relation(fields: [sender_id], references: [id], onDelete: Cascade)
+
+  content String
+
+  read Boolean @default(false)
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  @@index([id, sender_id])
+  @@map("messages")
+}
+
+model LocationsPhotos {
+  id String @id @default(uuid())
+
+  location_id String
+  location    BusinessLocations @relation(fields: [location_id], references: [id], onDelete: Cascade)
+
+  photo String
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  @@index([id, location_id])
+  @@map("locations_photos")
 }

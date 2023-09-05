@@ -53,12 +53,22 @@ export class VehiclesRepository implements IVehiclesRepository {
           user_id,
         },
         include: {
-          brand: true,
-          name: true,
+          brand: {
+            select: {
+              name: true,
+              id: true,
+            }
+          },
+          name: {
+            select: {
+              name: true,
+              id: true,
+            }
+          },
         },
       });
 
-      return vehicles;
+      return vehicles as IReturnVehicleDTO[];
     } catch (error) {
       throw new AppError(error.message);
     }
