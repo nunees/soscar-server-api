@@ -16,7 +16,7 @@ export class FetchAvatarController {
       if(!avatar) throw new AppError("Avatar não encontrado", 404);
 
       return response.status(200).sendFile(avatar, {
-        root: "./public/avatar",
+        root: "./upload/avatar",
       }) as any;
     } catch (error) {
       throw new AppError("Avatar não encontrado 2", 404);

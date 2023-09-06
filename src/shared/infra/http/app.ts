@@ -29,6 +29,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use(routes);
 
 app.use(express.static("public"));
+app.use(express.static("upload"));
 
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {

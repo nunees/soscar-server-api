@@ -17,7 +17,7 @@ import { FindLocationsByServiceController } from "@modules/locations/useCases/fi
 
 
 const partnerLocationsRoutes = Router();
-const uploadAvatar = multer(uploadConfig.upload("./public/locations"));
+const uploadAvatar = multer(uploadConfig.upload("./upload/locations"));
 
 const createLocationController = new CreateLocationController();
 const deleteLocationController = new DeleteLocationController();

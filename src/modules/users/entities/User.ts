@@ -11,6 +11,6 @@ export interface User {
   isPartner: boolean;
   created_at?: Date;
   updated_at?: Date;
-  avatar?: string;
+  avatar: string;
   gender?: string;
 }

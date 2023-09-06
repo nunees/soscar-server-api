@@ -18,7 +18,7 @@ export class FetchAllLocationsPhotosController{
       console.log(photo);
 
       return response.status(200).sendFile(photo, {
-        root: "./public/locations",
+        root: "./upload/locations",
       }) as any;
     }
       catch(erro){

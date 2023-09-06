@@ -1,10 +1,6 @@
 import { ISchedulesRepository } from "@modules/schedule/repositories/ISchedulesRepository";
 import { inject, injectable } from "tsyringe";
 
-type IRequest = {
-  id: string;
-  file: string | undefined;
-}
 
 @injectable()
 export class UploadDocumentsUseCase{
@@ -13,7 +9,18 @@ export class UploadDocumentsUseCase{
     private schedulesRepository: ISchedulesRepository
   ){}
 
-  async execute({id, file}: IRequest): Promise<void>{
+  async execute(id: string, schedule_id: string, file: string): Promise<void>{
+    const schedule = await this.schedulesRepository.findById(schedule_id);
+
+    if(!schedule){
+      throw new Error("Agendamento não encontrado");
+    }
+
+    if(schedule.user_id !== id){
+      throw new Error("Usuario nao autorizado");
+    }
+
+    const uploadDocument = await this.schedulesRepository.uploadDocument(schedule.id as string, file);
 
   }
 }

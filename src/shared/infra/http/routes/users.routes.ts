@@ -19,7 +19,7 @@ import multer from "multer";
 import uploadConfig from "@config/uploadConfig";
 
 const userRoutes = Router();
-const uploadAvatar = multer(uploadConfig.upload("./public/avatar"));
+const uploadAvatar = multer(uploadConfig.upload("./upload/avatar"));
 
 const createUserController = new CreateUserController();
 const createAddressController = new CreateAddressController();

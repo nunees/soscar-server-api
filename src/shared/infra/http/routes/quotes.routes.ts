@@ -10,7 +10,7 @@ import { FindAllUserQuotesDocumentsController } from "@modules/quote/useCases/fi
 import { FindUserQuoteByIdController } from "@modules/quote/useCases/findUserQuoteById/findUserQuoteByIdController";
 import { FindUserQuoteDocumentController } from "@modules/quote/useCases/findUserQuoteDocuments/findUserQuoteDocumentController";
 
-const uploadDocuments = multer(uploadConfig.upload("./public/quotes"));
+const uploadDocuments = multer(uploadConfig.upload("./upload/quotes"));
 
 
 const quotesRoutes = Router();

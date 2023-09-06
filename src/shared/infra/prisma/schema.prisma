@@ -102,12 +102,15 @@ model BusinessLocations {
   business_description        String?
   photos                      String[]                      @default([])
   active                      Boolean                       @default(true)
+  open_hours                  String?
+  open_hours_weekend          String[]
   created_at                  DateTime                      @default(now())
   updated_at                  DateTime?
   LocationsBusinessCategories LocationsBusinessCategories[]
   PaymentMethods              PaymentMethods?               @relation(fields: [paymentMethodsId], references: [id])
   paymentMethodsId            Int?
   LocationsPhotos             LocationsPhotos[]
+  UserSchedules               UserSchedules[]
 
   @@index([user_id, cnpj, business_name, business_phone, business_email, city, state, zipcode])
   @@map("business_locations")
@@ -313,11 +316,20 @@ model UserSchedules {
   vehicle_id String
   vehicles   UsersVehicles @relation(fields: [vehicle_id], references: [id], onDelete: Cascade)
 
+  location_id String
+  location    BusinessLocations @relation(fields: [location_id], references: [id], onDelete: Cascade)
+
   service_type    BusinessServices? @relation(fields: [service_type_id], references: [id])
   service_type_id Int?
 
   date DateTime @db.Date
-  time String
+  time DateTime @db.Time()
+
+  notes String?
+
+  status Int @default(1)
+
+  partner_notes String?
 
   created_at     DateTime         @default(now())
   updated_at     DateTime?

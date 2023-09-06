@@ -3,7 +3,6 @@ import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
-  id?: string;
   name: string;
   last_name: string;
   cpf: string;
