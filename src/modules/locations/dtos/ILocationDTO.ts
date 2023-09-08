@@ -28,4 +28,7 @@ export interface ILocationDTO {
     email: string;
     avatar: string;
   }
+  open_hours: string | null;
+  open_hours_weekend: string;
+  active: boolean;
 }

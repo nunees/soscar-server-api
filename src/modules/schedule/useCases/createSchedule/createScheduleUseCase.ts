@@ -1,6 +1,9 @@
+import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
 import { ISchedulesRepository } from "@modules/schedule/repositories/ISchedulesRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IVehiclesRepository } from "@modules/vehicles/repositories/IVehiclesRepository";
+import { AppError } from "@shared/errors/AppError";
+import { getWeekDay } from "@utils/DateUtils";
 import { inject, injectable } from "tsyringe";
 
 type IRequest = {
@@ -21,7 +24,9 @@ export class CreateScheduleUseCase{
     @inject("UsersRepository")
     private usersRepository: IUsersRepository,
     @inject("VehiclesRepository")
-    private vehiclesRepository: IVehiclesRepository
+    private vehiclesRepository: IVehiclesRepository,
+    @inject("LocationsRepository")
+    private locationsRepository: ILocationsRepository
   ){}
 
   async execute({user_id, vehicle_id, location_id, service_type, date, time, notes}:IRequest): Promise<void>{
@@ -32,8 +37,23 @@ export class CreateScheduleUseCase{
 
     const vehicleExists = await this.vehiclesRepository.findById(vehicle_id);
     if(!vehicleExists){
-      throw new Error("Veiculo nao encontrado");
+      throw new AppError("Veiculo nao encontrado");
     }
+
+    const location = await this.locationsRepository.findById(location_id);
+    if(!location){
+      throw new AppError("Local nao encontrado");
+    }
+
+    const openDays = location.open_hours_weekend.split(",");
+    const weekDay = getWeekDay(date);
+    const isOpen = openDays.includes(weekDay!) ? true : false;
+
+    if(!isOpen){
+      throw new AppError("Local fechado no dia selecionado");
+    }
+
+
 
     await this.schedulesRepository.create({
       user_id,

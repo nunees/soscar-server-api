@@ -15,7 +15,7 @@ export class CreateVechicleController {
       name_id,
       color,
       year,
-      plate,
+      plate: plate || null,
       insurance_id: insurance_id || 12,
       notes: notes || null,
       isPrimary: isPrimary || false,

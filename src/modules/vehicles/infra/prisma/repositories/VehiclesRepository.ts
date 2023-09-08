@@ -55,12 +55,14 @@ export class VehiclesRepository implements IVehiclesRepository {
         include: {
           brand: {
             select: {
+              icon: true,
               name: true,
               id: true,
             }
           },
           name: {
             select: {
+
               name: true,
               id: true,
             }

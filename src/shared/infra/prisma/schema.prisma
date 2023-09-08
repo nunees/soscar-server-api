@@ -100,10 +100,9 @@ model BusinessLocations {
   payment_methods             Int[]
   business_categories         Int[]
   business_description        String?
-  photos                      String[]                      @default([])
   active                      Boolean                       @default(true)
   open_hours                  String?
-  open_hours_weekend          String[]
+  open_hours_weekend          String
   created_at                  DateTime                      @default(now())
   updated_at                  DateTime?
   LocationsBusinessCategories LocationsBusinessCategories[]

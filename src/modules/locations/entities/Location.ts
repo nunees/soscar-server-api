@@ -15,7 +15,9 @@ export interface Location {
   payment_methods: number[];
   business_categories: number[];
   business_description: string;
-  photos: string[] | null;
+  active: boolean;
+  open_hours: string | null;
+  open_hours_weekend: string;
   created_at?: Date;
   updated_at?: Date;
 }

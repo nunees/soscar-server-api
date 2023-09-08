@@ -3,6 +3,7 @@ import { IBrandDTO } from "./IBrandDTO";
 export interface IReturnVehicleDTO {
   user_id: string;
   brand: {
+    icon: string;
     name: string;
     id: number;
   };
