@@ -20,12 +20,14 @@ export class CreateUserController {
 
     const createUserUseCase = container.resolve(CreateUserUseCase);
 
+    console.log(request.body);
+
     const user = await createUserUseCase.execute({
       name,
       last_name,
       cpf,
       mobile_phone,
-      birth_date: new Date(birth_date),
+      birth_date,
       genderId,
       username,
       email,

@@ -9,9 +9,9 @@ export class CreateScheduleController{
 
     const createScheduleUseCase = container.resolve(CreateScheduleUseCase);
 
-    await createScheduleUseCase.execute({
+    const schedule = await createScheduleUseCase.execute({
       user_id: id,
-      vehicle_id,
+      vehicle_id: vehicle_id,
       location_id,
       service_type,
       date,
@@ -19,7 +19,9 @@ export class CreateScheduleController{
       notes
     });
 
-
+    if(!schedule){
+      return response.status(400).json({error: "Erro ao criar agendamento"});
+    }
     return response.status(201).send();
   }
 }

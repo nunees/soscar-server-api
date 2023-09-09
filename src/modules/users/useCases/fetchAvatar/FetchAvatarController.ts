@@ -13,13 +13,11 @@ export class FetchAvatarController {
     try {
       const avatar = await fetchAvatarUseCase.execute(id, avatar_file);
 
-      if(!avatar) throw new AppError("Avatar não encontrado", 404);
-
       return response.status(200).sendFile(avatar, {
         root: "./upload/avatar",
       }) as any;
     } catch (error) {
-      throw new AppError("Avatar não encontrado 2", 404);
+      throw new AppError("Avatar não encontrado ");
     }
   }
 }

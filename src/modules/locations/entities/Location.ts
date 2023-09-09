@@ -16,8 +16,8 @@ export interface Location {
   business_categories: number[];
   business_description: string;
   active: boolean;
-  open_hours: string | null;
-  open_hours_weekend: string;
+  open_hours: string;
+  open_hours_weekend: string[];
   created_at?: Date;
   updated_at?: Date;
 }

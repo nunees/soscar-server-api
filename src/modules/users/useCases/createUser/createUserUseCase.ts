@@ -7,7 +7,7 @@ interface IRequest {
   last_name: string;
   cpf: string;
   mobile_phone: string;
-  birth_date: Date;
+  birth_date: string;
   username: string;
   genderId: number;
   email: string;
@@ -75,7 +75,7 @@ export class CreateUserUseCase {
       last_name,
       cpf,
       mobile_phone,
-      birth_date,
+      birth_date: new Date(birth_date),
       username,
       genderId,
       email,

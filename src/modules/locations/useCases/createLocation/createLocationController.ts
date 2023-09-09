@@ -21,11 +21,15 @@ export class CreateLocationController {
       payment_methods,
       business_categories,
       business_description,
+      open_hours,
+      open_hours_weekend,
     } = request.body;
 
     const createLocationUseCase = container.resolve(CreateLocationUseCase);
 
-    const location = await createLocationUseCase.execute(
+    console.log(request.body);
+
+    await createLocationUseCase.execute(
       {
         cnpj,
         business_name,
@@ -40,6 +44,8 @@ export class CreateLocationController {
         payment_methods,
         business_categories,
         business_description,
+        open_hours,
+        open_hours_weekend,
       },
       String(id)
     );

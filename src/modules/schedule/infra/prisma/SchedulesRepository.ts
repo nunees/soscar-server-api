@@ -11,6 +11,7 @@ export class SchedulesRepository implements ISchedulesRepository{
     private prismaClient: PrismaClient
   ){}
 
+
   async findById(id: string): Promise<Schedule | null> {
     const schedule = await this.prismaClient.userSchedules.findUnique({
       where: {
@@ -31,17 +32,37 @@ export class SchedulesRepository implements ISchedulesRepository{
   }
 
 
-  async create(data: ICreateSchedule): Promise<void> {
-    await this.prismaClient.userSchedules.create({
+  async create(data: ICreateSchedule): Promise<Schedule> {
+    const schedule = await this.prismaClient.userSchedules.create({
       data:{
           user_id: data.user_id,
           vehicle_id: data.vehicle_id,
           location_id: data.location_id,
           service_type_id: data.service_type,
           date: data.date,
-          time: data.time
+          time: data.time,
+          notes: data.notes || null,
       }
     })
+
+    return schedule;
+  }
+
+  async findByDate(date: Date): Promise<Schedule[] | null> {
+    try{
+      const schedules = await this.prismaClient.userSchedules.findMany({
+        where: {
+          date
+        },
+        orderBy: {
+          time: "asc"
+        }
+      });
+
+      return schedules as Schedule[] | null;
+    }catch(error){
+      throw new Error(error);
+    }
   }
 
 }

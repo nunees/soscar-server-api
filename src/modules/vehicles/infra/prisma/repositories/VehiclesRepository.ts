@@ -110,7 +110,6 @@ export class VehiclesRepository implements IVehiclesRepository {
   }
 
   async findById(vehicle_id: string): Promise<IReturnVehicleDTO> {
-    try {
       const vehicle = await this.prismaClient.usersVehicles.findUnique({
         where: {
           id: vehicle_id,
@@ -122,9 +121,6 @@ export class VehiclesRepository implements IVehiclesRepository {
       });
 
       return vehicle as IReturnVehicleDTO;
-    } catch (error) {
-      throw new AppError(error.message);
-    }
   }
 
   async listAllBrands(): Promise<IListAllBrands[]> {

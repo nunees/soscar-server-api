@@ -19,6 +19,8 @@ export interface ILocationsRepository {
     payment_methods,
     business_categories,
     business_description,
+    open_hours,
+    open_hours_weekend,
   }: ICreateLocationDTO): Promise<ILocationDTO>;
   delete(location_id: string): Promise<void>;
   update(

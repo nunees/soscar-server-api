@@ -30,6 +30,8 @@ export class LocationsRepository implements ILocationsRepository {
     payment_methods,
     business_categories,
     business_description,
+    open_hours,
+    open_hours_weekend,
 
   }: ICreateLocationDTO): Promise<ILocationDTO> {
     try{
@@ -53,6 +55,8 @@ export class LocationsRepository implements ILocationsRepository {
           payment_methods,
           business_categories,
           business_description,
+          open_hours,
+          open_hours_weekend,
           },
       });
 

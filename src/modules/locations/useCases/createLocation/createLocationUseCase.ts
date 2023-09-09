@@ -19,6 +19,8 @@ interface IRequest {
   payment_methods: number[],
   business_categories: number[],
   business_description: string | null,
+  open_hours: string,
+  open_hours_weekend: string[],
 }
 
 @injectable()
@@ -45,6 +47,8 @@ export class CreateLocationUseCase {
       payment_methods,
       business_categories,
       business_description,
+      open_hours,
+      open_hours_weekend,
     }: IRequest,
     user_id: string
   ):Promise<ILocationDTO> {
@@ -77,6 +81,8 @@ export class CreateLocationUseCase {
       payment_methods,
       business_categories,
       business_description,
+      open_hours,
+      open_hours_weekend,
     });
 
 

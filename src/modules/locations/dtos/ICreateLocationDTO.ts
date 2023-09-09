@@ -14,4 +14,6 @@ export interface ICreateLocationDTO {
   payment_methods: number[];
   business_categories: number[];
   business_description: string | null;
+  open_hours: string;
+  open_hours_weekend: string[];
 }

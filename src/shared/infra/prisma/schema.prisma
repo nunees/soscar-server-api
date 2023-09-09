@@ -102,7 +102,7 @@ model BusinessLocations {
   business_description        String?
   active                      Boolean                       @default(true)
   open_hours                  String?
-  open_hours_weekend          String
+  open_hours_weekend          String[]
   created_at                  DateTime                      @default(now())
   updated_at                  DateTime?
   LocationsBusinessCategories LocationsBusinessCategories[]
@@ -322,7 +322,7 @@ model UserSchedules {
   service_type_id Int?
 
   date DateTime @db.Date
-  time DateTime @db.Time()
+  time String
 
   notes String?
 
