@@ -22,6 +22,8 @@ import { IQuotesRepository } from "@modules/quote/repositories/IQuotesRepository
 import { QuotesRepository } from "@modules/quote/infra/prisma/repositories/QuotesRepository";
 import { ISchedulesRepository } from "@modules/schedule/repositories/ISchedulesRepository";
 import { SchedulesRepository } from "@modules/schedule/infra/prisma/SchedulesRepository";
+import { IDateProvider } from "./providers/DateProvider/IDateProvider";
+import { DayJsDateProvider } from "./providers/DateProvider/implementation/DayJsDateProvider";
 
 // In memory Repositories
 // container.registerSingleton<IUsersRepository>(
@@ -74,6 +76,11 @@ container.registerSingleton<IQuotesRepository>(
   "QuotesRepository",
   QuotesRepository
 );
+
+container.registerSingleton<IDateProvider>(
+  "DayjsDateProvider",
+  DayJsDateProvider
+)
 
 container.register<PrismaClient>("PrismaClient", {
   useValue: prisma,

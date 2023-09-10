@@ -3,6 +3,7 @@ import { Schedule } from "@modules/schedule/entities/Schedule";
 import { ISchedulesRepository } from "@modules/schedule/repositories/ISchedulesRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IVehiclesRepository } from "@modules/vehicles/repositories/IVehiclesRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
 import { getWeekDay } from "@utils/DateUtils";
 import { inject, injectable } from "tsyringe";
@@ -27,7 +28,9 @@ export class CreateScheduleUseCase{
     @inject("VehiclesRepository")
     private vehiclesRepository: IVehiclesRepository,
     @inject("LocationsRepository")
-    private locationsRepository: ILocationsRepository
+    private locationsRepository: ILocationsRepository,
+    @inject("DayjsDateProvider")
+    private dateProvider: IDateProvider
   ){}
 
   async execute({user_id, vehicle_id, location_id, service_type, date, time, notes}:IRequest): Promise<Schedule | null>{
@@ -51,14 +54,22 @@ export class CreateScheduleUseCase{
     }
 
 
+
+
     // Check if location is open on the selected day
     const weekDay = getWeekDay(date);
-
     const isOpen = location.open_hours_weekend?.includes(weekDay);
-
     if(!isOpen){
       throw new AppError("Local fechado no dia selecionado");
     }
+
+    // Check if location is open on the selected time
+    const openHours = location.open_hours!.split("-");
+    const isLocationOpen = this.dateProvider.compareIfTimeIsOpen(time, openHours);
+    if(!isLocationOpen){
+      throw new AppError("Local fechado no horario selecionado");
+    }
+
 
     // Check if time is available
     const newDate = date.toString().split("/");
@@ -66,24 +77,21 @@ export class CreateScheduleUseCase{
       new Date(Number(newDate[2]), Number(newDate[1])-1, Number(newDate[0]))
     );
 
-    if(allSchedulesByDate?.length === 0){
-      //const isTimeAvailable = location.open_hours.split("-").includes(time);
-      const isTimeAvailable = location.open_hours!.split("-").includes(time);
-      console.log(isTimeAvailable);
-        if(isTimeAvailable){
+
+    try{
+      if(allSchedulesByDate?.length === 0){
         const schedule = await this.schedulesRepository.create({
           user_id,
           vehicle_id,
           location_id,
           service_type,
-          date,
+          date: new Date(Number(newDate[2]), Number(newDate[1])-1, Number(newDate[0])),
           time,
           notes
         });
         return schedule;
       }
-    }else {
-      console.log("Não há agendamentos para o dia selecionado2");
+
       const isTimeAvailable = allSchedulesByDate!.find(schedule => schedule.time === time);
       if(!isTimeAvailable){
         throw new AppError("Horario nao disponivel");
@@ -93,14 +101,14 @@ export class CreateScheduleUseCase{
         vehicle_id,
         location_id,
         service_type,
-        date,
+        date: new Date(Number(newDate[2]), Number(newDate[1])-1, Number(newDate[0])),
         time,
         notes
       });
       return schedule;
+    }catch(error){
+      console.log(error);
+      throw new AppError("Erro ao criar agendamento");
     }
-
-    return null;
-
   }
 }

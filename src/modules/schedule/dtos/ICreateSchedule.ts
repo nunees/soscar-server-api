@@ -1,5 +1,6 @@
 
 export interface ICreateSchedule{
+  id?: string;
   user_id: string;
   vehicle_id: string;
   location_id: string;
@@ -7,4 +8,5 @@ export interface ICreateSchedule{
   date: Date;
   time: string;
   notes: string;
+  status?: number | null;
 }

@@ -5,17 +5,38 @@ import {Router} from 'express';
 import multer from 'multer';
 import uploadConfig from '@config/uploadConfig';
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
+import { FetchSchedulesController } from '@modules/schedule/useCases/fetchSchedules/fetchSchedulesController';
+import { FetchScheduleByIdController } from '@modules/schedule/useCases/fetchScheduleById/fetchScheduleByIdController';
+import { FetchFilesController } from '@modules/schedule/useCases/fetchFiles/FetchFilesController';
+import { UpdateScheduleController } from '@modules/schedule/useCases/updateSchedule/updateScheduleController';
+import { FetchLocationSchedulesController } from '@modules/schedule/useCases/fetchLocationSchedules/fetchLocationSchedulesController';
+
 
 const schedulesRoutes = Router();
 const uploadDocuments  = multer(uploadConfig.upload('./upload/schedules'));
 
 const createScheduleController = new CreateScheduleController();
 const uploadDocumentsController = new UploadDocumentsController();
+const fetchSchedulesController = new FetchSchedulesController();
+const fetchScheduleByIdController = new FetchScheduleByIdController();
+const fetchFilesController = new FetchFilesController();
+const updateScheduleController = new UpdateScheduleController();
+const fetchLocationSchedulesController = new FetchLocationSchedulesController();
+
+
+// GET
+schedulesRoutes.get('/', ensureAuthenticated, fetchSchedulesController.handle);
+schedulesRoutes.get('/:id', ensureAuthenticated, fetchScheduleByIdController.handle);
+schedulesRoutes.get('/documents/:schedule_id/:file_url',  fetchFilesController.handle);
 
 
 // POST
 schedulesRoutes.post('/', ensureAuthenticated, createScheduleController.handle);
 schedulesRoutes.post('/documents/:schedule_id', ensureAuthenticated, uploadDocuments.single('document'), uploadDocumentsController.handle);
+
+// PUT
+schedulesRoutes.put('/:schedule_id', ensureAuthenticated, updateScheduleController.handle);
+
 
 
 export {schedulesRoutes};
