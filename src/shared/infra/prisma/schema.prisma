@@ -102,6 +102,8 @@ model BusinessLocations {
   active                      Boolean                       @default(true)
   open_hours                  String?
   open_hours_weekend          String[]
+  latitude                    String?
+  longitude                   String?
   created_at                  DateTime                      @default(now())
   updated_at                  DateTime?
   LocationsBusinessCategories LocationsBusinessCategories[]

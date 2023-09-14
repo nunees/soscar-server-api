@@ -21,6 +21,8 @@ interface IRequest {
   business_description: string | null,
   open_hours: string,
   open_hours_weekend: string[],
+  latitude: string,
+  longitude: string
 }
 
 @injectable()
@@ -49,6 +51,8 @@ export class CreateLocationUseCase {
       business_description,
       open_hours,
       open_hours_weekend,
+      latitude,
+      longitude
     }: IRequest,
     user_id: string
   ):Promise<ILocationDTO> {
@@ -83,6 +87,8 @@ export class CreateLocationUseCase {
       business_description,
       open_hours,
       open_hours_weekend,
+      latitude,
+      longitude
     });
 
 

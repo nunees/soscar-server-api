@@ -32,6 +32,8 @@ export class LocationsRepository implements ILocationsRepository {
     business_description,
     open_hours,
     open_hours_weekend,
+    latitude,
+    longitude
 
   }: ICreateLocationDTO): Promise<ILocationDTO> {
     try{
@@ -57,6 +59,8 @@ export class LocationsRepository implements ILocationsRepository {
           business_description,
           open_hours,
           open_hours_weekend,
+          latitude,
+          longitude
           },
       });
 

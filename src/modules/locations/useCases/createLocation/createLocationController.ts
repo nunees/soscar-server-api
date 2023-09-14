@@ -23,6 +23,8 @@ export class CreateLocationController {
       business_description,
       open_hours,
       open_hours_weekend,
+      latitude,
+      longitude
     } = request.body;
 
     const createLocationUseCase = container.resolve(CreateLocationUseCase);
@@ -46,6 +48,8 @@ export class CreateLocationController {
         business_description,
         open_hours,
         open_hours_weekend,
+        latitude,
+        longitude
       },
       String(id)
     );

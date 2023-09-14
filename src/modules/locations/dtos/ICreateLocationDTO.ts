@@ -16,4 +16,6 @@ export interface ICreateLocationDTO {
   business_description: string | null;
   open_hours: string;
   open_hours_weekend: string[];
+  latitude: string | null;
+  longitude: string | null;
 }

@@ -15,6 +15,8 @@ export interface ILocationDTO {
   payment_methods: number[];
   business_categories: number[];
   business_description: string | null | undefined;
+  latitude: string | null;
+  longitude: string | null;
   LocationsPhotos?: {
     id?: string;
     location_id?: string | null;

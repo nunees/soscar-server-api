@@ -18,6 +18,8 @@ export interface Location {
   active: boolean;
   open_hours: string;
   open_hours_weekend: string[];
+  latitude: string | null;
+  longitude: string | null;
   created_at?: Date;
   updated_at?: Date;
 }
