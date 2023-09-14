@@ -26,5 +26,5 @@ export interface IUsersRepository {
   findById(user_id: string): Promise<IUserReturnDTO>;
   fetchUserProfile(user_id: string): Promise<User>;
   delete(user_id: string): Promise<void>;
-  fetchAvatar(id: string, avatar_id: string): Promise<string>;
+  fetchAvatar(id: string, avatar_id: string): Promise<string | null>;
 }

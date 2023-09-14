@@ -14,6 +14,7 @@ export class UpdateScheduleController{
             time,
             notes,
             status,
+            partner_notes,
         } = request.body;
 
         const fetchFilesUseCase = container.resolve(UpdateScheduleUseCase);
@@ -28,6 +29,7 @@ export class UpdateScheduleController{
                 time,
                 notes,
                 status,
+                partner_notes,
             });
 
             return response.status(201).send();

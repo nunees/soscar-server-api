@@ -1,4 +1,5 @@
 import { ICreateSchedule } from "@modules/schedule/dtos/ICreateSchedule";
+import { ILocationSchedule } from "@modules/schedule/dtos/ILocationSchedule";
 import { IReturnSchedule } from "@modules/schedule/dtos/IReturnSchedule";
 import { Schedule } from "@modules/schedule/entities/Schedule";
 import { ISchedulesRepository } from "@modules/schedule/repositories/ISchedulesRepository";
@@ -11,6 +12,19 @@ export class SchedulesRepository implements ISchedulesRepository{
     @inject("PrismaClient")
     private prismaClient: PrismaClient
   ){}
+
+  async findAllUsersSchedules(user_id: string, location_id: string): Promise<ILocationSchedule[]> {
+    const schedules = await this.prismaClient.userSchedules.findMany({
+      where: {
+        location_id,
+      },
+      include: {
+        _count: true
+      }
+    });
+
+    return schedules;
+  }
 
   async findLocationSchedules(location_id: string): Promise<Schedule[]> {
     const schedules = await this.prismaClient.userSchedules.findMany({
@@ -150,8 +164,6 @@ export class SchedulesRepository implements ISchedulesRepository{
       }
     });
 
-    console.log(scheduleExists);
-
     await this.prismaClient.userSchedules.update({
       where: {
         id: scheduleExists?.id || schedule.id,
@@ -164,7 +176,8 @@ export class SchedulesRepository implements ISchedulesRepository{
         date: schedule.date || scheduleExists?.date,
         time: schedule.time || scheduleExists?.time,
         notes: schedule.notes || scheduleExists?.notes,
-        status: schedule.status,
+        partner_notes: schedule.partner_notes,
+        status: Number(schedule.status) || scheduleExists?.status,
       }
     });
   }

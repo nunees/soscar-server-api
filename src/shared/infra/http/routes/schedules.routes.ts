@@ -10,6 +10,7 @@ import { FetchScheduleByIdController } from '@modules/schedule/useCases/fetchSch
 import { FetchFilesController } from '@modules/schedule/useCases/fetchFiles/FetchFilesController';
 import { UpdateScheduleController } from '@modules/schedule/useCases/updateSchedule/updateScheduleController';
 import { FetchLocationSchedulesController } from '@modules/schedule/useCases/fetchLocationSchedules/fetchLocationSchedulesController';
+import { FetchAllUserSchedulesController } from '@modules/schedule/useCases/fetchAllUsersSchedules/fetchAllUserSchedulesController';
 
 
 const schedulesRoutes = Router();
@@ -22,12 +23,14 @@ const fetchScheduleByIdController = new FetchScheduleByIdController();
 const fetchFilesController = new FetchFilesController();
 const updateScheduleController = new UpdateScheduleController();
 const fetchLocationSchedulesController = new FetchLocationSchedulesController();
-
+const fetchAllUserSchedulesController = new FetchAllUserSchedulesController();
 
 // GET
 schedulesRoutes.get('/', ensureAuthenticated, fetchSchedulesController.handle);
 schedulesRoutes.get('/:id', ensureAuthenticated, fetchScheduleByIdController.handle);
 schedulesRoutes.get('/documents/:schedule_id/:file_url',  fetchFilesController.handle);
+schedulesRoutes.get('/location/:location_id', ensureAuthenticated, fetchLocationSchedulesController.handle)
+schedulesRoutes.get('/location/user/:location_id', ensureAuthenticated, fetchAllUserSchedulesController.handle);
 
 
 // POST

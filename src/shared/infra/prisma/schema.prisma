@@ -36,7 +36,6 @@ model Users {
   UsersVehicles     UsersVehicles[]
   UserQuotes        UserQuotes[]
   UserSchedules     UserSchedules[]
-  Messages          Messages[]
 
   @@index([cpf, username, email])
   @@map("users")
@@ -402,17 +401,20 @@ model LogsTypes {
 model Messages {
   id String @id @default(uuid())
 
-  sender_id String
-  sender    Users  @relation(fields: [sender_id], references: [id], onDelete: Cascade)
+  sender_id   String
+  receiver_id String
 
   content String
 
-  read Boolean @default(false)
+  // 1 - sent
+  // 2 - received
+  // 3 - read
+  status Int @default(1)
 
   created_at DateTime  @default(now())
   updated_at DateTime?
 
-  @@index([id, sender_id])
+  @@index([id, sender_id, receiver_id])
   @@map("messages")
 }
 

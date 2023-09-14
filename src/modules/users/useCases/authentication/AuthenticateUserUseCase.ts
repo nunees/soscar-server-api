@@ -86,7 +86,7 @@ export class AuthenticateUserUseCase {
         name: user.name,
         username: user.username,
         isPartner: user.isPartner,
-        avatar: user.avatar || "profile.png",
+        avatar: user.avatar,
         email: user.email,
       },
       token,

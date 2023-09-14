@@ -17,7 +17,7 @@ export class FetchAvatarController {
         root: "./upload/avatar",
       }) as any;
     } catch (error) {
-      throw new AppError("Avatar não encontrado ");
+      return response.status(404).send();
     }
   }
 }

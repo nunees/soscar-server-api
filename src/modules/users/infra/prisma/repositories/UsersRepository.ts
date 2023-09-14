@@ -18,7 +18,7 @@ export class UsersRepository implements IUsersRepository {
     private prismaClient: PrismaClient
   ) {}
 
-  async fetchAvatar(id: string, avatar_file: string): Promise<string> {
+  async fetchAvatar(id: string, avatar_file: string): Promise<string | null> {
     const avatar = await this.prismaClient.users.findFirst({
       where: {
         id,
@@ -28,7 +28,13 @@ export class UsersRepository implements IUsersRepository {
       }
     });
 
-    return avatar?.avatar || "profile.png" as string;
+    console.log(avatar)
+
+    if(!avatar){
+      return null;
+    }
+
+    return avatar?.avatar as string;
   }
 
   async create({
@@ -60,7 +66,7 @@ export class UsersRepository implements IUsersRepository {
           email,
           password: hashed_password,
           isPartner,
-          avatar: avatar || "profile.png",
+          avatar: avatar || null,
           genderId,
           isTermsAccepted,
         },

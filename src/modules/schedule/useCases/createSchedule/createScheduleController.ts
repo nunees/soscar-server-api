@@ -15,6 +15,7 @@ export class CreateScheduleController{
         user_id: id,
         vehicle_id: vehicle_id,
         location_id,
+
         service_type,
         date,
         time,
