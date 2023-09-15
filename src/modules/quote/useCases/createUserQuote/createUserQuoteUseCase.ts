@@ -4,6 +4,7 @@ import { Quote } from "@modules/quote/entities/Quote";
 import { IQuotesRepository } from "@modules/quote/repositories/IQuotesRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IVehiclesRepository } from "@modules/vehicles/repositories/IVehiclesRepository";
+import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 
@@ -19,7 +20,8 @@ export class CreateUserQuoteUseCase{
   ){}
 
   async execute(quote: ICreateQuoteDTO): Promise<Quote>{
-    const userExists = await this.usersRepository.findById(quote.user_id);
+    try{
+      const userExists = await this.usersRepository.findById(quote.user_id);
 
     if(!userExists){
       throw new Error("Usuario não existe");
@@ -38,5 +40,8 @@ export class CreateUserQuoteUseCase{
     const createdQuote = await this.quotesRepository.create(quote);
 
     return createdQuote;
+    }catch(error){
+      throw new AppError("Erro ao criar arquivos do orçamento");
+    }
   }
 }

@@ -29,7 +29,7 @@ quotesRoutes.get("/:quote_id", ensureAuthenticated, findUserQuoteByIdController.
 quotesRoutes.get("/documents/:quote_id", ensureAuthenticated, findUserQuoteDocumentByIdController.handle);
 
 quotesRoutes.post("/", ensureAuthenticated ,createUserQuoteController.handle);
-quotesRoutes.post("/documents/:quote_id", ensureAuthenticated, uploadDocuments.array("document",5), createQuoteDocumentController.handle);
+quotesRoutes.post("/documents/:quote_id/:hashId", ensureAuthenticated, uploadDocuments.single("file"), createQuoteDocumentController.handle);
 
 
 export {quotesRoutes};

@@ -5,14 +5,16 @@ import { IQuotesRepository } from "@modules/quote/repositories/IQuotesRepository
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IVehiclesRepository } from "@modules/vehicles/repositories/IVehiclesRepository";
 import { AppError } from "@shared/errors/AppError";
-import { GetFiletypes, GetUploadFileNames } from "@utils/getUploadFileNames";
+import { FileExtensionToNumber, GetFiletypes, GetUploadFileNames } from "@utils/getUploadFileNames";
 import { Multer } from "multer";
+import { doc } from "prettier";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest{
   user_id: string;
   quote_id: string;
-  documents: any;
+  document: string;
+  hashId: string;
 }
 
 @injectable()
@@ -26,7 +28,7 @@ export class CreateQuoteDocumentUseCase{
     private vehiclesRepository: IVehiclesRepository,
   ){}
 
-  async execute({documents, quote_id, user_id}: IRequest): Promise<UserQuoteDocument>{
+  async execute({document, quote_id, user_id, hashId}: IRequest): Promise<UserQuoteDocument>{
 
     const userExists = await this.usersRepository.findById(user_id);
 
@@ -44,19 +46,20 @@ export class CreateQuoteDocumentUseCase{
       throw new Error("Orçamento informado não existe");
     }
 
-    const fileNames = documents.map((file: Express.Multer.File) => file.filename);
-
-    const fileExtension = GetFiletypes(documents[0].mimetype.split("/")[0]);
-
-    console.log("extension: " + fileExtension);
+    const fileExtension = document.split(".")[1];
 
 
-    const createdQuoteDocument = await this.quotesRepository.createUserQuoteDocument(quoteExists.id, {
-      user_quote_id: quoteExists.id,
-      document_type_id: fileExtension,
-      document_url: fileNames,
+    if(!fileExtension){
+      throw new Error("Extensão do arquivo não encontrada");
+    }
+
+    const result = await this.quotesRepository.createUserQuoteDocument(quote_id, {
+      user_quote_id: quote_id,
+      document_type_id: FileExtensionToNumber(fileExtension),
+      document_url: document,
+      hashId
     });
 
-    return createdQuoteDocument;
+    return result;
   }
 }

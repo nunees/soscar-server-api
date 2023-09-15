@@ -117,6 +117,7 @@ export class VehiclesRepository implements IVehiclesRepository {
         include: {
           brand: true,
           name: true,
+          InsuranceCompanies: true,
         },
       });
 

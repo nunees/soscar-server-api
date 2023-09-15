@@ -4,16 +4,15 @@ import { CreateUserQuoteUseCase } from "./createUserQuoteUseCase";
 
 export class CreateUserQuoteController{
   async handle(request: Request, response: Response): Promise<Response>{
+
     const {id} = request.headers;
     const {
+      hashId,
       is_juridical,
       vehicle_id,
       insurance_type_id,
       insurance_company_id,
-
       service_type_id,
-      franchise_price,
-      service_price,
       user_notes
     } = request.body;
 
@@ -25,10 +24,8 @@ export class CreateUserQuoteController{
       vehicle_id,
       insurance_type_id,
       insurance_company_id,
-
+      hashId,
       service_type_id,
-      franchise_price,
-      service_price,
       user_notes
     });
 

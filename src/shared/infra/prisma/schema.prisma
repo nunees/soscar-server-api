@@ -111,6 +111,7 @@ model BusinessLocations {
   paymentMethodsId            Int?
   LocationsPhotos             LocationsPhotos[]
   UserSchedules               UserSchedules[]
+  UserQuotes                  UserQuotes[]
 
   @@index([user_id, cnpj, business_name, business_phone, business_email, city, state, zipcode])
   @@map("business_locations")
@@ -239,10 +240,15 @@ model InsuranceTypes {
 model UserQuotes {
   id String @id @default(uuid())
 
+  hashId String
+
   is_juridical Boolean @default(false)
 
   user_id String
   users   Users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  location_id String
+  location    BusinessLocations @relation(fields: [location_id], references: [id], onDelete: Cascade)
 
   vehicle_id String
   vehicles   UsersVehicles @relation(fields: [vehicle_id], references: [id], onDelete: Cascade)
@@ -257,11 +263,14 @@ model UserQuotes {
   service_type_id Int?
 
   franchise_price Float?
-  service_price   Float?
 
-  user_notes    String?
+  service_price Float?
+
+  service_decription String?
+
+  user_notes String?
+
   partner_notes String?
-  photos        String[] @default([])
 
   created_at DateTime  @default(now())
   updated_at DateTime?
@@ -291,19 +300,21 @@ model QuotesDocuments {
 model UserQuotesDocuments {
   id String @id @default(uuid())
 
+  hashId String
+
   user_quote_id String
   user_quote    UserQuotes @relation(fields: [user_quote_id], references: [id], onDelete: Cascade)
 
   document_type_id Int
   document_type    DocumentsTypes @relation(fields: [document_type_id], references: [id], onDelete: Cascade)
 
-  document_url String[] @default([])
+  document_url String?
 
   created_at      DateTime          @default(now())
   updated_at      DateTime?
   QuotesDocuments QuotesDocuments[]
 
-  @@index([user_quote_id, document_type_id])
+  @@index([user_quote_id, document_type_id, hashId])
   @@map("user_quotes_documents")
 }
 
