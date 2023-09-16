@@ -17,6 +17,23 @@ export class QuotesRepository implements IQuotesRepository{
     private prismaClient: PrismaClient
   ){}
 
+  async fetchDocument(hashId: string, document_id: string): Promise<string> {
+    try {
+      const document = await this.prismaClient.userQuotesDocuments.findFirst({
+        where: {
+          hashId,
+          AND: {
+            id: document_id,
+          }
+        }
+      });
+
+      return document?.document_url as string;
+    } catch (error) {
+      throw new AppError("Erro ao buscar arquivo");
+    }
+  }
+
 
 
   async create(quote: ICreateQuoteDTO): Promise<Quote> {
@@ -31,6 +48,7 @@ export class QuotesRepository implements IQuotesRepository{
         service_type_id: Number(quote.service_type_id),
         user_notes: quote.user_notes || null,
         partner_notes: quote.partner_notes || null,
+        location_id: quote.location_id ,
         created_at: new Date(),
       },
       include: {
@@ -95,7 +113,12 @@ export class QuotesRepository implements IQuotesRepository{
       include: {
         UserQuotesDocuments: {
           select: {
-            document_type_id: true,
+            document_type: {
+              select: {
+                id: true,
+                name: true,
+              }
+            },
             document_url: true,
           }
         },
@@ -152,6 +175,7 @@ export class QuotesRepository implements IQuotesRepository{
         service_type: true,
         insurance_type: true,
         insurance_company: true,
+        UserQuotesDocuments: true,
       },
     });
 
@@ -159,15 +183,22 @@ export class QuotesRepository implements IQuotesRepository{
   }
 
   async findUserQuoteDocumentById(quote_id: string, document_id: string): Promise<QuotesDocument | null> {
-    const quoteDocument = await this.prismaClient.quotesDocuments.findFirst({
-      where: {
-        document_id,
-      },
-      include: {
-        document: true,
-      }
-    })
+    try{
+      const quoteDocument = await this.prismaClient.quotesDocuments.findFirst({
+        where: {
+          quote_id,
+          AND: {
+            document_id,
+          }
+        },
+        include: {
+          document: true,
+        }
+      });
 
-    return quoteDocument;
+      return quoteDocument;
+    }catch(error){
+      throw new AppError("Erro ao buscar arquivo");
+    }
   }
 }

@@ -1,6 +1,7 @@
 export interface Quote{
   id: string;
   hashId: string;
+  location_id: string;
   is_juridical: boolean;
   user_id: string;
   vehicle_id: string;

@@ -7,8 +7,6 @@ export class DeleteLocationController{
     const { id } = request.headers;
     const { location_id } = request.params;
 
-    console.log(location_id)
-    console.log(id)
 
     const deleteLocationUseCase = container.resolve(DeleteLocationUseCase);
 

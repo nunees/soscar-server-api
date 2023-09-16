@@ -13,7 +13,7 @@ export class GendersRepository implements IGendersRepository {
 
   async fetch(): Promise<Genders[]> {
     try {
-      console.log("GendersRepository")
+
       const genders = await this.prismaClient.usersGenders.findMany();
 
       return genders;

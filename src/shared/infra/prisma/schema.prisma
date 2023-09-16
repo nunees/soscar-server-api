@@ -104,6 +104,8 @@ model BusinessLocations {
   open_hours_weekend          String[]
   latitude                    String?
   longitude                   String?
+  avatar                      String?
+  cover_photo                 String?
   created_at                  DateTime                      @default(now())
   updated_at                  DateTime?
   LocationsBusinessCategories LocationsBusinessCategories[]
@@ -217,6 +219,7 @@ model VehiclesNames {
 model InsuranceCompanies {
   id            Int             @id @unique
   name          String
+  icon          String
   created_at    DateTime        @default(now())
   updated_at    DateTime?
   UsersVehicles UsersVehicles[]
@@ -271,6 +274,8 @@ model UserQuotes {
   user_notes String?
 
   partner_notes String?
+
+  status Int @default(1)
 
   created_at DateTime  @default(now())
   updated_at DateTime?

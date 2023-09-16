@@ -412,18 +412,26 @@ async function addScheme() {
     await prisma.insuranceCompanies.deleteMany();
     await prisma.insuranceCompanies.createMany({
       data: [
-        {id: 1, name: "Azul Seguros", created_at: new Date()},
-        {id: 2, name: "Bradesco Seguros", created_at: new Date()},
-        {id: 3, name: "Caixa Seguradora", created_at: new Date()},
-        {id: 4, name: "HDI Seguros", created_at: new Date()},
-        {id: 5, name: "Itaú Seguros", created_at: new Date()},
-        {id: 6, name: "Liberty Seguros", created_at: new Date()},
-        {id: 7, name: "Mapfre Seguros", created_at: new Date()},
-        {id: 8, name: "Porto Seguro", created_at: new Date()},
-        {id: 9, name: "SulAmérica Seguros", created_at: new Date()},
-        {id: 10, name: "Tokio Marine Seguradora", created_at: new Date()},
-        {id: 11, name: "Outro", created_at: new Date()},
-        {id: 12, name: "Não tenho seguro", created_at: new Date()},
+        {id: 1, name: "Alfa Seguros", icon: "alfa.png", created_at: new Date()},
+        {id: 2, name: "Aliro Seguros", icon: "aliro.png", created_at: new Date()},
+        {id: 3, name: "Allianz Seguros", icon: "allianz.png", created_at: new Date()},
+        {id: 4, name: "Azul Seguros", icon: "azul.png", created_at: new Date()},
+        {id: 5, name: "Bradesco Seguros", icon: "bradesco.png", created_at: new Date()},
+        {id: 6, name: "Caixa Seguradora", icon: "caixa.png",created_at: new Date()},
+        {id: 7, name: "HDI Seguros", icon: "hdi.png",created_at: new Date()},
+        {id: 8, name: "Itaú Seguros", icon: "itau.png",created_at: new Date()},
+        {id: 9, name: "Ituran Seguros", icon: "ituran.png",created_at: new Date()},
+        {id: 10, name: "Liberty Seguros", icon: "liberty.png",created_at: new Date()},
+        {id: 11, name: "Mapfre Seguros", icon: "mapfre.png",created_at: new Date()},
+        {id: 12, name: "Mitsui Seguros",icon: "mitsui.png", created_at: new Date()},
+        {id: 13, name: "Porto Seguro", icon: "porto.png",created_at: new Date()},
+        {id: 14, name: "Sompo Seguros", icon: "sompo.png",created_at: new Date()},
+        {id: 15, name: "SulAmérica Seguros", icon: "sulamerica.png",created_at: new Date()},
+        {id: 16, name: "Tokio Marine Seguradora", icon: "tokio.png",created_at: new Date()},
+        {id: 17, name: "Youse Seguros", icon: "youse.png", created_at: new Date()},
+        {id: 18, name: "Zurich Seguros", icon: "zurich.png",created_at: new Date()},
+        {id: 19, name: "Outro", icon: "other.png", created_at: new Date()},
+        {id: 20, name: "Não tenho seguro", icon: "none.png", created_at: new Date()},
       ]
     });
 
@@ -548,10 +556,6 @@ async function addScheme() {
         { id: 46, category_id: 11, name: "Outros" },
       ],
     });
-
-
-
-
 
   } catch (error) {
     throw new Error(error);

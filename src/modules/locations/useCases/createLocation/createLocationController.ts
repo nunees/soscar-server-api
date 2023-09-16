@@ -29,8 +29,6 @@ export class CreateLocationController {
 
     const createLocationUseCase = container.resolve(CreateLocationUseCase);
 
-    console.log(request.body);
-
     await createLocationUseCase.execute(
       {
         cnpj,

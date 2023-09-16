@@ -12,6 +12,8 @@ export interface Location {
   state: string;
   zipcode: string;
   location_id?: string;
+  cover_image?: string;
+  avatar?: string;
   payment_methods: number[];
   business_categories: number[];
   business_description: string;

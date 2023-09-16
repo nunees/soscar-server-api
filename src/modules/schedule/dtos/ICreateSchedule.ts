@@ -8,6 +8,5 @@ export interface ICreateSchedule{
   date: Date;
   time: string;
   notes: string;
-  partner_notes: string | null;
   status?: number | null;
 }

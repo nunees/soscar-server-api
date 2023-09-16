@@ -15,8 +15,6 @@ export class FetchAllLocationsPhotosController{
 
       if(!photo) throw new AppError("Nenhuma foto encontrada", 404);
 
-      console.log(photo);
-
       return response.status(200).sendFile(photo, {
         root: "./upload/locations",
       }) as any;

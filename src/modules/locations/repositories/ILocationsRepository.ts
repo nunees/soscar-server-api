@@ -47,4 +47,8 @@ export interface ILocationsRepository {
   fetchPhotos(location_id: string, photo_file: string): Promise<string>;
   deletePhoto(photo_id: string): Promise<void>;
   findLocationByService(service_id: number): Promise<Location[] | null>;
+  updateAvatar(location_id: string, avatar_file: string): Promise<void>;
+  updateCoverImage(location_id: string, cover_image: string): Promise<void>;
+  fetchAvatar(location_id: string, avatar_file: string): Promise<string>;
+  fetchCoverImage(location_id: string, cover_image: string): Promise<string>;
 }

@@ -28,8 +28,6 @@ export class UsersRepository implements IUsersRepository {
       }
     });
 
-    console.log(avatar)
-
     if(!avatar){
       return null;
     }
@@ -81,7 +79,7 @@ export class UsersRepository implements IUsersRepository {
         avatar: user.avatar,
       } as IUserReturnDTO;
     }catch(error){
-      console.log(error);
+
       throw new AppError(error.message);
     }
   }
@@ -97,7 +95,7 @@ export class UsersRepository implements IUsersRepository {
 
       return user as IUserReturnDTO;
     } catch (error) {
-      console.log(error)
+
       throw new AppError(message.ErrorFetchingData);
     }
   }
@@ -111,7 +109,7 @@ export class UsersRepository implements IUsersRepository {
       });
       return user as IUserReturnDTO;
     } catch (error) {
-      console.log(error)
+
       throw new AppError(message.ErrorFetchingData);
     }
   }
@@ -221,8 +219,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
 
- async update(user_id: string, user: IUpdateUserDTO): Promise<IUserReturnDTO> {
-  console.log({user});
+ async update(user_id: string, user: IUpdateUserDTO): Promise<IUserReturnDTO> {;
     try{
       const result = await this.prismaClient.users.update({
         where: {
@@ -239,7 +236,7 @@ export class UsersRepository implements IUsersRepository {
 
       return result as IUserReturnDTO;
     }catch(error){
-      console.log(error.message);
+
       throw new AppError("Erro ao atualizar usuário!")
     }
   }

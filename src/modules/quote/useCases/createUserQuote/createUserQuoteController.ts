@@ -13,8 +13,10 @@ export class CreateUserQuoteController{
       insurance_type_id,
       insurance_company_id,
       service_type_id,
-      user_notes
+      user_notes,
+      location_id
     } = request.body;
+
 
     const createUserQuoteUseCase = container.resolve(CreateUserQuoteUseCase);
 
@@ -26,7 +28,8 @@ export class CreateUserQuoteController{
       insurance_company_id,
       hashId,
       service_type_id,
-      user_notes
+      user_notes,
+      location_id
     });
 
     return response.status(201).json(quote);

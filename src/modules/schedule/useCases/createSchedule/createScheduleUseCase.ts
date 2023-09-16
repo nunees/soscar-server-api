@@ -107,7 +107,7 @@ export class CreateScheduleUseCase{
       });
       return schedule;
     }catch(error){
-      console.log(error);
+
       throw new AppError("Erro ao criar agendamento");
     }
   }

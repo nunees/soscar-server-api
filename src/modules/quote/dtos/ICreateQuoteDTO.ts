@@ -8,4 +8,5 @@ export interface ICreateQuoteDTO {
   service_type_id: number | null ;
   user_notes?: string | null;
   partner_notes?: string | null;
+  location_id: string;
 }

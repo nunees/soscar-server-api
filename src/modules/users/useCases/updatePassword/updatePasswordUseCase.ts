@@ -24,7 +24,6 @@ export class UpdatePasswordUseCase{
 
     userExists.password = await hash(password, 8);
 
-    console.log(userExists);
 
     await this.usersRepository.update(id, userExists as IUserCreateDTO );
 

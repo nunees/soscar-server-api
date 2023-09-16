@@ -17,6 +17,9 @@ export interface ILocationDTO {
   business_description: string | null | undefined;
   latitude: string | null;
   longitude: string | null;
+  active: boolean;
+  avatar: string | null;
+  cover_photo: string | null;
   LocationsPhotos?: {
     id?: string;
     location_id?: string | null;
@@ -32,5 +35,5 @@ export interface ILocationDTO {
   }
   open_hours: string | null,
   open_hours_weekend: string[] | null,
-  active: boolean;
+
 }

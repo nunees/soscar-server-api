@@ -41,7 +41,6 @@ export class VehiclesRepository implements IVehiclesRepository {
       }
     });
    }catch(error){
-    console.log(error.message);
     throw new AppError(error.message);
    }
   }

@@ -13,4 +13,5 @@ export interface IQuotesRepository{
   findAllUserQuotesDocuments(user_id: string): Promise<QuotesDocument[]>;
   findUserQuoteById(user_id: string, quote_id: string): Promise<Quote | null>;
   findUserQuoteDocumentById(quote_id: string, document_id: string): Promise<QuotesDocument | null>;
+  fetchDocument(hashId: string, document_id: string): Promise<string>;
 }

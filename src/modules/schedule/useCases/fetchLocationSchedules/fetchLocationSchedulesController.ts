@@ -7,7 +7,6 @@ export class FetchLocationSchedulesController{
   async handle(request: Request, response: Response):Promise<Response>{
     const { location_id } = request.params;
 
-    console.log(location_id);
 
     const fetchLocationSchedulesUseCase = container.resolve(FetchLocationSchedulesUseCase);
 

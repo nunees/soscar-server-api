@@ -21,6 +21,7 @@ export class CreateUserQuoteUseCase{
 
   async execute(quote: ICreateQuoteDTO): Promise<Quote>{
     try{
+
       const userExists = await this.usersRepository.findById(quote.user_id);
 
     if(!userExists){

@@ -16,8 +16,6 @@ export class FetchAllUserSchedulesUseCase{
             throw new Error("Nenhum agendamento realizado");
         }
 
-        console.log(schedules);
-
         return schedules;
     }
 }

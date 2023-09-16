@@ -8,6 +8,7 @@ export class CreateScheduleController{
     const {id}  = request.user;
     const {vehicle_id, location_id, service_type, date, time, notes} = request.body;
 
+
     const createScheduleUseCase = container.resolve(CreateScheduleUseCase);
 
     try{

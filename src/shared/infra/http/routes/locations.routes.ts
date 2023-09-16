@@ -14,6 +14,10 @@ import { UpdateBusinessPhotoController } from "@modules/locations/useCases/updat
 import { FetchAllLocationsPhotosController } from "@modules/locations/useCases/fetchAllLoactionsPhotos/fetchAllLocationsPhotosController";
 import { DeletePhotoController } from "@modules/locations/useCases/deletePhoto/deletePhotoController";
 import { FindLocationsByServiceController } from "@modules/locations/useCases/findLocationsByService/findLocationsByServiceController";
+import { UpdateLocationAvatarController } from "@modules/locations/useCases/updateLocationAvatar/updateLocationAvatarController";
+import { FetchAvatarController } from "@modules/locations/useCases/fetchAvatar/fetchAvatarController";
+import { FetchCoverController } from "@modules/locations/useCases/fetchCover/fetchCoverController";
+import { UpdateLocationCoverImageController } from "@modules/locations/useCases/updateLocationCoverImage/UpdateLocationCoverImageController";
 
 
 const partnerLocationsRoutes = Router();
@@ -28,6 +32,10 @@ const updateBusinessPhotoController = new UpdateBusinessPhotoController();
 const fetchAllLocationsPhotosController = new FetchAllLocationsPhotosController();
 const deletePhotoController = new DeletePhotoController();
 const findLocationByServiceController = new FindLocationsByServiceController();
+const updateLocationAvatarController = new UpdateLocationAvatarController();
+const updateLocationCoverImageController = new UpdateLocationCoverImageController();
+const fetchAvatarController = new FetchAvatarController();
+const fetchCoverController = new FetchCoverController();
 
 
 // GET
@@ -36,6 +44,7 @@ partnerLocationsRoutes.get(
   ensureAuthenticated,
   findLocationController.handle
 );
+
 
 partnerLocationsRoutes.get(
   "/",
@@ -55,18 +64,21 @@ partnerLocationsRoutes.get(
 );
 
 
+partnerLocationsRoutes.get(
+  "/avatar/:location_id/:avatar_file",
+  fetchAvatarController.handle
+);
+
+partnerLocationsRoutes.get(
+  "/coverimage/:location_id/:cover_file",
+  fetchCoverController.handle
+);
+
 // POST
 partnerLocationsRoutes.post(
   "/",
   ensureAuthenticated,
   createLocationController.handle
-);
-
-partnerLocationsRoutes.patch(
-  "/upload/new/:location_id",
-  ensureAuthenticated,
-  uploadAvatar.single("photo"),
-  updateBusinessPhotoController.handle
 );
 
 
@@ -77,9 +89,18 @@ partnerLocationsRoutes.patch(
   updateLocationController.handle
 );
 
+partnerLocationsRoutes.patch(
+  "/upload/new/:location_id",
+  ensureAuthenticated,
+  uploadAvatar.single("photo"),
+  updateBusinessPhotoController.handle
+);
+
 
 // PUT
+partnerLocationsRoutes.put('/avatar/:location_id', ensureAuthenticated, uploadAvatar.single('avatar'), updateLocationAvatarController.handle);
 
+partnerLocationsRoutes.put('/cover/:location_id', ensureAuthenticated, uploadAvatar.single('cover'), updateLocationCoverImageController.handle);
 
 
 // DELETE

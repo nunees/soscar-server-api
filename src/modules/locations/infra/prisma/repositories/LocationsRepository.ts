@@ -14,6 +14,64 @@ export class LocationsRepository implements ILocationsRepository {
     private prismaClient: PrismaClient
   ) {}
 
+  async fetchAvatar(location_id: string, avatar_file: string): Promise<string> {
+    const avatar = await this.prismaClient.businessLocations.findFirst({
+      where: {
+        avatar: avatar_file,
+        AND: {
+          id: location_id,
+        }
+      }
+    })
+
+    return avatar?.avatar as string;
+  }
+
+  async fetchCoverImage(location_id: string, cover_image: string): Promise<string> {
+      const cover = await this.prismaClient.businessLocations.findFirst({
+      where: {
+        id: location_id,
+        AND: {
+          cover_photo: cover_image,
+        }
+      }
+    });
+
+    console.log(cover)
+
+    return cover?.cover_photo as string;
+  }
+
+  async updateAvatar(location_id: string, avatar_file: string): Promise<void> {
+    try{
+       await this.prismaClient.businessLocations.update({
+        where: {
+          id: location_id,
+        },
+        data: {
+          avatar: avatar_file,
+        }
+      })
+    }catch(error){
+      throw new AppError("Não foi possível atualizar o avatar do local: ");
+    }
+  }
+  async updateCoverImage(location_id: string, cover_image: string): Promise<void> {
+
+    try {
+      await this.prismaClient.businessLocations.update({
+        where: {
+          id: location_id,
+        },
+        data: {
+          cover_photo: cover_image,
+        }
+      })
+    } catch (error) {
+      throw new AppError("Não foi possível atualizar a imagem de capa do local: ");
+    }
+  }
+
 
   async create({
     user_id,
@@ -97,6 +155,13 @@ export class LocationsRepository implements ILocationsRepository {
       payment_methods,
       business_categories,
       business_description,
+      cover_photo,
+      avatar,
+      open_hours,
+      open_hours_weekend,
+      latitude,
+      longitude
+
     }: IUpdateLocationDTO,
     location_id: string
   ): Promise<void> {
@@ -118,6 +183,12 @@ export class LocationsRepository implements ILocationsRepository {
           payment_methods,
           business_categories,
           business_description,
+          cover_photo,
+          avatar,
+          open_hours,
+          open_hours_weekend,
+          latitude,
+          longitude
         },
       });
     } catch (error) {
@@ -243,10 +314,13 @@ export class LocationsRepository implements ILocationsRepository {
     try{
       const locations = await this.prismaClient.businessLocations.findMany({
         where: {
-          business_categories: {has : service_id}
+          business_categories: {has : service_id},
         },
         include: {
           users: true,
+        },
+        orderBy: {
+          latitude: "desc",
         }
       })
 

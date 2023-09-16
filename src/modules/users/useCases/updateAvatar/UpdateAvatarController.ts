@@ -15,8 +15,6 @@ export class UpdateAvatarController {
         avatar_file,
       });
 
-      console.log("Return of avatar: " + avatar.avatar);
-
       return response.status(200).json(avatar);
     } catch (err) {
       return response.status(400).json({ error: err.message });

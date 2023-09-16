@@ -13,7 +13,7 @@ export class AuthenticateUserController {
     });
     return response.json(token);
    }catch(error){
-    console.log(error.message);
+
     return response.status(500).json("Erro ao autenticar usuário")
    }
   }

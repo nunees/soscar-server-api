@@ -3,7 +3,7 @@ import { FindAllLocationsUseCase } from "./findAllLocationsUseCase";
 import { container } from "tsyringe";
 
 export class FindAllLocationsController {
-  async handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response):Promise<Response> {
     const { id } = request.headers;
 
     const findAllLocationsUseCase = container.resolve(FindAllLocationsUseCase);

@@ -20,8 +20,6 @@ export class CreateUserController {
 
     const createUserUseCase = container.resolve(CreateUserUseCase);
 
-    console.log(request.body);
-
     const user = await createUserUseCase.execute({
       name,
       last_name,

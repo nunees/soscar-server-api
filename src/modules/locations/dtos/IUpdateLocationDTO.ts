@@ -14,4 +14,10 @@ export interface IUpdateLocationDTO {
   payment_methods: number[];
   business_categories: number[];
   business_description: string | null;
+  cover_photo: string | null;
+  avatar: string | null;
+  open_hours: string;
+  open_hours_weekend: string;
+  latitude: string;
+  longitude: string;
 }

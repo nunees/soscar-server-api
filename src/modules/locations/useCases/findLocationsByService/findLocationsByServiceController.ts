@@ -7,8 +7,6 @@ export class FindLocationsByServiceController{
   async handle(request: Request, response: Response): Promise<Response>{
     const {serviceId} = request.params;
 
-    console.log(serviceId)
-
     const findLocationsByServiceUseCase = container.resolve(FindLocationsByServiceUseCase);
 
     const locations = await findLocationsByServiceUseCase.execute(Number(serviceId));
