@@ -28,6 +28,7 @@ model Users {
   isAccountVerified Boolean?            @default(false)
   isAccountLocked   Boolean?            @default(false)
   isPartner         Boolean?
+  isAssistance      Boolean?            @default(false)
   created_at        DateTime            @default(now())
   updated_at        DateTime?
   UsersAddresses    UsersAddresses[]
@@ -36,9 +37,41 @@ model Users {
   UsersVehicles     UsersVehicles[]
   UserQuotes        UserQuotes[]
   UserSchedules     UserSchedules[]
+  AssistanceStatus  AssistanceStatus[]
 
   @@index([cpf, username, email])
   @@map("users")
+}
+
+model AssistanceStatus {
+  id Int @id @unique
+
+  user_id String
+  users   Users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  // 1 - offline
+  // 2 - online
+  status Int @default(1)
+
+  category_id Int
+  categories  BusinessCategories @relation(fields: [category_id], references: [id], onDelete: Cascade)
+
+  business_services_id Int
+  business_services    BusinessServices @relation(fields: [business_services_id], references: [id], onDelete: Cascade)
+
+  latitude  String?
+  longitude String?
+
+  milesFee Float? @default(0)
+
+  price Float? @default(0)
+
+  created_at DateTime     @default(now())
+  updated_at DateTime?
+  UserQuotes UserQuotes[]
+
+  @@index([id, user_id, category_id, business_services_id, latitude, longitude])
+  @@map("assistance_status")
 }
 
 model UsersGenders {
@@ -142,20 +175,22 @@ model BusinessCategories {
   updated_at                  DateTime?
   BusinessService             BusinessServices[]
   LocationsBusinessCategories LocationsBusinessCategories[]
+  AssistanceStatus            AssistanceStatus[]
 
   @@index([id, name])
   @@map("business_categories")
 }
 
 model BusinessServices {
-  id            Int                @id @unique
-  category_id   Int
-  category      BusinessCategories @relation(fields: [category_id], references: [id])
-  name          String
-  created_at    DateTime           @default(now())
-  updated_at    DateTime?
-  UserQuotes    UserQuotes[]
-  UserSchedules UserSchedules[]
+  id               Int                @id @unique
+  category_id      Int
+  category         BusinessCategories @relation(fields: [category_id], references: [id])
+  name             String
+  created_at       DateTime           @default(now())
+  updated_at       DateTime?
+  UserQuotes       UserQuotes[]
+  UserSchedules    UserSchedules[]
+  AssistanceStatus AssistanceStatus[]
 
   @@index([id, category_id, name])
   @@map("business_services")
@@ -282,6 +317,8 @@ model UserQuotes {
 
   UserQuotesDocuments UserQuotesDocuments[]
   QuotesDocuments     QuotesDocuments[]
+  AssistanceStatus    AssistanceStatus?     @relation(fields: [assistanceStatusId], references: [id])
+  assistanceStatusId  Int?
 
   @@index([user_id, vehicle_id, insurance_type_id, insurance_company_id])
   @@map("user_quotes")
