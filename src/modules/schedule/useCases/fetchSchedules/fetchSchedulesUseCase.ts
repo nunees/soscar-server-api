@@ -13,13 +13,13 @@ export class FetchSchedulesUseCase{
         private usersRepository: IUsersRepository,
     ){}
 
-    async execute(user_id: string): Promise<Schedule[] | null>{
+    async execute(user_id: string, userType: string): Promise<Schedule[] | null>{
         const user = await this.usersRepository.findById(user_id);
         if(!user){
             throw new Error("Usuario nao encontrado");
         }
 
-        const schedules = await this.schedulesRepository.findAll(user_id);
+        const schedules = await this.schedulesRepository.findAll(user_id, userType);
         if(!schedules){
             throw new Error("Nenhum agendamento realizado");
         }

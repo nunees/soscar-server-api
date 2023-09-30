@@ -12,14 +12,17 @@ export class FindAllUserQuotesUseCase{
     private usersRepository: IUsersRepository
   ){}
 
-  async execute(user_id: string){
+  async execute(user_id: string, user_type: string){
+
     const user = await this.usersRepository.findById(user_id);
 
     if(!user){
       throw new Error("User not found!");
     }
 
-    const quotes = await this.quotesRepository.findAllUserQuotes(user_id);
+    const quotes = await this.quotesRepository.findAllUserQuotes(user_id, user_type);
+
+    console.log(quotes)
 
     return quotes;
   }

@@ -124,6 +124,7 @@ export class LocationsRepository implements ILocationsRepository {
 
       return location;
     }catch(error){
+      console.log(error)
       throw new AppError("Erro ao criar localização: " + error);
     }
   }
@@ -236,7 +237,9 @@ export class LocationsRepository implements ILocationsRepository {
         },
       });
 
-      return locations;
+
+
+      return locations as ILocationDTO[];
     } catch (error) {
       throw new AppError(error);
     }

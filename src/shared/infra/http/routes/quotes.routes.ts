@@ -25,7 +25,7 @@ const findUserQuoteDocumentByIdController = new FindUserQuoteDocumentController(
 const fetchDocumentController = new FetchDocumentController();
 
 
-quotesRoutes.get("/", ensureAuthenticated, findAllUserQuotesController.handle);
+quotesRoutes.get("/:user_type", ensureAuthenticated, findAllUserQuotesController.handle);
 quotesRoutes.get("/documents", ensureAuthenticated, findAllUserQuotesDocumentsController.handle);
 quotesRoutes.get("/:quote_id", ensureAuthenticated, findUserQuoteByIdController.handle);
 quotesRoutes.get("/documents/:quote_id/:hashId", ensureAuthenticated, findUserQuoteDocumentByIdController.handle);

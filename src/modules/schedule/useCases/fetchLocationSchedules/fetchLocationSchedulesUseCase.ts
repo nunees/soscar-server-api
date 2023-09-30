@@ -11,6 +11,7 @@ export class FetchLocationSchedulesUseCase{
 
     async execute(location_id: string): Promise<Schedule[]>{
         const schedules = await this.schedulesRepository.findLocationSchedules(location_id);
+
         return schedules;
     }
 }

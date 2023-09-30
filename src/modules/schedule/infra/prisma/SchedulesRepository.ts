@@ -37,10 +37,10 @@ export class SchedulesRepository implements ISchedulesRepository{
   }
 
 
-  async findById(id: string): Promise<Schedule | null> {
+  async findById(scheduleId: string): Promise<Schedule | null> {
     const schedule = await this.prismaClient.userSchedules.findUnique({
       where: {
-        id
+        id: scheduleId
       },
       include: {
         users: {
@@ -80,6 +80,9 @@ export class SchedulesRepository implements ISchedulesRepository{
     }
     });
 
+
+    console.log(schedule)
+
     return schedule  as Schedule | null ;
   }
 
@@ -94,6 +97,7 @@ export class SchedulesRepository implements ISchedulesRepository{
 
 
   async create(data: ICreateSchedule): Promise<Schedule> {
+
     const schedule = await this.prismaClient.userSchedules.create({
       data:{
           user_id: data.user_id,
@@ -104,9 +108,9 @@ export class SchedulesRepository implements ISchedulesRepository{
           time: data.time,
           notes: data.notes || null,
       }
-    })
+    });
 
-    return schedule;
+    return schedule as unknown as Schedule;
   }
 
   async findByDate(date: Date): Promise<Schedule[] | null> {
@@ -126,10 +130,18 @@ export class SchedulesRepository implements ISchedulesRepository{
     }
   }
 
-  async findAll(user_id: string): Promise<Schedule[] | null> {
+  async findAll(user_id: string, user_type: string): Promise<Schedule[] | null> {
+   if(user_type === "partner"){
     const schedules = await this.prismaClient.userSchedules.findMany({
       where: {
-        user_id
+        location: {
+          users: {
+            id: user_id,
+            AND: {
+              isPartner: true
+            }
+          }
+        },
       },
       orderBy: {
         date: "desc"
@@ -139,8 +151,35 @@ export class SchedulesRepository implements ISchedulesRepository{
         location: true,
         service_type: true,
       }
-    })
+    });
+
     return schedules as unknown as Schedule[] | null;
+  }
+
+
+   if(user_type === "client"){
+    const schedules = await this.prismaClient.userSchedules.findMany({
+      where: {
+        users: {
+          id: user_id,
+          AND: {
+            isPartner: false
+          }
+        }
+      },
+      orderBy: {
+        date: "desc"
+      },
+      include: {
+        users: true,
+        location: true,
+        service_type: true,
+      }
+    });
+    return schedules as unknown as Schedule[] | null;
+  }
+
+  return [];
   }
 
   async findFiles(schedule_id: string, file_url: string): Promise<string> {

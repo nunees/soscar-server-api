@@ -10,8 +10,10 @@ export class FetchScheduleByIdUseCase{
     private schedulesRepository: ISchedulesRepository
   ){}
 
-  async execute(id: string): Promise<Schedule>{
-    const schedule = await this.schedulesRepository.findById(id);
+  async execute(scheduleId: string): Promise<Schedule>{
+    const schedule = await this.schedulesRepository.findById(scheduleId);
+
+
 
     if(!schedule){
       throw new AppError('Agendamento nao encontrado');

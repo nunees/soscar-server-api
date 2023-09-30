@@ -11,10 +11,13 @@ import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from "../../../../swagger.json";
 import cors from "cors";
+import nocache from "nocache";
 
 import "@shared/container";
 
 const app = express();
+
+app.use(nocache())
 
 app.use(cors({
   origin: "*",

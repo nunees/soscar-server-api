@@ -105,42 +105,94 @@ export class QuotesRepository implements IQuotesRepository{
     }
   }
 
-  async findAllUserQuotes(user_id: string): Promise<IReturnQuote[]> {
-    const quotes = await this.prismaClient.userQuotes.findMany({
-      where: {
-        user_id: user_id
-      },
-      include: {
-        UserQuotesDocuments: {
-          select: {
-            document_type: {
-              select: {
-                id: true,
-                name: true,
-              }
-            },
-            document_url: true,
-          }
+  async findAllUserQuotes(user_id: string, user_type: string): Promise<IReturnQuote[]> {
+    console.log(user_id, user_type)
+
+    if(user_type === "client"){
+      const quotes = await this.prismaClient.userQuotes.findMany({
+        where: {
+          user_id: user_id
         },
-        vehicles: true,
-        insurance_company: {
-          select: {
-            name: true,
-            id: true,
-          }
-        },
-        users: {
-          select: {
-            name: true,
-            email: true,
-            mobile_phone: true,
+        include: {
+          UserQuotesDocuments: {
+            select: {
+              document_type: {
+                select: {
+                  id: true,
+                  name: true,
+                }
+              },
+              document_url: true,
+            }
+          },
+          location: true,
+          vehicles: true,
+          insurance_company: {
+            select: {
+              name: true,
+              id: true,
+            }
+          },
+          users: {
+            select: {
+              name: true,
+              email: true,
+              mobile_phone: true,
+              avatar: true,
+            }
           }
         }
-      }
-    });
+      });
 
+      console.log("REPOSITORY", quotes)
 
-    return quotes as unknown as IReturnQuote[];
+      return quotes  as unknown as IReturnQuote[];
+    }
+
+    if(user_type === "partner"){
+      const quotes = await this.prismaClient.userQuotes.findMany({
+        where: {
+          location: {
+            users: {
+              id: user_id,
+            }
+          },
+        },
+        include: {
+          UserQuotesDocuments: {
+            select: {
+              document_type: {
+                select: {
+                  id: true,
+                  name: true,
+                }
+              },
+              document_url: true,
+            }
+          },
+          vehicles: true,
+          insurance_company: {
+            select: {
+              name: true,
+              id: true,
+            }
+          },
+          users: {
+            select: {
+              name: true,
+              email: true,
+              mobile_phone: true,
+            }
+          }
+        }
+      });
+
+      console.log("REPOSITORY", quotes)
+
+      return quotes as unknown as IReturnQuote[];
+    }
+
+    return [];
   }
 
   async findAllUserQuotesDocuments(user_id: string): Promise<QuotesDocument[]> {

@@ -4,5 +4,5 @@ export interface IUpdateUserDTO {
   mobile_phone: string;
   username: string;
   birth_date: Date;
-
+  isPartner?: boolean;
 }

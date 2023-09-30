@@ -44,7 +44,7 @@ model Users {
 }
 
 model AssistanceStatus {
-  id Int @id @unique
+  id String @id @default(uuid())
 
   user_id String
   users   Users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
@@ -53,11 +53,12 @@ model AssistanceStatus {
   // 2 - online
   status Int @default(1)
 
-  category_id Int
-  categories  BusinessCategories @relation(fields: [category_id], references: [id], onDelete: Cascade)
-
-  business_services_id Int
-  business_services    BusinessServices @relation(fields: [business_services_id], references: [id], onDelete: Cascade)
+  // 1 - Guincho
+  // 2 - Pane elétrica
+  // 3 - Pneu
+  // 4 - Chaveiro
+  // 5 - Pane seca
+  service_id Int
 
   latitude  String?
   longitude String?
@@ -66,11 +67,15 @@ model AssistanceStatus {
 
   price Float? @default(0)
 
-  created_at DateTime     @default(now())
-  updated_at DateTime?
-  UserQuotes UserQuotes[]
+  created_at           DateTime            @default(now())
+  updated_at           DateTime?
+  UserQuotes           UserQuotes[]
+  BusinessCategories   BusinessCategories? @relation(fields: [businessCategoriesId], references: [id])
+  businessCategoriesId Int?
+  BusinessServices     BusinessServices?   @relation(fields: [businessServicesId], references: [id])
+  businessServicesId   Int?
 
-  @@index([id, user_id, category_id, business_services_id, latitude, longitude])
+  @@index([id, user_id, latitude, longitude])
   @@map("assistance_status")
 }
 
@@ -317,8 +322,9 @@ model UserQuotes {
 
   UserQuotesDocuments UserQuotesDocuments[]
   QuotesDocuments     QuotesDocuments[]
-  AssistanceStatus    AssistanceStatus?     @relation(fields: [assistanceStatusId], references: [id])
-  assistanceStatusId  Int?
+
+  AssistanceStatus   AssistanceStatus? @relation(fields: [assistanceStatusId], references: [id])
+  assistanceStatusId String?
 
   @@index([user_id, vehicle_id, insurance_type_id, insurance_company_id])
   @@map("user_quotes")

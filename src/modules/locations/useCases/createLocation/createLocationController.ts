@@ -7,6 +7,8 @@ export class CreateLocationController {
     try{
       const { id } = request.headers;
 
+      console.log(request.body)
+
     const {
       cnpj,
       business_name,
@@ -27,6 +29,7 @@ export class CreateLocationController {
       longitude
     } = request.body;
 
+
     const createLocationUseCase = container.resolve(CreateLocationUseCase);
 
     await createLocationUseCase.execute(
@@ -36,7 +39,7 @@ export class CreateLocationController {
         business_phone,
         business_email,
         address_line,
-        number,
+        number: Number(number),
         city,
         district,
         state,
@@ -51,6 +54,8 @@ export class CreateLocationController {
       },
       String(id)
     );
+
+
 
     return response.status(201).json({message: "Endereço comercial criado com sucesso!"});
   }

@@ -11,7 +11,10 @@ export class UpdateUserController {
       mobile_phone,
       birth_date,
       username,
+      isPartner
     } = request.body;
+
+    console.log(request.body);
 
     const updateUserUseCase = container.resolve(UpdateUserUseCase);
 
@@ -20,7 +23,8 @@ export class UpdateUserController {
       last_name,
       mobile_phone,
       birth_date,
-      username
+      username,
+      isPartner
     });
 
     return response.status(201).send(user);

@@ -10,6 +10,8 @@ export class FindAllLocationsController {
 
     const locations = await findAllLocationsUseCase.execute(String(id));
 
+    console.log(locations)
+
     return response.status(200).json({locations});
   }
 }

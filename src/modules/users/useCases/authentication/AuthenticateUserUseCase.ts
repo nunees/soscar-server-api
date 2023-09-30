@@ -88,6 +88,7 @@ export class AuthenticateUserUseCase {
         isPartner: user.isPartner,
         avatar: user.avatar,
         email: user.email,
+
       },
       token,
       refresh_token,

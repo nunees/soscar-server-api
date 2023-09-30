@@ -10,6 +10,7 @@ interface IRequest {
   mobile_phone: string;
   username: string;
   birth_date: Date;
+  isPartner?: boolean;
 }
 
 @injectable()
@@ -25,6 +26,7 @@ export class UpdateUserUseCase {
     mobile_phone,
     username,
     birth_date,
+    isPartner
   }: IRequest): Promise<IUserReturnDTO> {
 
     const userExists = await this.usersRepository.findById(user_id);
@@ -39,6 +41,7 @@ export class UpdateUserUseCase {
       mobile_phone,
       username,
       birth_date,
+      isPartner
     });
 
     return user;

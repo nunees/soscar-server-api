@@ -35,7 +35,6 @@ export class CreateScheduleUseCase{
 
   async execute({user_id, vehicle_id, location_id, service_type, date, time, notes}:IRequest): Promise<Schedule | null>{
 
-
     const user = await this.usersRepository.findById(user_id);
     if(!user){
       throw new Error("Usuario nao encontrado");
@@ -46,6 +45,8 @@ export class CreateScheduleUseCase{
     if(!vehicleExists){
       throw new AppError("Veiculo nao encontrado");
     }
+
+
 
 
     const location = await this.locationsRepository.findById(location_id);
@@ -63,6 +64,7 @@ export class CreateScheduleUseCase{
       throw new AppError("Local fechado no dia selecionado");
     }
 
+
     // Check if location is open on the selected time
     const openHours = location.open_hours!.split("-");
     const isLocationOpen = this.dateProvider.compareIfTimeIsOpen(time, openHours);
@@ -73,13 +75,21 @@ export class CreateScheduleUseCase{
 
     // Check if time is available
     const newDate = date.toString().split("/");
+    const tempDate = new Date(Number(newDate[2]), Number(newDate[1])-1, Number(newDate[0]));
+
+    console.log("Date: ", tempDate)
+
     const allSchedulesByDate = await this.schedulesRepository.findByDate(
-      new Date(Number(newDate[2]), Number(newDate[1])-1, Number(newDate[0]))
+      new Date(tempDate)
     );
+
+    console.log("All schedules by date: ", allSchedulesByDate)
+
 
 
     try{
       if(allSchedulesByDate?.length === 0){
+
         const schedule = await this.schedulesRepository.create({
           user_id,
           vehicle_id,
@@ -92,10 +102,13 @@ export class CreateScheduleUseCase{
         return schedule;
       }
 
-      const isTimeAvailable = allSchedulesByDate!.find(schedule => schedule.time === time);
-      if(!isTimeAvailable){
+      const isTimeAvailable = allSchedulesByDate?.find(schedule => schedule.time === time);
+
+      if(!isTimeAvailable || isTimeAvailable === undefined){
         throw new AppError("Horario nao disponivel");
       }
+
+
       const schedule = await this.schedulesRepository.create({
         user_id,
         vehicle_id,

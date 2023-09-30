@@ -26,8 +26,8 @@ const fetchLocationSchedulesController = new FetchLocationSchedulesController();
 const fetchAllUserSchedulesController = new FetchAllUserSchedulesController();
 
 // GET
-schedulesRoutes.get('/', ensureAuthenticated, fetchSchedulesController.handle);
-schedulesRoutes.get('/:id', ensureAuthenticated, fetchScheduleByIdController.handle);
+schedulesRoutes.get('/:user_type', ensureAuthenticated, fetchSchedulesController.handle);
+schedulesRoutes.get('/find/:scheduleId', ensureAuthenticated, fetchScheduleByIdController.handle);
 schedulesRoutes.get('/documents/:schedule_id/:file_url',  fetchFilesController.handle);
 schedulesRoutes.get('/location/:location_id', ensureAuthenticated, fetchLocationSchedulesController.handle)
 schedulesRoutes.get('/location/user/:location_id', ensureAuthenticated, fetchAllUserSchedulesController.handle);

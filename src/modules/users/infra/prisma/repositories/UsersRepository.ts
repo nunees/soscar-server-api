@@ -219,20 +219,34 @@ export class UsersRepository implements IUsersRepository {
     }
   }
 
- async update(user_id: string, user: IUpdateUserDTO): Promise<IUserReturnDTO> {;
+ async update(user_id: string, user: IUpdateUserDTO): Promise<IUserReturnDTO> {
+
     try{
+      const userFound = await this.prismaClient.users.findUnique({
+        where: {
+          id: user_id
+        }
+      });
+
+      if(!userFound){
+        throw new AppError("Usuário não encontrado!");
+      }
+
       const result = await this.prismaClient.users.update({
         where: {
           id: user_id,
         },
         data: {
-          name: user.name,
-          last_name: user.last_name,
-          username: user.username,
-          mobile_phone: user.mobile_phone,
-          birth_date: user.birth_date,
+          name: user.name ?? userFound.name,
+          last_name: user.last_name ?? userFound.last_name,
+          username: user.username ?? userFound.username,
+          mobile_phone: user.mobile_phone ?? userFound.mobile_phone,
+          birth_date: user.birth_date ?? userFound.birth_date,
+          isPartner: user.isPartner ?? userFound.isPartner,
         }
       });
+
+      console.log("AFTER UPDATE: ", result);
 
       return result as IUserReturnDTO;
     }catch(error){
