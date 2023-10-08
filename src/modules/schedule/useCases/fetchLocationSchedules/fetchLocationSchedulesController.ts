@@ -13,7 +13,6 @@ export class FetchLocationSchedulesController{
 
     const schedules = await fetchLocationSchedulesUseCase.execute(location_id);
 
-    console.log(schedules)
 
     return response.json(schedules);
     }

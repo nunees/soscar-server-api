@@ -22,8 +22,6 @@ export class FindAllUserQuotesUseCase{
 
     const quotes = await this.quotesRepository.findAllUserQuotes(user_id, user_type);
 
-    console.log(quotes)
-
     return quotes;
   }
 }

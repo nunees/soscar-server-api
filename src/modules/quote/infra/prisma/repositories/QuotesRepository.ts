@@ -1,6 +1,7 @@
 import { ICreateQuoteDTO } from "@modules/quote/dtos/ICreateQuoteDTO";
 import { ICreateQuoteDocumentDTO } from "@modules/quote/dtos/ICreateQuoteDocumentDTO";
 import { IReturnQuote } from "@modules/quote/dtos/IReturnQuote";
+import { IUpdateRegularQuoteDTO } from "@modules/quote/dtos/IUpdateRegularQuoteDTO";
 import { Quote } from "@modules/quote/entities/Quote";
 import { QuotesDocument } from "@modules/quote/entities/QuotesDocuments";
 import { UserQuoteDocument } from "@modules/quote/entities/UserQuotesDocuments";
@@ -16,6 +17,98 @@ export class QuotesRepository implements IQuotesRepository{
     @inject("PrismaClient")
     private prismaClient: PrismaClient
   ){}
+
+  async updateDocumentOwner(document_id: string, user_id: string): Promise<void> {
+    try{
+      await this.prismaClient.userQuotesDocuments.update(
+        {
+          where: {
+            id: document_id,
+          },
+          data: {
+            isPartnerDocument: true,
+          }
+        }
+      );
+
+
+    }catch(error){
+      throw new AppError("Erro ao atualizar documento");
+    }
+  }
+
+  async createPartnerQuoteDocument(quote_id: string, document: ICreateQuoteDocumentDTO): Promise<QuotesDocument> {
+    try{
+      const documents = await this.prismaClient.partnerQuotesDocuments.create({
+        data: {
+          hashId: document.hashId,
+          quote_id,
+          document_type_id: document.document_type_id || 0,
+          document_url: String(document.document_url),
+          created_at: new Date(),
+        }
+      });
+
+      await this.prismaClient.quotesDocuments.create({
+        data: {
+          document_id: documents.id,
+          quote_id: quote_id,
+        }
+      })
+
+      return documents;
+    }catch(error){
+      throw new AppError("Erro ao salvar arquivos no banco de dados");
+    }
+  }
+
+  async updateQuoteStatus(user_id: string, quote_id: string, status: number): Promise<Quote> {
+    try{
+
+      const quote = await this.prismaClient.userQuotes.update({
+        where: {
+          id: quote_id,
+        },
+        data: {
+          status,
+          updated_at: new Date(),
+        }
+      });
+
+      return quote;
+    }catch(error){
+      throw new AppError("Erro ao atualizar status do orcamento");
+    }
+  }
+
+  async updateRegularQuote(user_id: string, quote_id: string, data: IUpdateRegularQuoteDTO): Promise<Quote> {
+    console.log("STATUS: ", data.status)
+    try{
+      const quote = await this.prismaClient.userQuotes.update({
+        where: {
+          id: quote_id,
+        },
+        data: {
+          franchise_price: data.franchise_price,
+          service_decription: data.service_description,
+          service_price: Number(data.service_price),
+          partner_notes: data.partner_notes,
+          status: data.status,
+          updated_at: new Date(),
+        }
+      });
+
+      console.log(quote)
+
+
+
+      return quote;
+    }catch(error){
+      console.log(error)
+      throw new AppError("Erro ao atualizar orcamento");
+    }
+  }
+
 
   async fetchDocument(hashId: string, document_id: string): Promise<string> {
     try {
@@ -67,6 +160,8 @@ export class QuotesRepository implements IQuotesRepository{
   }
 
   async findQuoteById(quote_id: string): Promise<IReturnQuote | null> {
+  console.log(quote_id)
+
     const quote = await this.prismaClient.userQuotes.findUnique({
       where: {
         id: quote_id
@@ -106,7 +201,7 @@ export class QuotesRepository implements IQuotesRepository{
   }
 
   async findAllUserQuotes(user_id: string, user_type: string): Promise<IReturnQuote[]> {
-    console.log(user_id, user_type)
+
 
     if(user_type === "client"){
       const quotes = await this.prismaClient.userQuotes.findMany({
@@ -144,7 +239,7 @@ export class QuotesRepository implements IQuotesRepository{
         }
       });
 
-      console.log("REPOSITORY", quotes)
+
 
       return quotes  as unknown as IReturnQuote[];
     }
@@ -186,8 +281,6 @@ export class QuotesRepository implements IQuotesRepository{
           }
         }
       });
-
-      console.log("REPOSITORY", quotes)
 
       return quotes as unknown as IReturnQuote[];
     }

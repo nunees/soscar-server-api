@@ -77,13 +77,13 @@ export class CreateScheduleUseCase{
     const newDate = date.toString().split("/");
     const tempDate = new Date(Number(newDate[2]), Number(newDate[1])-1, Number(newDate[0]));
 
-    console.log("Date: ", tempDate)
+
 
     const allSchedulesByDate = await this.schedulesRepository.findByDate(
       new Date(tempDate)
     );
 
-    console.log("All schedules by date: ", allSchedulesByDate)
+
 
 
 

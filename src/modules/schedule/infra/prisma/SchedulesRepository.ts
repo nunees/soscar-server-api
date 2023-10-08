@@ -80,9 +80,6 @@ export class SchedulesRepository implements ISchedulesRepository{
     }
     });
 
-
-    console.log(schedule)
-
     return schedule  as Schedule | null ;
   }
 

@@ -14,13 +14,15 @@ export class FindUserQuoteByIdUseCase{
   ){}
 
   async execute(user_id: string, quote_id: string): Promise<Quote>{
+
     const user = await this.usersRepository.findById(user_id);
 
     if(!user){
       throw new Error("Usuário não encontrado");
     }
 
-    const quote = await this.quotesRepository.findUserQuoteById(user_id, quote_id);
+    const quote = await this.quotesRepository.findQuoteById(quote_id);
+
 
     if(!quote){
       throw new Error("Cotação não encontrada");

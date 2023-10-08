@@ -246,8 +246,6 @@ export class UsersRepository implements IUsersRepository {
         }
       });
 
-      console.log("AFTER UPDATE: ", result);
-
       return result as IUserReturnDTO;
     }catch(error){
 

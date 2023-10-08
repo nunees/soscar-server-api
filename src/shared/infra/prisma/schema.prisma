@@ -323,8 +323,9 @@ model UserQuotes {
   UserQuotesDocuments UserQuotesDocuments[]
   QuotesDocuments     QuotesDocuments[]
 
-  AssistanceStatus   AssistanceStatus? @relation(fields: [assistanceStatusId], references: [id])
-  assistanceStatusId String?
+  AssistanceStatus       AssistanceStatus?        @relation(fields: [assistanceStatusId], references: [id])
+  assistanceStatusId     String?
+  PartnerQuotesDocuments PartnerQuotesDocuments[]
 
   @@index([user_id, vehicle_id, insurance_type_id, insurance_company_id])
   @@map("user_quotes")
@@ -337,8 +338,10 @@ model QuotesDocuments {
   document_id String
   document    UserQuotesDocuments @relation(fields: [document_id], references: [id], onDelete: Cascade)
 
-  created_at DateTime  @default(now())
-  updated_at DateTime?
+  created_at               DateTime                @default(now())
+  updated_at               DateTime?
+  PartnerQuotesDocuments   PartnerQuotesDocuments? @relation(fields: [partnerQuotesDocumentsId], references: [id])
+  partnerQuotesDocumentsId String?
 
   @@id([quote_id, document_id])
   @@index([quote_id, document_id])
@@ -358,12 +361,35 @@ model UserQuotesDocuments {
 
   document_url String?
 
+  isPartnerDocument Boolean @default(false)
+
   created_at      DateTime          @default(now())
   updated_at      DateTime?
   QuotesDocuments QuotesDocuments[]
 
   @@index([user_quote_id, document_type_id, hashId])
   @@map("user_quotes_documents")
+}
+
+model PartnerQuotesDocuments {
+  id String @id @default(uuid())
+
+  hashId String
+
+  quote_id      String
+  partner_quote UserQuotes @relation(fields: [quote_id], references: [id], onDelete: Cascade)
+
+  document_type_id Int
+  document_type    DocumentsTypes @relation(fields: [document_type_id], references: [id], onDelete: Cascade)
+
+  document_url String?
+
+  created_at      DateTime          @default(now())
+  updated_at      DateTime?
+  QuotesDocuments QuotesDocuments[]
+
+  @@index([quote_id, document_type_id, hashId])
+  @@map("partner_quotes_documents")
 }
 
 model UserSchedules {
@@ -414,11 +440,12 @@ model SchedulesFiles {
 }
 
 model DocumentsTypes {
-  id                  Int                   @id @unique
-  name                String
-  created_at          DateTime              @default(now())
-  updated_at          DateTime?
-  UserQuotesDocuments UserQuotesDocuments[]
+  id                     Int                      @id @unique
+  name                   String
+  created_at             DateTime                 @default(now())
+  updated_at             DateTime?
+  UserQuotesDocuments    UserQuotesDocuments[]
+  PartnerQuotesDocuments PartnerQuotesDocuments[]
 
   @@index([id, name])
   @@map("documents_types")

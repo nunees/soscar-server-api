@@ -7,9 +7,6 @@ export class FetchScheduleByIdController{
     const {id} = request.headers;
     const {scheduleId} = request.params;
 
-    console.log(scheduleId);
-
-
     const fetchScheduleByIdUsecase = container.resolve(FetchScheduleByIdUseCase);
 
     const schedule = await fetchScheduleByIdUsecase.execute(scheduleId);

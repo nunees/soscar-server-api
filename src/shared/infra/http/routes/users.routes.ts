@@ -45,7 +45,7 @@ userRoutes.post(
 );
 userRoutes.post("/address/new", ensureAuthenticated, createAddressController.handle);
 
-userRoutes.get('/profile', ensureAuthenticated, fetchUserProfileController.handle);
+userRoutes.get('/profile/:user_id', ensureAuthenticated, fetchUserProfileController.handle);
 
 
 

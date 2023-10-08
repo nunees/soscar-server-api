@@ -2,6 +2,7 @@ export interface IReturnQuote {
     id: string;
     hashId: string;
     is_juridical: boolean;
+    location_id?: string;
     user_id: string;
     vehicle_id: string;
     insurance_company_id?: number | null;

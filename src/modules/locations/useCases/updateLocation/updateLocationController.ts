@@ -21,6 +21,10 @@ export class UpdateLocationController {
       payment_methods,
       business_categories,
       business_description,
+      open_hours,
+      open_hours_weekend,
+      latitude,
+      longitude
     } = request.body;
 
     const updateLocationUseCase = container.resolve(UpdateLocationUseCase);
@@ -41,6 +45,10 @@ export class UpdateLocationController {
       payment_methods,
       business_categories,
       business_description,
+      open_hours,
+      open_hours_weekend,
+      latitude,
+      longitude,
     });
 
     return response.status(200).send();

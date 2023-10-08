@@ -37,7 +37,6 @@ export class LocationsRepository implements ILocationsRepository {
       }
     });
 
-    console.log(cover)
 
     return cover?.cover_photo as string;
   }
@@ -95,6 +94,27 @@ export class LocationsRepository implements ILocationsRepository {
 
   }: ICreateLocationDTO): Promise<ILocationDTO> {
     try{
+      console.log({
+        user_id,
+        cnpj,
+        business_name,
+        business_phone,
+        business_email,
+        address_line,
+        number,
+        city,
+        district,
+        state,
+        zipcode,
+        payment_methods,
+        business_categories,
+        business_description,
+        open_hours,
+        open_hours_weekend,
+        latitude,
+        longitude
+      })
+
       const location = await this.prismaClient.businessLocations.create({
         data: {
           users: {
@@ -124,7 +144,7 @@ export class LocationsRepository implements ILocationsRepository {
 
       return location;
     }catch(error){
-      console.log(error)
+
       throw new AppError("Erro ao criar localização: " + error);
     }
   }
@@ -167,29 +187,35 @@ export class LocationsRepository implements ILocationsRepository {
     location_id: string
   ): Promise<void> {
     try {
+      const location = await this.prismaClient.businessLocations.findUnique({
+        where: {
+          id: location_id,
+        },
+      });
+
       await this.prismaClient.businessLocations.update({
         where: {
           id: location_id,
         },
         data: {
-          business_name,
-          business_phone,
-          business_email,
-          address_line,
-          number,
-          city,
-          district,
-          state,
-          zipcode,
-          payment_methods,
-          business_categories,
-          business_description,
-          cover_photo,
-          avatar,
-          open_hours,
-          open_hours_weekend,
-          latitude,
-          longitude
+          business_name: business_name  ?? location?.business_name,
+          business_phone: business_phone ?? location?.business_phone,
+          business_email: business_email ?? location?.business_email,
+          address_line: address_line ?? location?.address_line,
+          number: number ?? location?.number,
+          city: city ?? location?.city,
+          district: district ?? location?.district,
+          state: state ?? location?.state,
+          zipcode: zipcode ?? location?.zipcode,
+          payment_methods: payment_methods ?? location?.payment_methods,
+          business_categories: business_categories ?? location?.business_categories,
+          business_description: business_description ?? location?.business_description,
+          cover_photo: cover_photo ?? location?.cover_photo,
+          avatar: avatar ?? location?.avatar,
+          open_hours: open_hours ?? location?.open_hours,
+          open_hours_weekend: open_hours_weekend ?? location?.open_hours_weekend,
+          latitude: latitude ?? location?.latitude,
+          longitude: longitude ?? location?.longitude,
         },
       });
     } catch (error) {

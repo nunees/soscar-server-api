@@ -7,8 +7,6 @@ export class FindAllUserQuotesController {
     const { id } = request.headers;
     const {user_type} = request.params;
 
-    console.log(id, user_type)
-
     const findAllUserQuotesUseCase = container.resolve(FindAllUserQuotesUseCase);
 
     const quotes = await findAllUserQuotesUseCase.execute(String(id), user_type);

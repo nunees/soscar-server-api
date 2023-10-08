@@ -7,7 +7,7 @@ export class CreateLocationController {
     try{
       const { id } = request.headers;
 
-      console.log(request.body)
+
 
     const {
       cnpj,

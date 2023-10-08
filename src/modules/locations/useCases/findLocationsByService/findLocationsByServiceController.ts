@@ -13,7 +13,7 @@ export class FindLocationsByServiceController{
 
     if(!locations) return response.status(404).send({message: "Nenhuma localização encontrada"});
 
-    console.log(locations)
+
 
     return response.status(200).send(locations);
   }

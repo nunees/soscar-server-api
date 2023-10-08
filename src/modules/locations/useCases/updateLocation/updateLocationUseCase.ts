@@ -19,6 +19,10 @@ interface IRequest {
   payment_methods: number[],
   business_categories: number[],
   business_description: string | null,
+  open_hours: string,
+  open_hours_weekend: string[],
+  latitude: string,
+  longitude: string,
 }
 
 @injectable()
@@ -46,6 +50,10 @@ export class UpdateLocationUseCase {
     payment_methods,
     business_categories,
     business_description,
+    open_hours,
+    open_hours_weekend,
+    latitude,
+    longitude
   }: IRequest) {
     const userExists = await this.usersRepository.findById(String(user_id));
 
@@ -72,6 +80,10 @@ export class UpdateLocationUseCase {
         payment_methods,
         business_categories,
         business_description,
+        open_hours,
+        open_hours_weekend,
+        latitude,
+        longitude
       },
       String(location_id)
     );

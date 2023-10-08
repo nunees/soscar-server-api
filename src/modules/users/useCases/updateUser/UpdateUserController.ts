@@ -14,7 +14,6 @@ export class UpdateUserController {
       isPartner
     } = request.body;
 
-    console.log(request.body);
 
     const updateUserUseCase = container.resolve(UpdateUserUseCase);
 

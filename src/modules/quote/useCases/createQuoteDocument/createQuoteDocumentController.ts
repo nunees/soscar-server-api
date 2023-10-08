@@ -4,8 +4,10 @@ import { CreateQuoteDocumentUseCase } from "./createQuoteDocumentUseCase";
 
 export class CreateQuoteDocumentController{
   async handle(request: Request, response: Response): Promise<Response>{
-    const { id } = request.user;
-    const { quote_id } = request.params;
+console.log("createQuoteDocumentController")
+
+    const {id} = request.user;
+    const {quote_id} = request.params;
     const {hashId} = request.params;
 
     const document = request.file?.filename as string;
