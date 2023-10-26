@@ -90,7 +90,7 @@ export class LocationsRepository implements ILocationsRepository {
     open_hours,
     open_hours_weekend,
     latitude,
-    longitude
+    longitude,
 
   }: ICreateLocationDTO): Promise<ILocationDTO> {
     try{
@@ -181,7 +181,8 @@ export class LocationsRepository implements ILocationsRepository {
       open_hours,
       open_hours_weekend,
       latitude,
-      longitude
+      longitude,
+      active,
 
     }: IUpdateLocationDTO,
     location_id: string
@@ -216,12 +217,14 @@ export class LocationsRepository implements ILocationsRepository {
           open_hours_weekend: open_hours_weekend ?? location?.open_hours_weekend,
           latitude: latitude ?? location?.latitude,
           longitude: longitude ?? location?.longitude,
+          active: active ?? location?.active,
         },
       });
     } catch (error) {
       throw new AppError(error);
     }
   }
+
   async findById(location_id: string): Promise<ILocationDTO> {
     try {
       const location = await this.prismaClient.businessLocations.findUnique({

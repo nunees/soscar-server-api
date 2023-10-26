@@ -9,6 +9,12 @@ export class UploadDocumentsController{
     const {schedule_id} = request.params;
     const file = request.file?.filename;
 
+    console.log({
+      id,
+      schedule_id,
+      file
+    })
+
     const uploadDocumentsUseCase = container.resolve(UploadDocumentsUseCase);
 
     await uploadDocumentsUseCase.execute(id, schedule_id, file as string);

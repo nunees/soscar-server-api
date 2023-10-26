@@ -24,6 +24,8 @@ import { ISchedulesRepository } from "@modules/schedule/repositories/ISchedulesR
 import { SchedulesRepository } from "@modules/schedule/infra/prisma/SchedulesRepository";
 import { IDateProvider } from "./providers/DateProvider/IDateProvider";
 import { DayJsDateProvider } from "./providers/DateProvider/implementation/DayJsDateProvider";
+import { ILegalQuoteRepository } from "@modules/quote/repositories/ILegalQuoteRepository";
+import { LegalQuotesRepository } from "@modules/quote/infra/prisma/repositories/LegalQuotesRespository";
 
 // In memory Repositories
 // container.registerSingleton<IUsersRepository>(
@@ -89,4 +91,9 @@ container.register<PrismaClient>("PrismaClient", {
 container.register<ISchedulesRepository>(
   "SchedulesRepository",
   SchedulesRepository
+)
+
+container.registerSingleton<ILegalQuoteRepository>(
+  "LegalQuotesRepository",
+  LegalQuotesRepository
 )

@@ -21,6 +21,7 @@ interface IRequest {
   business_description: string | null,
   open_hours: string,
   open_hours_weekend: string[],
+  active: boolean,
   latitude: string,
   longitude: string,
 }
@@ -53,7 +54,8 @@ export class UpdateLocationUseCase {
     open_hours,
     open_hours_weekend,
     latitude,
-    longitude
+    longitude,
+    active,
   }: IRequest) {
     const userExists = await this.usersRepository.findById(String(user_id));
 
@@ -83,7 +85,8 @@ export class UpdateLocationUseCase {
         open_hours,
         open_hours_weekend,
         latitude,
-        longitude
+        longitude,
+        active
       },
       String(location_id)
     );

@@ -14,6 +14,8 @@ import { UpdateRegularQuoteController } from "@modules/quote/useCases/updateRegu
 import { UpdateQuoteStatusController } from "@modules/quote/useCases/updateQuoteStatus/updateQuoteStatusController";
 import { CreatePartnerDocumentController } from "@modules/quote/useCases/createPartnerDocument/createPatnerDocumentController";
 import { UpdateDocumentOwnerController } from "@modules/quote/useCases/updateDocumentOwner/updateDocumentOwnerController";
+import { CreateLegalQuoteController } from "@modules/quote/useCases/createLegalQuote/CreateLegalQuoteController";
+import { CreateLegalDocumentController } from "@modules/quote/useCases/createLegalDocument/CreateLegalDocumentController";
 
 const uploadDocuments = multer(uploadConfig.upload("./upload/quotes"));
 
@@ -32,6 +34,10 @@ const updateQuoteStatusController = new UpdateQuoteStatusController();
 const createPartnerDocumentController = new CreatePartnerDocumentController();
 const updateDocumentOwnerController = new UpdateDocumentOwnerController();
 
+//Legal quotes
+const createLegalQuoteController = new CreateLegalQuoteController();
+const createLegalQuoteDocumentController = new CreateLegalDocumentController();
+
 
 quotesRoutes.get("/:user_type", ensureAuthenticated, findAllUserQuotesController.handle);
 quotesRoutes.get("/documents", ensureAuthenticated, findAllUserQuotesDocumentsController.handle);
@@ -40,8 +46,11 @@ quotesRoutes.get("/documents/:quote_id/:hashId", ensureAuthenticated, findUserQu
 quotesRoutes.get("/document/:document_id/:hashId", fetchDocumentController.handle);
 
 quotesRoutes.post("/", ensureAuthenticated ,createUserQuoteController.handle);
+quotesRoutes.post("/legal", ensureAuthenticated, createLegalQuoteController.handle)
 
 quotesRoutes.post("/documents/:quote_id/:hashId", ensureAuthenticated, uploadDocuments.single("file"), createQuoteDocumentController.handle);
+quotesRoutes.post("/legal/document/:quote_id/:hashId", ensureAuthenticated, uploadDocuments.single("document"), createLegalQuoteDocumentController.handle);
+
 quotesRoutes.post("/partner/document/:quote_id/:hashId", ensureAuthenticated, uploadDocuments.single("file"), createPartnerDocumentController.handle);
 
 quotesRoutes.patch("/:quote_id", ensureAuthenticated, updateRegularQuoteController.handle);

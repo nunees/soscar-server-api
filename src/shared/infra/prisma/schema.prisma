@@ -38,6 +38,7 @@ model Users {
   UserQuotes        UserQuotes[]
   UserSchedules     UserSchedules[]
   AssistanceStatus  AssistanceStatus[]
+  UserLegalQuotes   UserLegalQuotes[]
 
   @@index([cpf, username, email])
   @@map("users")
@@ -152,6 +153,8 @@ model BusinessLocations {
   LocationsPhotos             LocationsPhotos[]
   UserSchedules               UserSchedules[]
   UserQuotes                  UserQuotes[]
+  UserLegalQuotes             UserLegalQuotes?              @relation(fields: [userLegalQuotesId], references: [id])
+  userLegalQuotesId           String?
 
   @@index([user_id, cnpj, business_name, business_phone, business_email, city, state, zipcode])
   @@map("business_locations")
@@ -196,6 +199,7 @@ model BusinessServices {
   UserQuotes       UserQuotes[]
   UserSchedules    UserSchedules[]
   AssistanceStatus AssistanceStatus[]
+  UserLegalQuotes  UserLegalQuotes[]
 
   @@index([id, category_id, name])
   @@map("business_services")
@@ -221,10 +225,11 @@ model UsersVehicles {
   isPrimary   Boolean @default(false)
   engineMiles Int?    @default(0)
 
-  created_at    DateTime        @default(now())
-  updated_at    DateTime?
-  UserQuotes    UserQuotes[]
-  UserSchedules UserSchedules[]
+  created_at      DateTime          @default(now())
+  updated_at      DateTime?
+  UserQuotes      UserQuotes[]
+  UserSchedules   UserSchedules[]
+  UserLegalQuotes UserLegalQuotes[]
 
   @@index([user_id, brand_id, name_id, year, plate])
   @@map("users_vehicles")
@@ -257,27 +262,74 @@ model VehiclesNames {
 }
 
 model InsuranceCompanies {
-  id            Int             @id @unique
-  name          String
-  icon          String
-  created_at    DateTime        @default(now())
-  updated_at    DateTime?
-  UsersVehicles UsersVehicles[]
-  UserQuotes    UserQuotes[]
+  id              Int               @id @unique
+  name            String
+  icon            String
+  created_at      DateTime          @default(now())
+  updated_at      DateTime?
+  UsersVehicles   UsersVehicles[]
+  UserQuotes      UserQuotes[]
+  UserLegalQuotes UserLegalQuotes[]
 
   @@index([id, name])
   @@map("insurance_companies")
 }
 
 model InsuranceTypes {
-  id         Int          @id @unique
-  name       String
-  created_at DateTime     @default(now())
-  updated_at DateTime?
-  UserQuotes UserQuotes[]
+  id              Int               @id @unique
+  name            String
+  created_at      DateTime          @default(now())
+  updated_at      DateTime?
+  UserQuotes      UserQuotes[]
+  UserLegalQuotes UserLegalQuotes[]
 
   @@index([id, name])
   @@map("insurance_types")
+}
+
+model UserLegalQuotes {
+  id String @id @unique @default(uuid())
+
+  hashId String
+
+  is_juridical Boolean @default(true)
+
+  user_id String
+  users   Users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  vehicle_id String
+  vehicles   UsersVehicles @relation(fields: [vehicle_id], references: [id], onDelete: Cascade)
+
+  insurance_type_id Int?
+  insurance_type    InsuranceTypes? @relation(fields: [insurance_type_id], references: [id], onDelete: Cascade)
+
+  insurance_company_id Int?
+  insurance_company    InsuranceCompanies? @relation(fields: [insurance_company_id], references: [id], onDelete: Cascade)
+
+  service_type    BusinessServices? @relation(fields: [service_type_id], references: [id])
+  service_type_id Int?
+
+  franchise_price Float?
+
+  service_price Float?
+
+  service_decription String?
+
+  user_notes String?
+
+  partner_notes String?
+
+  status Int @default(1)
+
+  locations String[]
+
+  created_at          DateTime              @default(now())
+  updated_at          DateTime?
+  LegalQuoteDocuments LegalQuoteDocuments[]
+  BusinessLocations   BusinessLocations[]
+
+  @@index([id, user_id, vehicle_id, hashId])
+  @@map("user_legal_quotes")
 }
 
 model UserQuotes {
@@ -329,6 +381,20 @@ model UserQuotes {
 
   @@index([user_id, vehicle_id, insurance_type_id, insurance_company_id])
   @@map("user_quotes")
+}
+
+model LegalQuoteDocuments {
+  id                String          @id @default(uuid())
+  quote_id          String
+  quote             UserLegalQuotes @relation(fields: [quote_id], references: [id], onDelete: Cascade)
+  document_url      String
+  isPartnerDocument Boolean         @default(false)
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  @@index([quote_id])
+  @@map("legal_quote_documents")
 }
 
 model QuotesDocuments {

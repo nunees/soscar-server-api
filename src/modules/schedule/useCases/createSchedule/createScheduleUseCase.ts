@@ -13,7 +13,7 @@ type IRequest = {
   vehicle_id: string;
   location_id: string;
   service_type: number;
-  date: Date;
+  date: string;
   time: string;
   notes: string;
 }
@@ -35,6 +35,8 @@ export class CreateScheduleUseCase{
 
   async execute({user_id, vehicle_id, location_id, service_type, date, time, notes}:IRequest): Promise<Schedule | null>{
 
+
+
     const user = await this.usersRepository.findById(user_id);
     if(!user){
       throw new Error("Usuario nao encontrado");
@@ -46,15 +48,10 @@ export class CreateScheduleUseCase{
       throw new AppError("Veiculo nao encontrado");
     }
 
-
-
-
     const location = await this.locationsRepository.findById(location_id);
     if(!location){
       throw new AppError("Local nao encontrado");
     }
-
-
 
 
     // Check if location is open on the selected day
@@ -74,16 +71,18 @@ export class CreateScheduleUseCase{
 
 
     // Check if time is available
-    const newDate = date.toString().split("/");
-    const tempDate = new Date(Number(newDate[2]), Number(newDate[1])-1, Number(newDate[0]));
+    // const newDate = date.toString().split("-");
 
+    // const tempDate = new Date(Number(newDate[2]), Number(newDate[1])-1, Number(newDate[0]));
+
+    // console.log(tempDate)
+
+    const scheduleDate = new Date(date);
 
 
     const allSchedulesByDate = await this.schedulesRepository.findByDate(
-      new Date(tempDate)
+      scheduleDate
     );
-
-
 
 
 
@@ -95,7 +94,7 @@ export class CreateScheduleUseCase{
           vehicle_id,
           location_id,
           service_type,
-          date: new Date(Number(newDate[2]), Number(newDate[1])-1, Number(newDate[0])),
+          date: scheduleDate,
           time,
           notes
         });
@@ -114,7 +113,7 @@ export class CreateScheduleUseCase{
         vehicle_id,
         location_id,
         service_type,
-        date: new Date(Number(newDate[2]), Number(newDate[1])-1, Number(newDate[0])),
+        date: scheduleDate,
         time,
         notes
       });

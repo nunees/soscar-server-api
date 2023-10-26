@@ -5,8 +5,10 @@ import { AppError } from "@shared/errors/AppError";
 
 export class CreateScheduleController{
   async handle(request: Request, response: Response): Promise<Response>{
+
     const {id}  = request.user;
     const {vehicle_id, location_id, service_type, date, time, notes} = request.body;
+
 
     const createScheduleUseCase = container.resolve(CreateScheduleUseCase);
 
@@ -15,7 +17,6 @@ export class CreateScheduleController{
         user_id: id,
         vehicle_id: vehicle_id,
         location_id,
-
         service_type,
         date,
         time,

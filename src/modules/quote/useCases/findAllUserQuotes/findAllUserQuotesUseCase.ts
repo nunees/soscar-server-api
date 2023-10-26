@@ -1,3 +1,4 @@
+import { IReturnQuote } from "@modules/quote/dtos/IReturnQuote";
 import { IQuotesRepository } from "@modules/quote/repositories/IQuotesRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { inject, injectable } from "tsyringe";
@@ -12,7 +13,7 @@ export class FindAllUserQuotesUseCase{
     private usersRepository: IUsersRepository
   ){}
 
-  async execute(user_id: string, user_type: string){
+  async execute(user_id: string, user_type: string): Promise<IReturnQuote[]>{
 
     const user = await this.usersRepository.findById(user_id);
 

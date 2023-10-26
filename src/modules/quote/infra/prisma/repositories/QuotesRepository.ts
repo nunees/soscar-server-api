@@ -18,7 +18,7 @@ export class QuotesRepository implements IQuotesRepository{
     private prismaClient: PrismaClient
   ){}
 
-  async updateDocumentOwner(document_id: string, user_id: string): Promise<void> {
+  async updateDocumentOwner(document_id: string): Promise<void> {
     try{
       await this.prismaClient.userQuotesDocuments.update(
         {
@@ -241,6 +241,7 @@ export class QuotesRepository implements IQuotesRepository{
 
 
 
+
       return quotes  as unknown as IReturnQuote[];
     }
 
@@ -277,11 +278,13 @@ export class QuotesRepository implements IQuotesRepository{
               name: true,
               email: true,
               mobile_phone: true,
+              avatar: true
             }
           }
         }
       });
 
+      console.log(quotes)
       return quotes as unknown as IReturnQuote[];
     }
 

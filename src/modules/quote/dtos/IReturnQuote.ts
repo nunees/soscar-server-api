@@ -21,6 +21,7 @@ export interface IReturnQuote {
         name: string;
         email: string;
         mobile: string;
+        avatar: string;
     }
     insurance_company: {
         name: string;

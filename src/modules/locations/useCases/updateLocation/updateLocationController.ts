@@ -24,7 +24,8 @@ export class UpdateLocationController {
       open_hours,
       open_hours_weekend,
       latitude,
-      longitude
+      longitude,
+      active,
     } = request.body;
 
     const updateLocationUseCase = container.resolve(UpdateLocationUseCase);
@@ -49,6 +50,7 @@ export class UpdateLocationController {
       open_hours_weekend,
       latitude,
       longitude,
+      active
     });
 
     return response.status(200).send();
