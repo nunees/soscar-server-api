@@ -49,6 +49,7 @@ quotesRoutes.post("/", ensureAuthenticated ,createUserQuoteController.handle);
 quotesRoutes.post("/legal", ensureAuthenticated, createLegalQuoteController.handle)
 
 quotesRoutes.post("/documents/:quote_id/:hashId", ensureAuthenticated, uploadDocuments.single("file"), createQuoteDocumentController.handle);
+
 quotesRoutes.post("/legal/document/:quote_id/:hashId", ensureAuthenticated, uploadDocuments.single("document"), createLegalQuoteDocumentController.handle);
 
 quotesRoutes.post("/partner/document/:quote_id/:hashId", ensureAuthenticated, uploadDocuments.single("file"), createPartnerDocumentController.handle);

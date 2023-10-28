@@ -26,6 +26,8 @@ import { IDateProvider } from "./providers/DateProvider/IDateProvider";
 import { DayJsDateProvider } from "./providers/DateProvider/implementation/DayJsDateProvider";
 import { ILegalQuoteRepository } from "@modules/quote/repositories/ILegalQuoteRepository";
 import { LegalQuotesRepository } from "@modules/quote/infra/prisma/repositories/LegalQuotesRespository";
+import { IReviewsRepository } from "@modules/review/repositories/IReviewsRepository";
+import { ReviewsRepository } from "@modules/review/infra/prisma/repositories/ReviewsRepository";
 
 // In memory Repositories
 // container.registerSingleton<IUsersRepository>(
@@ -96,4 +98,9 @@ container.register<ISchedulesRepository>(
 container.registerSingleton<ILegalQuoteRepository>(
   "LegalQuotesRepository",
   LegalQuotesRepository
+)
+
+container.registerSingleton<IReviewsRepository>(
+  "ReviewsRepository",
+  ReviewsRepository
 )

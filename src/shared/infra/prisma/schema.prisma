@@ -39,6 +39,7 @@ model Users {
   UserSchedules     UserSchedules[]
   AssistanceStatus  AssistanceStatus[]
   UserLegalQuotes   UserLegalQuotes[]
+  Reviews           Reviews[]
 
   @@index([cpf, username, email])
   @@map("users")
@@ -155,6 +156,7 @@ model BusinessLocations {
   UserQuotes                  UserQuotes[]
   UserLegalQuotes             UserLegalQuotes?              @relation(fields: [userLegalQuotesId], references: [id])
   userLegalQuotesId           String?
+  Reviews                     Reviews[]
 
   @@index([user_id, cnpj, business_name, business_phone, business_email, city, state, zipcode])
   @@map("business_locations")
@@ -585,4 +587,21 @@ model LocationsPhotos {
 
   @@index([id, location_id])
   @@map("locations_photos")
+}
+
+model Reviews {
+  id String @id @default(uuid())
+
+  user_id String
+  users   Users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  location_id String
+  location    BusinessLocations @relation(fields: [location_id], references: [id], onDelete: Cascade)
+
+  rating Int
+
+  review String
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
 }

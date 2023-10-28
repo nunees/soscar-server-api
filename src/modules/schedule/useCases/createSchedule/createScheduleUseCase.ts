@@ -36,7 +36,6 @@ export class CreateScheduleUseCase{
   async execute({user_id, vehicle_id, location_id, service_type, date, time, notes}:IRequest): Promise<Schedule | null>{
 
 
-
     const user = await this.usersRepository.findById(user_id);
     if(!user){
       throw new Error("Usuario nao encontrado");
@@ -53,10 +52,14 @@ export class CreateScheduleUseCase{
       throw new AppError("Local nao encontrado");
     }
 
+    // Check if location is open on the selected day
+    const weekDay = getWeekDay(date).toUpperCase();
 
     // Check if location is open on the selected day
-    const weekDay = getWeekDay(date);
-    const isOpen = location.open_hours_weekend?.includes(weekDay);
+    const isOpen = location.open_hours_weekend?.find(day => day.toUpperCase() === weekDay.toUpperCase());
+    console.log(isOpen)
+
+    // if not open on the selected day, throw error
     if(!isOpen){
       throw new AppError("Local fechado no dia selecionado");
     }
