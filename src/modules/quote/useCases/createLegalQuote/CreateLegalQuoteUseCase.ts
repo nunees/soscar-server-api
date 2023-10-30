@@ -41,31 +41,31 @@ export class CreateLegalQuoteUseCase {
       throw new Error('Veiculo nao encontrado');
     }
 
-    console.log(quote.locations)
+
+    // const locationExists = await this.locationsRepository.findById(location);
+    //   if (!locationExists) {
+    //     throw new Error('Localizacao nao encontrada');
+    //   }
+    //   return locationExists.id;
+
 
     quote.locations.map(async (location) => {
-      const locationExists = await this.locationsRepository.findById(location);
-      if (!locationExists) {
+      try{
+        await this.legalQuotesRepository.create({
+          user_id: String(user.id),
+          hashId: quote.hashId,
+          vehicle_id: quote.vehicle_id,
+          insurance_company_id: quote.insurance_company_id,
+          service_type_id: quote.service_type_id,
+          user_notes: quote.user_notes,
+          location_id: location,
+          insurance_type_id: 1,
+        });
+      }catch(error){
         throw new Error('Localizacao nao encontrada');
       }
-      return locationExists.id;
+
+      return
     });
-
-    try {
-      const data = await this.legalQuotesRepository.create({
-        user_id: String(user.id),
-        hashId: quote.hashId,
-        vehicle_id: quote.vehicle_id,
-        insurance_company_id: quote.insurance_company_id,
-        service_type_id: quote.service_type_id,
-        user_notes: quote.user_notes,
-        locations: quote.locations,
-        insurance_type_id: 1,
-      });
-
-      return data;
-    } catch (error) {
-      throw new AppError('Ocorreu um erro ao criar o orçamento');
-    }
   }
 }

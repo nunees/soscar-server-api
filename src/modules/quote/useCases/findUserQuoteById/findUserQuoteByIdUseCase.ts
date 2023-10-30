@@ -28,6 +28,6 @@ export class FindUserQuoteByIdUseCase{
       throw new Error("Cotação não encontrada");
     }
 
-    return quote;
+    return quote as unknown as Quote;
   }
 }

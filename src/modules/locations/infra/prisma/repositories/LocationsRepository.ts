@@ -14,6 +14,20 @@ export class LocationsRepository implements ILocationsRepository {
     private prismaClient: PrismaClient
   ) {}
 
+  async findLocationsByUserId(user_id: string): Promise<Location[]> {
+    try{
+      const locations = await this.prismaClient.businessLocations.findMany({
+        where: {
+          user_id,
+        }
+      });
+
+      return locations as Location[];
+    }catch(error){
+      throw new AppError("Não foi possível buscar os locais pelo usuário: ");
+    }
+  }
+
   async fetchAvatar(location_id: string, avatar_file: string): Promise<string> {
     const avatar = await this.prismaClient.businessLocations.findFirst({
       where: {

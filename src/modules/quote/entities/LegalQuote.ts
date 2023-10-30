@@ -2,7 +2,7 @@
 export interface LegalQuote{
   id: string;
   hashId: string;
-  is_juridian: boolean;
+  is_juridical: boolean;
   user_id: string;
   vehicle_id: string;
   insurance_company_id: number;
@@ -14,5 +14,11 @@ export interface LegalQuote{
   user_notes?: string;
   partner_notes?: string;
   status: string;
-  locations: string[];
+  location_id: string;
+  users?: {
+    name: string;
+    email: string;
+    mobile_phone: string;
+    avatar: string;
+  }
 }

@@ -7,8 +7,6 @@ export class CreateLocationController {
     try{
       const { id } = request.headers;
 
-
-
     const {
       cnpj,
       business_name,
@@ -28,6 +26,8 @@ export class CreateLocationController {
       latitude,
       longitude
     } = request.body;
+
+    console.log(request.body)
 
 
     const createLocationUseCase = container.resolve(CreateLocationUseCase);

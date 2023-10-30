@@ -6,7 +6,7 @@ export class CreateLegalDocumentController {
 
 
     const { id } = request.user;
-    const { quote_id } = request.params;
+    const { hashId } = request.params;
 
     const document = request.file?.filename as string;
 
@@ -14,12 +14,14 @@ export class CreateLegalDocumentController {
       CreateLegalDocumentUseCase
     );
 
-    await createLegalDocumentUseCase.execute({
+    const file = await createLegalDocumentUseCase.execute({
       user_id: id,
-      quote_id,
+      hashId,
       document_url: document,
     });
 
-    return response.status(201).send();
+    console.log(file)
+
+    return response.status(201).send(file);
   }
 }

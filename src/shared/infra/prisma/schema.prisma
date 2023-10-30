@@ -40,6 +40,7 @@ model Users {
   AssistanceStatus  AssistanceStatus[]
   UserLegalQuotes   UserLegalQuotes[]
   Reviews           Reviews[]
+  Notifications     Notifications[]
 
   @@index([cpf, username, email])
   @@map("users")
@@ -154,9 +155,9 @@ model BusinessLocations {
   LocationsPhotos             LocationsPhotos[]
   UserSchedules               UserSchedules[]
   UserQuotes                  UserQuotes[]
-  UserLegalQuotes             UserLegalQuotes?              @relation(fields: [userLegalQuotesId], references: [id])
-  userLegalQuotesId           String?
-  Reviews                     Reviews[]
+
+  Reviews         Reviews[]
+  UserLegalQuotes UserLegalQuotes[]
 
   @@index([user_id, cnpj, business_name, business_phone, business_email, city, state, zipcode])
   @@map("business_locations")
@@ -302,8 +303,11 @@ model UserLegalQuotes {
   vehicle_id String
   vehicles   UsersVehicles @relation(fields: [vehicle_id], references: [id], onDelete: Cascade)
 
-  insurance_type_id Int?
-  insurance_type    InsuranceTypes? @relation(fields: [insurance_type_id], references: [id], onDelete: Cascade)
+  location_id String
+  location    BusinessLocations @relation(fields: [location_id], references: [id], onDelete: Cascade)
+
+  // insurance_type_id Int?
+  // insurance_type    InsuranceTypes? @relation(fields: [insurance_type_id], references: [id], onDelete: Cascade)
 
   insurance_company_id Int?
   insurance_company    InsuranceCompanies? @relation(fields: [insurance_company_id], references: [id], onDelete: Cascade)
@@ -323,12 +327,11 @@ model UserLegalQuotes {
 
   status Int @default(1)
 
-  locations String[]
-
   created_at          DateTime              @default(now())
   updated_at          DateTime?
   LegalQuoteDocuments LegalQuoteDocuments[]
-  BusinessLocations   BusinessLocations[]
+  InsuranceTypes      InsuranceTypes?       @relation(fields: [insuranceTypesId], references: [id])
+  insuranceTypesId    Int?
 
   @@index([id, user_id, vehicle_id, hashId])
   @@map("user_legal_quotes")
@@ -386,16 +389,21 @@ model UserQuotes {
 }
 
 model LegalQuoteDocuments {
-  id                String          @id @default(uuid())
-  quote_id          String
-  quote             UserLegalQuotes @relation(fields: [quote_id], references: [id], onDelete: Cascade)
-  document_url      String
-  isPartnerDocument Boolean         @default(false)
+  id String @id @default(uuid())
+
+  hash_id String
+
+  document_url String
+
+  isPartnerDocument Boolean @default(false)
 
   created_at DateTime  @default(now())
   updated_at DateTime?
 
-  @@index([quote_id])
+  userLegalQuotesId String?
+  UserLegalQuotes   UserLegalQuotes? @relation(fields: [userLegalQuotesId], references: [id])
+
+  @@index([hash_id, id])
   @@map("legal_quote_documents")
 }
 
@@ -604,4 +612,26 @@ model Reviews {
 
   created_at DateTime  @default(now())
   updated_at DateTime?
+
+  @@index([id, user_id, location_id])
+  @@map("reviews")
+}
+
+model Notifications {
+  id String @id @default(uuid())
+
+  user_id String
+  users   Users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  title String
+
+  body String
+
+  received Boolean @default(false)
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  @@index([id, user_id])
+  @@map("notifications")
 }

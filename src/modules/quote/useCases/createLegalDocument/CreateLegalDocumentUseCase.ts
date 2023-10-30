@@ -6,7 +6,7 @@ import { inject, injectable } from 'tsyringe';
 interface IRequest {
 
   user_id: string;
-  quote_id: string;
+  hashId: string;
   document_url: string;
 }
 
@@ -21,25 +21,23 @@ export class CreateLegalDocumentUseCase {
 
   async execute({
     user_id,
-    quote_id,
+    hashId,
     document_url,
-  }: IRequest): Promise<void> {
+  }: IRequest) {
 
     const user = await this.usersRepository.findById(user_id);
     if(!user){
       throw new Error("Usuario não encontrado");
     }
 
-    const quote = await this.legalQuotesRepository.findById(quote_id);
 
-    if (!quote) {
-      throw new Error('Orçamento não encontrado');
-    }
 
-    await this.legalQuotesRepository.createQuoteDocument(
-      quote_id,
+    const data = await this.legalQuotesRepository.createQuoteDocument(
+      hashId,
       document_url,
       user.isPartner as boolean,
     );
+
+    return data;
   }
 }

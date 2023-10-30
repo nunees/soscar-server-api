@@ -51,4 +51,5 @@ export interface ILocationsRepository {
   updateCoverImage(location_id: string, cover_image: string): Promise<void>;
   fetchAvatar(location_id: string, avatar_file: string): Promise<string>;
   fetchCoverImage(location_id: string, cover_image: string): Promise<string>;
+  findLocationsByUserId(user_id: string): Promise<Location[]>;
 }
