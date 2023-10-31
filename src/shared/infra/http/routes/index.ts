@@ -8,6 +8,7 @@ import { quotesRoutes } from "./quotes.routes";
 import { schedulesRoutes } from "./schedules.routes";
 import { reviewsRoutes } from "./reviews.routes";
 import { legalRoutes } from "./legal.routes";
+import { notificationsRouter } from "./notifications.routes";
 
 const routes = Router();
 
@@ -19,6 +20,7 @@ routes.use("/quotes", quotesRoutes);
 routes.use("/legal", legalRoutes);
 routes.use("/schedules", schedulesRoutes);
 routes.use("/reviews", reviewsRoutes);
+routes.use("/notifications", notificationsRouter);
 
 
 export { routes };

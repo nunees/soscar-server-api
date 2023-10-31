@@ -28,6 +28,8 @@ import { ILegalQuoteRepository } from "@modules/quote/repositories/ILegalQuoteRe
 import { LegalQuotesRepository } from "@modules/quote/infra/prisma/repositories/LegalQuotesRespository";
 import { IReviewsRepository } from "@modules/review/repositories/IReviewsRepository";
 import { ReviewsRepository } from "@modules/review/infra/prisma/repositories/ReviewsRepository";
+import { INotificationsRepository } from "@modules/notifications/repositories/INotificationsRepository";
+import { NotificationsRepository } from "@modules/notifications/infra/prisma/NotificationsRepository";
 
 // In memory Repositories
 // container.registerSingleton<IUsersRepository>(
@@ -103,4 +105,9 @@ container.registerSingleton<ILegalQuoteRepository>(
 container.registerSingleton<IReviewsRepository>(
   "ReviewsRepository",
   ReviewsRepository
+)
+
+container.register<INotificationsRepository>(
+  "NotificationsRepository",
+  NotificationsRepository
 )
