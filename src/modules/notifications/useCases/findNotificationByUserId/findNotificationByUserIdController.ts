@@ -14,6 +14,6 @@ export class FindNotificationByUserIdController{
       user_id,
     );
 
-    return response.json(notifications);
+    return response.status(200).json(notifications);
   }
 }
