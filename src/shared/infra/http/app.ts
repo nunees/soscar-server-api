@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-
+import Handlebars from "handlebars"; "handlebars";
 import { AppError } from "@shared/errors/AppError";
 
 import "express-async-errors";
@@ -14,6 +14,7 @@ import cors from "cors";
 import nocache from "nocache";
 
 import "@shared/container";
+
 
 const app = express();
 

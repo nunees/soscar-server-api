@@ -9,6 +9,7 @@ import { schedulesRoutes } from "./schedules.routes";
 import { reviewsRoutes } from "./reviews.routes";
 import { legalRoutes } from "./legal.routes";
 import { notificationsRouter } from "./notifications.routes";
+import { passwordRoutes } from "./passwords.routes";
 
 const routes = Router();
 
@@ -21,6 +22,7 @@ routes.use("/legal", legalRoutes);
 routes.use("/schedules", schedulesRoutes);
 routes.use("/reviews", reviewsRoutes);
 routes.use("/notifications", notificationsRouter);
+routes.use("/password", passwordRoutes)
 
 
 export { routes };

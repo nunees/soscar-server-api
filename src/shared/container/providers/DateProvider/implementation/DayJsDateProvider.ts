@@ -7,8 +7,6 @@ dayjs.extend(utc);
 
 export class DayJsDateProvider implements IDateProvider {
 
-
-
   addHours(hours: number): Date {
     return dayjs().add(hours, "hour").toDate();
   }
