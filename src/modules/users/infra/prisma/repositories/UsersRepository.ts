@@ -18,6 +18,22 @@ export class UsersRepository implements IUsersRepository {
     private prismaClient: PrismaClient
   ) {}
 
+  async updatePassword(user_id: string, password: string): Promise<void> {
+    try{
+      await this.prismaClient.users.update({
+        where: {
+          id: user_id
+        },
+        data: {
+          password
+        }
+      });
+    }catch(error){
+      console.log(error);
+      throw new AppError("Erro ao atualizar senha!");
+    }
+  }
+
   async fetchAvatar(id: string, avatar_file: string): Promise<string | null> {
     const avatar = await this.prismaClient.users.findFirst({
       where: {

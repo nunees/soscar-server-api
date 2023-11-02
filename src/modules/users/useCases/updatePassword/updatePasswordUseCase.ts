@@ -16,16 +16,15 @@ export class UpdatePasswordUseCase{
 
     if(!userExists) throw new Error("Usuário não encontrado");
 
-    const oldPasswordHash = await hash(old_password, 8);
+    //onst oldPasswordHash = await hash(old_password, 8);
 
     const passwordMatch = await compare(old_password, userExists.password);
 
     if(!passwordMatch) throw new Error("Senha antiga incorreta");
 
-    userExists.password = await hash(password, 8);
+    const newPassword = await hash(password, 8);
 
-
-    await this.usersRepository.update(id, userExists as IUserCreateDTO );
+    await this.usersRepository.updatePassword(id, newPassword);
 
   }
 }

@@ -4,14 +4,15 @@ import { FindNotificationByUserIdUseCase } from "./findNotificationByUserIdUseCa
 
 export class FindNotificationByUserIdController{
   async handle(request: Request, response: Response){
-    const { user_id } = request.params;
+    console.log("FindNotificationByUserIdController")
 
-    console.log("id of user: ", user_id);
+    const {id} = request.user;
+    //const { user_id } = request.params;
 
     const findNotificationByUserIdUseCase = container.resolve(FindNotificationByUserIdUseCase);
 
     const notifications = await findNotificationByUserIdUseCase.execute(
-      user_id,
+      id,
     );
 
     return response.status(200).json(notifications);

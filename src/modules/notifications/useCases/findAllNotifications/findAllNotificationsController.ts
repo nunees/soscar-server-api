@@ -13,6 +13,6 @@ export class FindAllNotificationsController{
 
     const notifications = await findAllNotificationsUseCase.execute(user_id);
 
-    return response.json(notifications);
+    return response.status(200).json(notifications);
   }
 }

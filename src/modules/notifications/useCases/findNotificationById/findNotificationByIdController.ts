@@ -5,6 +5,7 @@ import { container } from "tsyringe";
 
 export class FindNotificationByIdController{
   async handle(request: Request, response: Response){
+    console.log("FindNotificationByIdController")
     const { notification_id } = request.params;
 
     const findNotificationByIdUseCase = container.resolve(FindNotificationByIdUseCase);

@@ -6,11 +6,13 @@ import { MarkNotificationAsReadController } from "@modules/notifications/useCase
 import { Router } from "express";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 import { FindAllNotificationsController } from "@modules/notifications/useCases/findAllNotifications/findAllNotificationsController";
+import { DeleteAllNotificationsController } from "@modules/notifications/useCases/deleteAllNotifications/deleteAllNotificationsController";
 
 
 
 const createNotificationController = new CreateNotificationController();
 const deleteNotificationController = new DeleteNotificationController();
+const deleteAllNotificationsController = new DeleteAllNotificationsController();
 const findNotificationByIdController = new FindNotificationByIdController();
 const findNotificationByUserIdController = new FindNotificationByUserIdController();
 const markNotificationAsReadController = new MarkNotificationAsReadController();
@@ -19,13 +21,13 @@ const findAllNotificationsController = new FindAllNotificationsController();
 const notificationsRouter = Router();
 
 notificationsRouter.get('/', ensureAuthenticated, findAllNotificationsController.handle);
-notificationsRouter.get('/:notification_id',ensureAuthenticated, findNotificationByIdController.handle);
-notificationsRouter.get('/user/:user_id',ensureAuthenticated, findNotificationByUserIdController.handle);
+notificationsRouter.get('/all/new',ensureAuthenticated, findNotificationByUserIdController.handle);
+notificationsRouter.get('/find/:notification_id',ensureAuthenticated, findNotificationByIdController.handle);
 
 notificationsRouter.post('/',ensureAuthenticated, createNotificationController.handle);
 notificationsRouter.patch('/:notification_id',ensureAuthenticated, markNotificationAsReadController.handle);
 
-notificationsRouter.delete('/all/:user_id',ensureAuthenticated, deleteNotificationController.handle);
+notificationsRouter.delete('/all/:user_id',ensureAuthenticated, deleteAllNotificationsController.handle);
 notificationsRouter.delete('/:notification_id',ensureAuthenticated, deleteNotificationController.handle);
 
 
