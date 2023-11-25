@@ -10,6 +10,7 @@ import { reviewsRoutes } from "./reviews.routes";
 import { legalRoutes } from "./legal.routes";
 import { notificationsRouter } from "./notifications.routes";
 import { passwordRoutes } from "./passwords.routes";
+import { assistanceRoutes } from "./assistance.routes";
 
 const routes = Router();
 
@@ -22,7 +23,8 @@ routes.use("/legal", legalRoutes);
 routes.use("/schedules", schedulesRoutes);
 routes.use("/reviews", reviewsRoutes);
 routes.use("/notifications", notificationsRouter);
-routes.use("/password", passwordRoutes)
+routes.use("/passwords", passwordRoutes);
+routes.use("/assistance", assistanceRoutes);
 
 
 export { routes };

@@ -7,6 +7,7 @@ import { Router } from "express";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 import { FindAllNotificationsController } from "@modules/notifications/useCases/findAllNotifications/findAllNotificationsController";
 import { DeleteAllNotificationsController } from "@modules/notifications/useCases/deleteAllNotifications/deleteAllNotificationsController";
+import { FindNotReadNotificationController } from "@modules/notifications/useCases/findNotReadNotification/findNotReadNotificationController";
 
 
 
@@ -17,12 +18,14 @@ const findNotificationByIdController = new FindNotificationByIdController();
 const findNotificationByUserIdController = new FindNotificationByUserIdController();
 const markNotificationAsReadController = new MarkNotificationAsReadController();
 const findAllNotificationsController = new FindAllNotificationsController();
+const findNotReadNotificationController = new FindNotReadNotificationController();
 
 const notificationsRouter = Router();
 
 notificationsRouter.get('/', ensureAuthenticated, findAllNotificationsController.handle);
 notificationsRouter.get('/all/new',ensureAuthenticated, findNotificationByUserIdController.handle);
-notificationsRouter.get('/find/:notification_id',ensureAuthenticated, findNotificationByIdController.handle);
+notificationsRouter.get('/all/:user_id',ensureAuthenticated, findNotificationByUserIdController.handle);
+notificationsRouter.get('/all/fresh',ensureAuthenticated, findNotReadNotificationController.handle);
 
 notificationsRouter.post('/',ensureAuthenticated, createNotificationController.handle);
 notificationsRouter.patch('/:notification_id',ensureAuthenticated, markNotificationAsReadController.handle);

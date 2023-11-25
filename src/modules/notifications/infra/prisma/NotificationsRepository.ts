@@ -12,6 +12,26 @@ export class NotificationsRepository implements INotificationsRepository{
     private prismaClient: PrismaClient
   ){}
 
+  async findNotRead(user_id: string): Promise<Notification[]> {
+    try{
+      const notifications = await this.prismaClient.notifications.findMany({
+        orderBy: {
+          created_at: 'desc'
+        },
+        where: {
+          user_id,
+          AND: {
+            received: false,
+          }
+        }
+      });
+
+      return notifications as Notification[];
+    }catch(error){
+      throw new AppError("Notification not found!");
+    }
+  }
+
   async findAll(user_id: string): Promise<Notification[]> {
     try {
       const notifications = await this.prismaClient.notifications.findMany({

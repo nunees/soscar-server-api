@@ -5,6 +5,8 @@ import { IDateProvider } from "@shared/container/providers/DateProvider/IDatePro
 import { IMailProvider } from "@shared/container/providers/MailProvider/IMailProvider";
 import { inject, injectable } from "tsyringe";
 import {v4 as uuidV4} from "uuid";
+import { GenerateCode } from "@utils/RecoverCodeGenerator";
+import { IPasswordResetsRepository } from "@modules/users/repositories/IPasswordResetsRepository";
 
 
 @injectable()
@@ -12,8 +14,8 @@ export class SendForgotPasswordMailUseCase{
   constructor(
     @inject("UsersRepository")
     private usersRepository: IUsersRepository,
-    @inject("UsersTokensRepository")
-    private usersTokensRepository: IUsersTokensRepository,
+    @inject("PasswordResetsRepository")
+    private passwordResetsRepository: IPasswordResetsRepository,
     @inject("DayjsDateProvider")
     private dayjsDateProvider: IDateProvider,
     @inject("EtherealMailProvider")
@@ -36,25 +38,31 @@ export class SendForgotPasswordMailUseCase{
       "forgotPassword.hbs"
     );
 
-    const token = uuidV4();
+
+
     const expires_date = this.dayjsDateProvider.addHours(3);
 
-    await this.usersTokensRepository.create({
-      refresh_token: token,
+    const code = GenerateCode(16);
+
+    await this.passwordResetsRepository.create({
       user_id: user.id as string,
-      expires_date
+      expires_date,
+      code,
     })
 
     const variables = {
       name: user.name,
-      link: `${process.env.FORGOT_MAIL_URL}${token}`,
+      code,
     };
 
-    await this.mailProvider.sendMail(
-      email,
-      "Recuperação de senha",
-      variables,
-      templatePath
-    );
+
+    await this.mailProvider.send({
+      to: `${user.name} <${user.email}>`,
+      subject: "Recuperação de senha",
+      path: templatePath,
+      variables
+    })
+
+
   }
 }

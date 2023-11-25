@@ -30,6 +30,12 @@ import { IReviewsRepository } from "@modules/review/repositories/IReviewsReposit
 import { ReviewsRepository } from "@modules/review/infra/prisma/repositories/ReviewsRepository";
 import { INotificationsRepository } from "@modules/notifications/repositories/INotificationsRepository";
 import { NotificationsRepository } from "@modules/notifications/infra/prisma/NotificationsRepository";
+import { IPasswordResetsRepository } from "@modules/users/repositories/IPasswordResetsRepository";
+import { PasswordResetsRepository } from "@modules/users/infra/prisma/repositories/PasswordResetsRepository";
+import { AssistanceStatusRepository } from "@modules/assistance/infra/prisma/AssistancesStatusRepository";
+import { IAssistanceOrdersRepository } from "@modules/assistance/repositories/IAssistanceOrdersRepository";
+import { AssistanceOrdersRepository } from "@modules/assistance/infra/prisma/AssistanceOrdersRepository";
+import { IAssistanceStatusRepository } from "@modules/assistance/repositories/IAssistanceStatusRepository";
 
 // In memory Repositories
 // container.registerSingleton<IUsersRepository>(
@@ -107,7 +113,22 @@ container.registerSingleton<IReviewsRepository>(
   ReviewsRepository
 )
 
-container.register<INotificationsRepository>(
+container.registerSingleton<INotificationsRepository>(
   "NotificationsRepository",
   NotificationsRepository
+)
+
+container.registerSingleton<IPasswordResetsRepository>(
+  "PasswordResetsRepository",
+  PasswordResetsRepository
+)
+
+container.registerSingleton<IAssistanceStatusRepository>(
+  "AssistanceStatusRepository",
+  AssistanceStatusRepository
+)
+
+container.registerSingleton<IAssistanceOrdersRepository>(
+  "AssistanceOrdersRepository",
+  AssistanceOrdersRepository
 )

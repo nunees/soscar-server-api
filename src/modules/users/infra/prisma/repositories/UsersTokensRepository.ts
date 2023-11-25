@@ -17,15 +17,17 @@ export class UsersTokensRepository implements IUsersTokensRepository {
     expires_date,
     refresh_token,
     user_id,
+    code,
   }: IUserTokenCreateDTO): Promise<IUserTokenReturnDTO> {
     const userToken = await this.prismaClient.usersTokens.create({
       data: {
         user_id,
         refresh_token,
+        code,
         expires_date: new Date(expires_date),
       },
     });
-    return userToken;
+    return userToken as IUserTokenReturnDTO;
   }
 
   async findByUserId(user_id: string): Promise<IUserTokenReturnDTO> {

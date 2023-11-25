@@ -32,6 +32,9 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(routes);
 
+
+app.set("view engine", "handlebars");
+
 app.use(express.static("public"));
 app.use(express.static("upload"));
 

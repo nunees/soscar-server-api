@@ -43,6 +43,8 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
 
   async fetchDocument(hashId: string, document_id: string): Promise<string> {
     try{
+      console.log(hashId, document_id)
+
       const document = await this.prismaClient.legalQuoteDocuments.findFirst({
         where: {
           hash_id: hashId,
@@ -51,6 +53,8 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
           }
         }
       });
+
+      console.log(document?.document_url)
 
       return document?.document_url as string;
 
@@ -64,7 +68,7 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
       const documents = await this.prismaClient.legalQuoteDocuments.findMany({
         where: {
           hash_id: hashId
-        }
+        },
       });
 
       return documents;

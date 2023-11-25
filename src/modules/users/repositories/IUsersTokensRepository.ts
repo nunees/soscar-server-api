@@ -6,6 +6,7 @@ export interface IUsersTokensRepository {
     expires_date,
     refresh_token,
     user_id,
+    code,
   }: IUserTokenCreateDTO): Promise<IUserTokenReturnDTO>;
 
   findByUserId(user_id: string): Promise<IUserTokenReturnDTO>;

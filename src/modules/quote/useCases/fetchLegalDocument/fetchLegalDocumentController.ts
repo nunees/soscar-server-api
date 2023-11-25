@@ -8,6 +8,7 @@ export class FetchLegalDocumentController{
         const { document_id } = request.params;
         const { hashId } = request.params;
 
+
         const fetchLegalDocumentUseCase = container.resolve(FetchLegalDocumentUseCase);
 
 
@@ -19,6 +20,7 @@ export class FetchLegalDocumentController{
                 root: "./upload/quotes",
             }) as any;
         }catch(error){
+            console.log(error)
             return response.status(404).send();
         }
 
