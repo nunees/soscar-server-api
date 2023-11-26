@@ -41,12 +41,11 @@ quotesRoutes.get("/documents", ensureAuthenticated, findAllUserQuotesDocumentsCo
 quotesRoutes.get("/find/:quote_id", ensureAuthenticated, findUserQuoteByIdController.handle);
 quotesRoutes.get("/documents/:quote_id/:hashId", ensureAuthenticated, findUserQuoteDocumentByIdController.handle);
 quotesRoutes.get("/document/:document_id/:hashId", fetchDocumentController.handle);
+quotesRoutes.get("/legal/:quote_id/:hashId", ensureAuthenticated, findUserQuoteDocumentByIdController.handle);
 
 quotesRoutes.post("/", ensureAuthenticated ,createUserQuoteController.handle);
 
 quotesRoutes.post("/documents/:quote_id/:hashId", ensureAuthenticated, uploadDocuments.single("file"), createQuoteDocumentController.handle);
-
-quotesRoutes.get("/legal/:quote_id/:hashId", ensureAuthenticated, findUserQuoteDocumentByIdController.handle);
 
 
 quotesRoutes.post("/partner/document/:quote_id/:hashId", ensureAuthenticated, uploadDocuments.single("file"), createPartnerDocumentController.handle);
