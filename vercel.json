@@ -9,7 +9,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "src/shared/infra/http/server.ts"
+            "dest": "src/shared/infra/http/routes/index.ts"
         }
     ]
 }
