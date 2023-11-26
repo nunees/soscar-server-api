@@ -2,7 +2,7 @@
     "version": 2,
     "builds":[
         {
-            "src": "dist/index.js",
+            "src": "src/shared/infra/http/server.ts",
             "use": "@vercel/node",
             "config": { "includeFiles": ["dist/**"] }
         }
@@ -10,7 +10,7 @@
     "routes": [
         {
             "src": "src/shared/infra/http/routes/index.ts",
-            "dest": "dist/index.js"
+            "dest": "src/shared/infra/http/server.ts"
         }
     ]
 }
