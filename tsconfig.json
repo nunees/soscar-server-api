@@ -9,7 +9,7 @@
       "@modules/*": ["modules/*"],
       "@config/*": ["config/*"],
       "@shared/*": ["shared/*"],
-      "@errors/*": ["shared/errors/*"],
+      "@errors/*": ["errors/*"],
       "@utils/*": ["utils/*"]
     },
     "resolveJsonModule": true,
