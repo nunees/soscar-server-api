@@ -56,7 +56,8 @@
   },
   "scripts": {
     "dev": "ts-node-dev  --exit-child -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "vercel-build": "npx prisma generate && npx prisma migrate deploy && prisma db seed"
+    "vercel-build": "npx prisma generate && npx prisma migrate deploy && prisma db seed",
+    "setup": "npx prisma generate && npx prisma migrate deploy && prisma db seed"
   },
   "prisma": {
     "schema": "src/shared/infra/prisma/schema.prisma",
