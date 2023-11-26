@@ -16,7 +16,7 @@ export class FetchScheduleByIdUseCase{
 
 
     if(!schedule){
-      throw new AppError('Agendamento nao encontrado');
+      throw new AppError('Agendamento não encontrado');
     }
 
     return schedule;

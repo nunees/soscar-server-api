@@ -100,7 +100,7 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
       return quotes as unknown as LegalQuote[];
 
     }catch(error){
-      throw new AppError("Erro ao buscar orcamentos");
+      throw new AppError("Erro ao buscar orçamentos");
     }
   }
 
@@ -161,7 +161,7 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
       return quotes as unknown as LegalQuote[];
 
     }catch(error){
-      throw new AppError("Erro ao buscar orcamentos");
+      throw new AppError("Erro ao buscar orçamentos");
     }
   }
 
@@ -174,7 +174,7 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
       return quotes as unknown as LegalQuote[];
 
     }catch(error){
-      throw new AppError("Erro ao buscar orcamentos");
+      throw new AppError("Erro ao buscar orçamentos");
     }
   }
 
@@ -189,7 +189,7 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
       return quotes as unknown as LegalQuote[];
 
     }catch(error){
-      throw new AppError("Erro ao buscar orcamentos");
+      throw new AppError("Erro ao buscar orçamentos");
     }
   }
 
@@ -211,7 +211,7 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
       return quote as unknown as LegalQuote;
 
     }catch(error){
-      throw new AppError("Erro ao buscar orcamento");
+      throw new AppError("Erro ao buscar orçamento");
     }
   }
 

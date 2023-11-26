@@ -37,7 +37,7 @@ export class CreateAddressUseCase {
     const userExists = await this.usersRepository?.findById(user_id);
 
     if (userExists === null || userExists === undefined) {
-      throw new AppError("Usuario nao existe");
+      throw new AppError("Usuário nao existe");
     }
 
     if (userExists.isPartner) {
@@ -56,7 +56,7 @@ export class CreateAddressUseCase {
         created_at: this.dayJsDateProvider.datenow(),
       });
     } catch (error) {
-      throw new AppError("Erro ao criar endereco");
+      throw new AppError("Erro ao criar endereço");
     }
   }
 }

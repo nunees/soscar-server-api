@@ -25,11 +25,11 @@ export class CreateUserQuoteUseCase{
       const userExists = await this.usersRepository.findById(quote.user_id);
 
     if(!userExists){
-      throw new Error("Usuario não existe");
+      throw new Error("Usuário não existe");
     }
 
     if(userExists.isPartner){
-      throw new Error("Usuarios parceiro não podem criar orçamentos");
+      throw new Error("Usuários parceiro não podem criar orçamentos");
     }
 
     const vehicleExists = await this.vehiclesRepository.findById(quote.vehicle_id);

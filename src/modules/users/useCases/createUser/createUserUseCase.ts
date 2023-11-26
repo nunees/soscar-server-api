@@ -61,13 +61,13 @@ export class CreateUserUseCase {
     userExist = await this.usersRepository.findByUsername(username);
 
     if (userExist) {
-      throw new AppError("Nome de usuario em uso!");
+      throw new AppError("Nome de usuário em uso!");
     }
 
     userExist = await this.usersRepository.findByEmail(email);
 
     if (userExist) {
-      throw new AppError("Endereco de email em uso!");
+      throw new AppError("Endereço de email em uso!");
     }
 
     const user = await this.usersRepository.create({

@@ -74,7 +74,7 @@ export class QuotesRepository implements IQuotesRepository{
 
 
       if(!quote){
-        throw new AppError("Orcamento nao encontrado");
+        throw new AppError("Orçamento nao encontrado");
       }
 
       const newQuote = await this.prismaClient.userQuotes.update({
@@ -91,7 +91,7 @@ export class QuotesRepository implements IQuotesRepository{
       return newQuote;
     }catch(error){
 
-      throw new AppError("Erro ao atualizar status do orcamento");
+      throw new AppError("Erro ao atualizar status do orçamento");
     }
   }
 
@@ -119,7 +119,7 @@ export class QuotesRepository implements IQuotesRepository{
       return quote;
     }catch(error){
 
-      throw new AppError("Erro ao atualizar orcamento");
+      throw new AppError("Erro ao atualizar orçamento");
     }
   }
 

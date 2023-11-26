@@ -32,7 +32,7 @@ export class RefreshTokenUseCase {
       );
 
     if (!userToken) {
-      throw new AppError(message.RefreshTokenDoesNotExist);
+      throw new AppError("token.invalid");
     }
 
     // Delete old token

@@ -38,7 +38,7 @@ export class CreateScheduleUseCase{
 
     const user = await this.usersRepository.findById(user_id);
     if(!user){
-      throw new Error("Usuario nao encontrado");
+      throw new Error("Usuário nao encontrado");
     }
 
 
@@ -67,7 +67,7 @@ export class CreateScheduleUseCase{
     const openHours = location.open_hours!.split("-");
     const isLocationOpen = this.dateProvider.compareIfTimeIsOpen(time, openHours);
     if(!isLocationOpen){
-      throw new AppError("Local fechado no horario selecionado");
+      throw new AppError("Local fechado no horário selecionado");
     }
 
 
@@ -105,7 +105,7 @@ export class CreateScheduleUseCase{
       const isTimeAvailable = allSchedulesByDate?.find(schedule => schedule.time === time);
 
       if(!isTimeAvailable || isTimeAvailable === undefined){
-        throw new AppError("Horario nao disponivel");
+        throw new AppError("Horário não disponível");
       }
 
 

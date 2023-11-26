@@ -60,7 +60,7 @@ export class CreateLocationUseCase {
       const user = await this.usersRepository.findById(user_id);
 
       if (!user) {
-        throw new AppError("Usuario não encontrado", 404);
+        throw new AppError("Usuário não encontrado", 404);
       }
 
       if (!user.isPartner) {

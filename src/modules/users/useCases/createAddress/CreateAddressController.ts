@@ -7,7 +7,7 @@ import { message } from "@shared/lang/pt-br/String";
 export class CreateAddressController {
   async handle(request: Request, response: Response): Promise<Response> {
     if (!request.user || !request.body) {
-      throw new AppError("Nao foi possivel criar um novo endereco");
+      throw new AppError("Nao foi possível criar um novo endereço");
     }
 
     const { id } = request.user;
