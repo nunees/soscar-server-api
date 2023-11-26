@@ -5,10 +5,10 @@ WORKDIR /usr/app
 
 COPY package.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . . 
 
 EXPOSE 3333
 
-CMD ["npm", "run", "dev" ]
+CMD ["npm", "run", "setup", "&&", "npm", "run", "dev" ]
