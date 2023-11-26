@@ -2,14 +2,14 @@
     "version": 2,
     "builds":[
         {
-            "src": "./src/shared/infra/http/app.ts",
+            "src": "./src/shared/infra/http/server.ts",
             "use": "@vercel/node"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "src/shared/infra/http/app.ts"
+            "dest": "src/shared/infra/http/server.ts"
         }
     ]
 }
