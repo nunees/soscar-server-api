@@ -26,7 +26,7 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
 
   async updateDocumentOwner(document_id: string): Promise<void> {
     try{
-      console.log("In repository: update document owner", document_id)
+
       await this.prismaClient.legalQuoteDocuments.update({
         where: {
           id: document_id,
@@ -43,7 +43,7 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
 
   async fetchDocument(hashId: string, document_id: string): Promise<string> {
     try{
-      console.log(hashId, document_id)
+
 
       const document = await this.prismaClient.legalQuoteDocuments.findFirst({
         where: {
@@ -54,7 +54,7 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
         }
       });
 
-      console.log(document?.document_url)
+
 
       return document?.document_url as string;
 
@@ -80,7 +80,7 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
 
   async findByHashId(user_id: string, hashId: string): Promise<LegalQuote[]> {
     try{
-      console.log("In repository: find by hash id", hashId)
+
       const quotes = await this.prismaClient.userLegalQuotes.findMany({
         where: {
           hashId: hashId,
@@ -169,7 +169,7 @@ export class LegalQuotesRepository implements ILegalQuoteRepository{
     try{
       const quotes = await this.prismaClient.userLegalQuotes.findMany();
 
-      console.log(quotes);
+
 
       return quotes as unknown as LegalQuote[];
 

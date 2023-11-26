@@ -14,7 +14,7 @@ export class CreateLegalQuoteController {
       locations,
     } = request.body;
 
-    console.log("In controller: ", locations)
+
 
 
 

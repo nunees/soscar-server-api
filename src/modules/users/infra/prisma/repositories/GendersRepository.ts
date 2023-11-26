@@ -18,7 +18,7 @@ export class GendersRepository implements IGendersRepository {
 
       return genders;
     } catch (error) {
-      throw new AppError(error);
+      throw new AppError("Não foi possível buscar os gêneros");
     }
   }
 }

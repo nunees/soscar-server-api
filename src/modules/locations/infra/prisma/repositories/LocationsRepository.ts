@@ -24,7 +24,7 @@ export class LocationsRepository implements ILocationsRepository {
 
       return locations as Location[];
     }catch(error){
-      throw new AppError("Não foi possível buscar os locais pelo usuário: ");
+      throw new AppError("Não foi possível buscar os locais do usuário");
     }
   }
 
@@ -66,7 +66,7 @@ export class LocationsRepository implements ILocationsRepository {
         }
       })
     }catch(error){
-      throw new AppError("Não foi possível atualizar o avatar do local: ");
+      throw new AppError("Não foi possível atualizar o avatar do local");
     }
   }
   async updateCoverImage(location_id: string, cover_image: string): Promise<void> {
@@ -81,7 +81,7 @@ export class LocationsRepository implements ILocationsRepository {
         }
       })
     } catch (error) {
-      throw new AppError("Não foi possível atualizar a imagem de capa do local: ");
+      throw new AppError("Não foi possível atualizar a imagem de capa do local");
     }
   }
 
@@ -108,26 +108,7 @@ export class LocationsRepository implements ILocationsRepository {
 
   }: ICreateLocationDTO): Promise<ILocationDTO> {
     try{
-      console.log({
-        user_id,
-        cnpj,
-        business_name,
-        business_phone,
-        business_email,
-        address_line,
-        number,
-        city,
-        district,
-        state,
-        zipcode,
-        payment_methods,
-        business_categories,
-        business_description,
-        open_hours,
-        open_hours_weekend,
-        latitude,
-        longitude
-      })
+
 
       const location = await this.prismaClient.businessLocations.create({
         data: {
@@ -159,7 +140,7 @@ export class LocationsRepository implements ILocationsRepository {
       return location;
     }catch(error){
 
-      throw new AppError("Erro ao criar localização: " + error);
+      throw new AppError("Erro ao criar localização");
     }
   }
 
@@ -171,7 +152,7 @@ export class LocationsRepository implements ILocationsRepository {
         },
       });
     } catch (error) {
-      throw new AppError(error);
+      throw new AppError("Erro ao deletar localização");
     }
   }
 
@@ -235,7 +216,7 @@ export class LocationsRepository implements ILocationsRepository {
         },
       });
     } catch (error) {
-      throw new AppError(error);
+      throw new AppError("Erro ao atualizar localização");
     }
   }
 
@@ -263,9 +244,9 @@ export class LocationsRepository implements ILocationsRepository {
         }
       });
 
-      return location as ILocationDTO;
+      return location as unknown as ILocationDTO;
     } catch (error) {
-      throw new AppError(error);
+      throw new AppError("Erro ao buscar localização");
     }
   }
 
@@ -284,7 +265,7 @@ export class LocationsRepository implements ILocationsRepository {
 
       return locations as ILocationDTO[];
     } catch (error) {
-      throw new AppError(error);
+      throw new AppError("Erro ao buscar localizações");
     }
   }
 

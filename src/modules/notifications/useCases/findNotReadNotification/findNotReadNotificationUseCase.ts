@@ -14,7 +14,7 @@ export class FindNotReadNotificationUseCase{
   async execute(user_id: string): Promise<Notification[]>{
     const notifications = await this.notificationsRepository.findNotRead(user_id);
     if(!notifications){
-      throw new AppError("Notification not found!");
+      throw new AppError("Notificações não encontradas!");
     }
     return notifications;
   }

@@ -7,7 +7,6 @@ export class FindAllNotificationsController{
     const {id} = request.user;
     const {user_id} = request.params;
 
-    console.log("id of user: ", user_id);
 
     const findAllNotificationsUseCase = container.resolve(FindAllNotificationsUseCase);
 

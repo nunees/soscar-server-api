@@ -11,7 +11,7 @@ export class UpdateLegalQuoteStatusUseCase{
   ){}
 
   async execute(user_id: string, quote_id: string, status: number): Promise<void>{
-    console.log("In use case: update legal quote status", quote_id)
+
 
     const quote = await this.legalQuotesRepository.findById(quote_id);
 

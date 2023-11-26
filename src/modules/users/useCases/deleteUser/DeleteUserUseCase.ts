@@ -13,7 +13,7 @@ export class DeleteUserUseCase {
     const userExists = await this.usersRepository.findById(id);
 
     if (!userExists) {
-      throw new AppError(message.UserNotFound, 404);
+      throw new AppError("Erro ao deletar usuário");
     }
 
     await this.usersRepository.delete(id);

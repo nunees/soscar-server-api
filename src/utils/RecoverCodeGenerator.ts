@@ -1,5 +1,4 @@
-
-  export function GenerateCode(length: number): string {
+export function GenerateCode(length: number): string {
     let result = '';
     const characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

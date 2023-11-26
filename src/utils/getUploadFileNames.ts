@@ -1,23 +1,5 @@
 import { AppError } from "@shared/errors/AppError";
 
-const fileTypes = [
-  {id: 1, name: "pdf", created_at: new Date()},
-  {id: 2, name: "doc", created_at: new Date()},
-  {id: 3, name: "docx", created_at: new Date()},
-  {id: 4, name: "xls", created_at: new Date()},
-  {id: 5, name: "xlsx", created_at: new Date()},
-  {id: 6, name: "ppt", created_at: new Date()},
-  {id: 7, name: "pptx", created_at: new Date()},
-  {id: 8, name: "txt", created_at: new Date()},
-  {id: 9, name: "jpg", created_at: new Date()},
-  {id: 10, name: "jpeg", created_at: new Date()},
-  {id: 11, name: "png", created_at: new Date()},
-  {id: 12, name: "gif", created_at: new Date()},
-  {id: 13, name: "mp4", created_at: new Date()},
-  {id: 14, name: "avi", created_at: new Date()},
-  {id: 15, name: "mov", created_at: new Date()},
-]
-
 export function GetUploadFileNames(documents: Express.Multer.File[]): (string | null)[] {
   const fileNames = documents.map((file) => {
     if(file.mimetype === "application/pdf" || file.mimetype === "image/png" || file.mimetype === "image/jpeg"){

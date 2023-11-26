@@ -19,7 +19,7 @@ export async function ensureAuthenticated(
   const usersTokensRepository = new UsersTokensRepository(prismaCLient);
 
   if (!authHeader) {
-    throw new AppError("Token missing!", 401);
+    throw new AppError("token.missing");
   }
 
   const [, token] = authHeader.split(" ");
@@ -29,7 +29,7 @@ export async function ensureAuthenticated(
 
     const user = await usersTokensRepository.findByUserId(user_id as string);
 
-    if (!user) throw new AppError("User does not exists!", 401);
+    if (!user) throw new AppError("Usuário não existe!", 401);
 
     request.user = {
       id: user_id as string,
@@ -37,6 +37,6 @@ export async function ensureAuthenticated(
 
     return next();
   } catch {
-    throw new AppError("User not authorized!", 401);
+    throw new AppError("Usuário não autorizado", 401);
   }
 }

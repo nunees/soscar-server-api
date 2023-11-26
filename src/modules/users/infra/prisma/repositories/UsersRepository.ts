@@ -29,7 +29,7 @@ export class UsersRepository implements IUsersRepository {
         }
       });
     }catch(error){
-      console.log(error);
+
       throw new AppError("Erro ao atualizar senha!");
     }
   }
@@ -96,7 +96,7 @@ export class UsersRepository implements IUsersRepository {
       } as IUserReturnDTO;
     }catch(error){
 
-      throw new AppError(error.message);
+      throw new AppError("Erro ao criar usuário!");
     }
   }
 
@@ -112,7 +112,7 @@ export class UsersRepository implements IUsersRepository {
       return user as IUserReturnDTO;
     } catch (error) {
 
-      throw new AppError(message.ErrorFetchingData);
+      throw new AppError("Erro ao buscar usuário!");
     }
   }
 
@@ -126,7 +126,7 @@ export class UsersRepository implements IUsersRepository {
       return user as IUserReturnDTO;
     } catch (error) {
 
-      throw new AppError(message.ErrorFetchingData);
+      throw new AppError("Erro ao buscar usuário!");
     }
   }
   async findByUsername(username: string): Promise<IUserReturnDTO> {
@@ -139,7 +139,7 @@ export class UsersRepository implements IUsersRepository {
 
       return user as IUserReturnDTO;
     } catch (error) {
-      throw new AppError(message.ErrorFetchingData);
+      throw new AppError("Erro ao buscar usuário!");
     }
   }
   async findByEmail(email: string): Promise<User> {
@@ -151,7 +151,7 @@ export class UsersRepository implements IUsersRepository {
       });
       return user as User;
     } catch (error) {
-      throw new AppError(message.ErrorFetchingData);
+      throw new AppError("Erro ao buscar usuário!");
     }
   }
 
@@ -165,7 +165,7 @@ export class UsersRepository implements IUsersRepository {
 
       return user as IUserReturnDTO;
     } catch (error) {
-      throw new AppError(message.ErrorFetchingData);
+      throw new AppError("Erro ao buscar usuário!");
     }
   }
 
@@ -186,7 +186,7 @@ export class UsersRepository implements IUsersRepository {
 
       return true;
     } catch (error) {
-      throw new AppError(message.ErrorFetchingData);
+      throw new AppError("Erro ao buscar usuário!");
     }
   }
 
@@ -205,7 +205,7 @@ export class UsersRepository implements IUsersRepository {
         avatar: avatar.avatar,
       } as IAvatarDTO;
     } catch (error) {
-      throw new AppError(message.ErrorFetchingData);
+      throw new AppError("Erro ao atualizar avatar!");
     }
   }
 
@@ -217,7 +217,7 @@ export class UsersRepository implements IUsersRepository {
         },
       });
     } catch (error) {
-      throw new AppError(message.ErrorFetchingData);
+      throw new AppError("Erro ao deletar usuário!");
     }
   }
 
@@ -231,7 +231,7 @@ export class UsersRepository implements IUsersRepository {
 
       return user as User;
     } catch (error) {
-      throw new AppError(message.ErrorFetchingData);
+      throw new AppError("Erro ao buscar usuário!");
     }
   }
 

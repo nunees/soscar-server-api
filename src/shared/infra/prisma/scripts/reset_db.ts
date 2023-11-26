@@ -11,7 +11,7 @@ async function main() {
     await prisma.$disconnect();
     console.log("✅ Database reseted!");
   } catch (error) {
-    throw new Error("\n❌ Erro ao tentar restar o banco: " + error.message);
+    throw new Error("\n❌ Erro ao tentar reverter o banco: " + error.message);
   }
 }
 
@@ -21,7 +21,7 @@ main()
   })
   .catch((error) => {
     console.error(
-      "❌ Não foi possivel resetar o banco de dados: ",
+      "❌ Não foi possível reverter o banco de dados: ",
       error.message
     );
   });

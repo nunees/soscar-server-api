@@ -28,7 +28,7 @@ export class NotificationsRepository implements INotificationsRepository{
 
       return notifications as Notification[];
     }catch(error){
-      throw new AppError("Notification not found!");
+      throw new AppError("Notificações não encontradas!");
     }
   }
 
@@ -48,7 +48,7 @@ export class NotificationsRepository implements INotificationsRepository{
 
       return notifications || [] as Notification[];
     } catch (error) {
-      throw new AppError("Notification not found!");
+      throw new AppError("Notificações não encontradas!");
     }
   }
 
@@ -60,7 +60,7 @@ export class NotificationsRepository implements INotificationsRepository{
         }
       });
     } catch (error) {
-      throw new AppError("Notification not found!");
+      throw new AppError("Erro ao deletar notificações!");
     }
   }
 
@@ -76,7 +76,7 @@ export class NotificationsRepository implements INotificationsRepository{
         }
       });
     }catch(error){
-      throw new AppError("Notification not created!");
+      throw new AppError("Erro ao criar notificação!");
     }
   }
 
@@ -95,7 +95,7 @@ export class NotificationsRepository implements INotificationsRepository{
 
       return notifications || [] as Notification[];
     } catch (error) {
-      throw new AppError("Notification not found!");
+      throw new AppError("Notificações não encontradas!");
     }
   }
 
@@ -110,7 +110,7 @@ export class NotificationsRepository implements INotificationsRepository{
 
       return notification || {} as Notification;
     } catch (error) {
-      throw new AppError("Notification not found!")
+      throw new AppError("Erro ao buscar notificação!")
     }
   }
 
@@ -127,7 +127,7 @@ export class NotificationsRepository implements INotificationsRepository{
         }
       });
     } catch (error) {
-      throw new AppError("Notification not found!")
+      throw new AppError("Erro ao marcar notificação como lida!")
     }
   }
 
@@ -140,7 +140,7 @@ export class NotificationsRepository implements INotificationsRepository{
         }
       });
     }catch(error){
-      throw new AppError("Notification not found!")
+      throw new AppError("Erro ao deletar notificação!")
     }
   }
 

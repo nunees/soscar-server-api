@@ -10,8 +10,6 @@ export class FindReviewByLocationController{
 
     const reviews = await findReviewByLocationUseCase.execute(location_id);
 
-    console.log(reviews)
-
     return response.json(reviews);
   }
 }

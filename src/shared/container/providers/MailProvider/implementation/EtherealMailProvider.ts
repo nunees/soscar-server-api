@@ -26,7 +26,7 @@ export class EtherealMailProvider implements IMailProvider {
     //   })
     //   .catch((err) => console.error(err));
     nodemailer.createTestAccount().then((account) => {
-      console.log(account);
+
       const transporter = nodemailer.createTransport({
         host: account.smtp.host,
         port: account.smtp.port,
@@ -58,7 +58,5 @@ export class EtherealMailProvider implements IMailProvider {
       html: templateHTML,
     });
 
-    console.log("Message sent: %s", message.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(message));
   }
 }

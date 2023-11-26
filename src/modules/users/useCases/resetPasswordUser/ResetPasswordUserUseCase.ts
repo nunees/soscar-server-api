@@ -29,7 +29,7 @@ export class ResetPasswordUserUseCase {
     );
 
     if (!userToken) {
-      throw new AppError("Token invalid!");
+      throw new AppError("token.invalid");
     }
 
     if (
@@ -38,7 +38,7 @@ export class ResetPasswordUserUseCase {
         this.dateProvider.datenow()
       )
     ) {
-      throw new AppError("Token invalid!");
+      throw new AppError("token.invalid");
     }
 
     const user = await this.usersRepository.findById(userToken.user_id);

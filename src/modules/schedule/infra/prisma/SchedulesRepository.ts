@@ -95,8 +95,6 @@ export class SchedulesRepository implements ISchedulesRepository{
 
   async create(data: ICreateSchedule): Promise<Schedule> {
 
-    console.log(data)
-
     const schedule = await this.prismaClient.userSchedules.create({
       data:{
           user_id: data.user_id,

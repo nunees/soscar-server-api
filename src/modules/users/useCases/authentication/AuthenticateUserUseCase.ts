@@ -49,13 +49,13 @@ export class AuthenticateUserUseCase {
     } = auth;
 
     if (!user) {
-      throw new AppError("Email e/ou senha incorretos", 401);
+      throw new AppError("Email ou senha incorretos", 401);
     }
 
     // Verify password
     const passwordMatch = await compare(password, user.password);
     if (!passwordMatch) {
-      throw new AppError(message.EmailOrPasswordIncorrect, 401);
+      throw new AppError("Email ou senha incorretos", 401);
     }
 
     // Generate token

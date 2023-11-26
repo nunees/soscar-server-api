@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 import { FetchDocumentUseCase } from "./FetchDocumentUseCase";
 
 export class FetchDocumentController{
-    // "/document/:document_id/:hashId"
+
     async handle(request: Request, response: Response): Promise<Response>{
         const { document_id } = request.params;
         const { hashId } = request.params;

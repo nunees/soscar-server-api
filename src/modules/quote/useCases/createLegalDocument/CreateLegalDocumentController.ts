@@ -20,7 +20,7 @@ export class CreateLegalDocumentController {
       document_url: document,
     });
 
-    console.log(file)
+
 
     return response.status(201).send(file);
   }

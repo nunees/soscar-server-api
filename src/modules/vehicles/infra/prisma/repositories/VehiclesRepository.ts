@@ -41,7 +41,7 @@ export class VehiclesRepository implements IVehiclesRepository {
       }
     });
    }catch(error){
-    throw new AppError(error.message);
+    throw new AppError("Erro ao cadastrar veículo");
    }
   }
 
@@ -71,7 +71,7 @@ export class VehiclesRepository implements IVehiclesRepository {
 
       return vehicles as IReturnVehicleDTO[];
     } catch (error) {
-      throw new AppError(error.message);
+      throw new AppError("Erro ao buscar veículos");
     }
   }
 
@@ -83,7 +83,7 @@ export class VehiclesRepository implements IVehiclesRepository {
         },
       });
     } catch (error) {
-      throw new AppError(error.message);
+      throw new AppError("Erro ao deletar veículo");
     }
   }
 
@@ -104,7 +104,7 @@ export class VehiclesRepository implements IVehiclesRepository {
         },
       });
     } catch (error) {
-      throw new AppError(error.message);
+      throw new AppError("Erro ao atualizar veículo");
     }
   }
 
@@ -128,7 +128,7 @@ export class VehiclesRepository implements IVehiclesRepository {
       const brands = await this.prismaClient.vehiclesBrands.findMany();
       return brands;
     } catch (error) {
-      throw new AppError(error.message);
+      throw new AppError("Erro ao buscar marcas de veículos");
     }
   }
 

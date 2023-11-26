@@ -21,7 +21,7 @@ export class FetchUserProfileUseCase {
 
       return profile;
     } catch (error) {
-      throw new AppError("Internal server error", 500);
+      throw new AppError("Erro ao buscar perfil");
     }
   }
 }

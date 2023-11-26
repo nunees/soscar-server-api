@@ -562,19 +562,6 @@ async function addScheme() {
   }
 }
 
-async function insertData(){
-  try {
-    console.log("Inserting data to database...");
-    await prisma.users.createMany({
-      data: [
-        {id: uuid(), name: "João", last_name: "Silva", cpf: "654856484",mobile_phone: "11998585585", email: "joao233@test.com", username: "j132a", password: await hash("123123", 8), birth_date: new Date(), genderId: 1, isTermsAccepted: true, isPartner: true}
-      ]
-    })
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-
 addScheme()
   .then(() => {
     prisma.$disconnect();

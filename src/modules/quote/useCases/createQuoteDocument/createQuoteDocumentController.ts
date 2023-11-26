@@ -4,7 +4,7 @@ import { CreateQuoteDocumentUseCase } from "./createQuoteDocumentUseCase";
 
 export class CreateQuoteDocumentController{
   async handle(request: Request, response: Response): Promise<Response>{
-console.log("createQuoteDocumentController")
+
 
     const {id} = request.user;
     const {quote_id} = request.params;

@@ -27,7 +27,7 @@ export class CreateLocationController {
       longitude
     } = request.body;
 
-    console.log(request.body)
+
 
 
     const createLocationUseCase = container.resolve(CreateLocationUseCase);

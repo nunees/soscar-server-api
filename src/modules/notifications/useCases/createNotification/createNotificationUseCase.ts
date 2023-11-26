@@ -34,6 +34,6 @@ export class CreateNotificationUseCase{
     });
 
 
-    console.log(user.name);
+
   }
 }

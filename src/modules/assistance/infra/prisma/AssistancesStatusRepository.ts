@@ -29,8 +29,8 @@ export class AssistanceStatusRepository implements IAssistanceStatusRepository{
                 }
             })
         }catch(error){
-            console.log(error)
-            throw new AppError("Error on update location")
+
+            throw new AppError("Erro ao atualizar localização")
         }
     }
 
@@ -49,7 +49,7 @@ export class AssistanceStatusRepository implements IAssistanceStatusRepository{
 
             return null;
         } catch (error) {
-            throw new AppError("Error on find assistance status")
+            throw new AppError("Erro ao buscar ordem de assistência")
         }
     }
 
@@ -69,7 +69,7 @@ export class AssistanceStatusRepository implements IAssistanceStatusRepository{
 
             return result as AssistanceStatus;
         }catch(error){
-            throw new AppError("Error on find all assistance status")
+            throw new AppError("Erro ao buscar ordem de assistência")
         }
     }
 
@@ -83,7 +83,7 @@ export class AssistanceStatusRepository implements IAssistanceStatusRepository{
 
 
             if(!order){
-                throw new AppError("Order not found")
+                throw new AppError("Ordem não encontrada")
             }
 
             await this.prisma.assistanceStatus.update({
@@ -101,8 +101,8 @@ export class AssistanceStatusRepository implements IAssistanceStatusRepository{
                 }
             })
         } catch (error) {
-            console.log(error)
-            throw new AppError("Error on update assistance status")
+
+            throw new AppError("Erro ao atualizar ordem de assistência")
         }
     }
 

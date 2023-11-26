@@ -6,8 +6,6 @@ export class MarkNotificationAsReadController{
   async handle(request: Request, response: Response): Promise<Response>{
     const { notification_id } = request.params;
 
-    console.log(notification_id)
-
     const markNotificationAsReadUseCase = container.resolve(MarkNotificationAsReadUseCase);
 
     await markNotificationAsReadUseCase.execute(notification_id);

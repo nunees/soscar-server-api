@@ -29,7 +29,7 @@ export class AddressesRepository implements IAddressRepository {
     });
 
     if (!userExists) {
-      throw new AppError(message.UserNotFound, 401);
+      throw new AppError("Usuário não encontrado");
     }
 
     await this.prismaClient.usersAddresses.create({
@@ -72,7 +72,7 @@ export class AddressesRepository implements IAddressRepository {
         },
       });
     } catch (error) {
-      throw new AppError(error, 401);
+      throw new AppError("Erro ao atualizar endereço");
     }
   }
 
@@ -121,7 +121,7 @@ export class AddressesRepository implements IAddressRepository {
       });
       return address as IUserAddressReturnDTO;
     } catch (error) {
-      throw new AppError(message.AddressNotFound, 404);
+      throw new AppError("Endereço não encontrado");
     }
   }
 }

@@ -29,7 +29,7 @@ export class CreateLegalQuoteUseCase {
   ) {}
 
   async execute(quote: IRequest) {
-    console.log("In use case: ", quote.locations)
+
 
     const user = await this.usersRepository.findById(quote.user_id);
     if (!user) {

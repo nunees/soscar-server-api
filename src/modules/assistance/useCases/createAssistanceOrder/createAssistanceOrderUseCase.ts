@@ -21,7 +21,7 @@ export class CreateAssistanceOrderUseCase{
     latitude,
     longitude
   }: ICreateAssistanceOrderDTO): Promise<AssistanceOrders>{
-    console.log({user_id, assistance_status_id, order_status, total_price, total_miles})
+
     const order = await this.assistanceOrdersRepository.create({
       user_id,
       assistance_status_id,

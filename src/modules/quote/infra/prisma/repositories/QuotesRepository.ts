@@ -65,24 +65,38 @@ export class QuotesRepository implements IQuotesRepository{
   async updateQuoteStatus(user_id: string, quote_id: string, status: number): Promise<Quote> {
     try{
 
-      const quote = await this.prismaClient.userQuotes.update({
+      const quote = await this.prismaClient.userQuotes.findFirst({
+        where: {
+          id: quote_id
+        }
+      });
+
+
+
+      if(!quote){
+        throw new AppError("Orcamento nao encontrado");
+      }
+
+      const newQuote = await this.prismaClient.userQuotes.update({
         where: {
           id: quote_id,
         },
         data: {
-          status,
+          ...quote,
+          status: status,
           updated_at: new Date(),
         }
       });
 
-      return quote;
+      return newQuote;
     }catch(error){
+
       throw new AppError("Erro ao atualizar status do orcamento");
     }
   }
 
   async updateRegularQuote(user_id: string, quote_id: string, data: IUpdateRegularQuoteDTO): Promise<Quote> {
-    console.log("STATUS: ", data.status)
+
     try{
       const quote = await this.prismaClient.userQuotes.update({
         where: {
@@ -98,13 +112,13 @@ export class QuotesRepository implements IQuotesRepository{
         }
       });
 
-      console.log(quote)
+
 
 
 
       return quote;
     }catch(error){
-      console.log(error)
+
       throw new AppError("Erro ao atualizar orcamento");
     }
   }
@@ -160,7 +174,6 @@ export class QuotesRepository implements IQuotesRepository{
   }
 
   async findQuoteById(quote_id: string): Promise<IReturnQuote | null> {
-  console.log(quote_id)
 
     const quote = await this.prismaClient.userQuotes.findUnique({
       where: {
@@ -284,7 +297,7 @@ export class QuotesRepository implements IQuotesRepository{
         }
       });
 
-      console.log(quotes)
+
       return quotes as unknown as IReturnQuote[];
     }
 

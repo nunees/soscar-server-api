@@ -11,6 +11,8 @@ export interface IReturnVehicleDTO {
     name: string;
     id: number;
   };
+  brand_id?: number;
+  name_id?: number;
   color: string | null;
   year: number;
   plate?: string | null;

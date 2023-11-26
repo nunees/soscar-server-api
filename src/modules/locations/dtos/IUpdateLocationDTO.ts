@@ -20,4 +20,5 @@ export interface IUpdateLocationDTO {
   open_hours_weekend: string[];
   latitude: string;
   longitude: string;
+  active: boolean;
 }

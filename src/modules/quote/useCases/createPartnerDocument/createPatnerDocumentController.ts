@@ -9,7 +9,7 @@ export class CreatePartnerDocumentController{
     const {quote_id} = request.params;
     const {hashId} = request.params;
 
-    console.log(id, quote_id, hashId)
+
 
     const document = request.file?.filename as string;
 

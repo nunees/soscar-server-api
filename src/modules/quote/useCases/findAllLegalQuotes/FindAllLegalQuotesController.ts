@@ -10,7 +10,7 @@ export class FindAllLegalQuotesController{
 
     const quotes = await findAllLegalQuotesUseCase.execute(id);
 
-    console.log("Quotes: ", quotes)
+
 
     return response.json(quotes);
   }

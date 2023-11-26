@@ -24,7 +24,7 @@ export class AssistanceOrdersRepository implements IAssistanceOrdersRepository{
         }
       });
     }catch(error){
-      throw new AppError("Error on accept order")
+      throw new AppError("Erro ao aceitar ordem de assistência")
     }
   }
 
@@ -39,7 +39,7 @@ export class AssistanceOrdersRepository implements IAssistanceOrdersRepository{
         }
       });
     }catch(error){
-      throw new AppError("Error on cancel order")
+      throw new AppError("Erro ao cancelar ordem de assistência")
     }
   }
 
@@ -63,7 +63,7 @@ export class AssistanceOrdersRepository implements IAssistanceOrdersRepository{
       return false;
 
     } catch (error) {
-      throw new AppError("Error on find assistance orders by user id")
+      throw new AppError("Erro ao verificar se usuário já possui ordem de assistência")
     }
   }
 
@@ -95,8 +95,8 @@ export class AssistanceOrdersRepository implements IAssistanceOrdersRepository{
       return orders;
 
     } catch (error) {
-      console.log(error)
-      throw new AppError("Error on find all assistance orders")
+
+      throw new AppError("Erro ao buscar ordens de assistência")
     }
   }
 
@@ -111,18 +111,18 @@ export class AssistanceOrdersRepository implements IAssistanceOrdersRepository{
       });
 
      if(!result){
-       throw new AppError("Order not found")
+       throw new AppError("Ordem de assistência não encontrada")
      }
 
      return result;
 
     } catch (error) {
-      throw new AppError("Error on find assistance order by id")
+      throw new AppError("Erro ao encontrar ordem de assistência")
     }
   }
 
   async update(data: IUpdateAssistanceOrderDTO, user_id: string): Promise<void> {
-    console.log({data})
+
     try {
       const order = await this.prisma.assistanceOrders.findFirst({
         where: {
@@ -131,7 +131,7 @@ export class AssistanceOrdersRepository implements IAssistanceOrdersRepository{
       });
 
       if(!order){
-        throw new AppError("Order not found")
+        throw new AppError("Ordem não encontrada")
       }
 
       order.latitude = data.latitude ?? order.latitude;
@@ -151,7 +151,7 @@ export class AssistanceOrdersRepository implements IAssistanceOrdersRepository{
       });
 
     } catch (error) {
-      throw new AppError("Error on update assistance order")
+      throw new AppError("Erro ao atualizar ordem de assistência")
     }
   }
 

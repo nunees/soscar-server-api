@@ -57,8 +57,6 @@ export class CreateScheduleUseCase{
 
     // Check if location is open on the selected day
     const isOpen = location.open_hours_weekend?.find(day => day.toUpperCase() === weekDay.toUpperCase());
-    console.log(isOpen)
-
     // if not open on the selected day, throw error
     if(!isOpen){
       throw new AppError("Local fechado no dia selecionado");
@@ -78,7 +76,7 @@ export class CreateScheduleUseCase{
 
     // const tempDate = new Date(Number(newDate[2]), Number(newDate[1])-1, Number(newDate[0]));
 
-    // console.log(tempDate)
+
 
     const scheduleDate = new Date(date);
 
