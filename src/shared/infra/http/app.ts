@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import Handlebars from "handlebars"; "handlebars";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "src/shared/errors/AppError";
 
 import "express-async-errors";
 import "reflect-metadata";
