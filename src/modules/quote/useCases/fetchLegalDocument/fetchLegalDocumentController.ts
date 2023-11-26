@@ -11,8 +11,6 @@ export class FetchLegalDocumentController{
 
         const fetchLegalDocumentUseCase = container.resolve(FetchLegalDocumentUseCase);
 
-
-
         try{
             const document = await fetchLegalDocumentUseCase.execute(document_id, hashId);
 
