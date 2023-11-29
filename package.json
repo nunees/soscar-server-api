@@ -67,7 +67,7 @@
     "uuid": "^9.0.0"
   },
   "scripts": {
-    "dev": "ts-node-dev  --exit-child -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "dev": "NODE_OPTIONS='--max-old-space-size=350' ts-node-dev  --exit-child -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "setup": "npx prisma generate && npx prisma migrate deploy && prisma db seed",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files  --ignore \"**/*.spec.ts\"",
     "start": "node --max-old-space-size=400 dist/shared/infra/http/server.js --production"
