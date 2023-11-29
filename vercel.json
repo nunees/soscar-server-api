@@ -8,8 +8,8 @@
     ],
     "routes": [
         {
-            "src": "(.*)",
-            "dest": "src/shared/infra/http/routes/index.ts"
+            "src": "/(.*)",
+            "dest": "src/shared/infra/http/routes"
         }
     ]
 }
