@@ -1,5 +1,4 @@
 import express, { NextFunction, Request, Response } from "express";
-import Handlebars from "handlebars"; "handlebars";
 import { AppError } from "@errors/AppError";
 
 import "express-async-errors";
@@ -8,8 +7,6 @@ import "reflect-metadata";
 import { routes } from "./routes";
 
 import morgan from "morgan";
-import swaggerUi from "swagger-ui-express";
-import swaggerFile from "../../../../swagger.json";
 import cors from "cors";
 import nocache from "nocache";
 
@@ -28,14 +25,8 @@ app.use(morgan(":method :url :status - :response-time ms"));
 
 app.use(express.json());
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
-
 app.use(routes);
 
-
-app.set("view engine", "handlebars");
-
-app.use(express.static("public"));
 app.use(express.static("upload"));
 
 app.use(
