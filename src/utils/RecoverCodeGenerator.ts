@@ -1,3 +1,9 @@
+/**
+ * Generate a random code with the length passed as parameter
+ * @param length - length of the code to generate
+ * @returns string - random code generated
+ */
+
 export function GenerateCode(length: number): string {
     let result = '';
     const characters =
