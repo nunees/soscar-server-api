@@ -2,7 +2,6 @@ import { AppError } from "@errors/AppError";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { CreateAddressUseCase } from "./CreateAddressUseCase";
-import { message } from "@shared/lang/pt-br/String";
 
 export class CreateAddressController {
   async handle(request: Request, response: Response): Promise<Response> {

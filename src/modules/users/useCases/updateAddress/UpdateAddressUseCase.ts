@@ -1,7 +1,6 @@
 import { IAddressRepository } from "@modules/users/repositories/IAddressRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { message } from "@shared/lang/pt-br/String";
-import { container, inject, injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 type IRequest = {
   user_id: string;
@@ -36,7 +35,7 @@ export class UpdateAddressUseCase {
     const userExists = await this.usersRepository.findById(user_id);
 
     if (!userExists) {
-      throw new Error(message.UserNotFound);
+      throw new Error("User not found");
     }
 
     const addressExists = await this.addressesRepository.findAddressById(
@@ -45,7 +44,7 @@ export class UpdateAddressUseCase {
     );
 
     if (!addressExists) {
-      throw new Error(message.AddressNotFound);
+      throw new Error("Address not found");
     }
 
     await this.addressesRepository.update(

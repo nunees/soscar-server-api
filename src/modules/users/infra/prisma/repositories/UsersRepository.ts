@@ -6,7 +6,6 @@ import { User } from "@modules/users/entities/User";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { PrismaClient } from "@prisma/client";
 import { AppError } from "@errors/AppError";
-import { message } from "@shared/lang/pt-br/String";
 import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
 import { idText } from "typescript";
