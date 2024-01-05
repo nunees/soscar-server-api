@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { ILocationDTO } from "@modules/locations/dtos/ILocationDTO";
 

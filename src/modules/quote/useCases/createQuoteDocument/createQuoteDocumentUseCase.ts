@@ -4,7 +4,7 @@ import { UserQuoteDocument } from "@modules/quote/entities/UserQuotesDocuments";
 import { IQuotesRepository } from "@modules/quote/repositories/IQuotesRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IVehiclesRepository } from "@modules/vehicles/repositories/IVehiclesRepository";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { FileExtensionToNumber, GetFiletypes, GetUploadFileNames } from "@utils/getUploadFileNames";
 import { Multer } from "multer";
 import { doc } from "prettier";

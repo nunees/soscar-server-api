@@ -4,7 +4,7 @@ import { Quote } from "@modules/quote/entities/Quote";
 import { IQuotesRepository } from "@modules/quote/repositories/IQuotesRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IVehiclesRepository } from "@modules/vehicles/repositories/IVehiclesRepository";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 

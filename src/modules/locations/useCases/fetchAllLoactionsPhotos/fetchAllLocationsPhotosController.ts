@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import { container } from "tsyringe";
 import { FetchAllLocationsPhotosUseCase } from "./fetchAllLocationsPhotosUseCase";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 
 export class FetchAllLocationsPhotosController{
   async handle(request: Request, response: Response): Promise<Response>{

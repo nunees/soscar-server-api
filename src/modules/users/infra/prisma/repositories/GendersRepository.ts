@@ -1,7 +1,7 @@
 import { Genders } from "@modules/users/entities/Genders";
 import { IGendersRepository } from "@modules/users/repositories/IGendersRepository";
 import { PrismaClient } from "@prisma/client";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

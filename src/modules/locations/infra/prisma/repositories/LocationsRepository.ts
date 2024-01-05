@@ -4,7 +4,7 @@ import { IUpdateLocationDTO } from "@modules/locations/dtos/IUpdateLocationDTO";
 import { Location } from "@modules/locations/entities/Location";
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
 import { PrismaClient } from "@prisma/client";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

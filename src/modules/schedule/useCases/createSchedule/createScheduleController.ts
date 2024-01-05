@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import { container } from "tsyringe";
 import { CreateScheduleUseCase } from "./createScheduleUseCase";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 
 export class CreateScheduleController{
   async handle(request: Request, response: Response): Promise<Response>{

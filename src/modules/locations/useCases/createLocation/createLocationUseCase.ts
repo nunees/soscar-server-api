@@ -1,7 +1,7 @@
 import { ILocationDTO } from "@modules/locations/dtos/ILocationDTO";
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { message } from "@shared/lang/pt-br/String";
 import { inject, injectable } from "tsyringe";
 

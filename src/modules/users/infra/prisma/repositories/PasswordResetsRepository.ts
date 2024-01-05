@@ -2,7 +2,7 @@ import { ICreatePasswordRecoverDTO } from "@modules/users/dtos/ICreatePasswordRe
 import { PasswordReset } from "@modules/users/entities/PasswordReset";
 import { IPasswordResetsRepository } from "@modules/users/repositories/IPasswordResetsRepository";
 import { PrismaClient } from "@prisma/client";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 

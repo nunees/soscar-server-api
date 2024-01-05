@@ -1,5 +1,5 @@
 import { INotificationsRepository } from "@modules/notifications/repositories/INotificationsRepository";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { Notification } from "@modules/notifications/entities/Notification";
 

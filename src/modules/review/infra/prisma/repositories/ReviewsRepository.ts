@@ -3,7 +3,7 @@ import { ICreateReviewDTO } from "@modules/review/dtos/IReviewDTO";
 import { Review } from "@modules/review/entities/Review";
 import { IReviewsRepository } from "@modules/review/repositories/IReviewsRepository";
 import { PrismaClient } from "@prisma/client";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { FetchAvatarUseCase } from "./fetchAvatarUseCase";
 
 export class FetchAvatarController {

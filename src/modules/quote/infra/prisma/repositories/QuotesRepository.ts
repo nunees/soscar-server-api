@@ -7,7 +7,7 @@ import { QuotesDocument } from "@modules/quote/entities/QuotesDocuments";
 import { UserQuoteDocument } from "@modules/quote/entities/UserQuotesDocuments";
 import { IQuotesRepository } from "@modules/quote/repositories/IQuotesRepository";
 import { PrismaClient } from "@prisma/client";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 

@@ -2,7 +2,7 @@ import { IUserAddressCreateDTO } from "@modules/users/dtos/IUserAddressCreateDTO
 import { IUserAddressReturnDTO } from "@modules/users/dtos/IUserAddressReturnDTO";
 import { IAddressRepository } from "@modules/users/repositories/IAddressRepository";
 import { PrismaClient } from "@prisma/client";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { message } from "@shared/lang/pt-br/String";
 import { inject, injectable } from "tsyringe";
 
