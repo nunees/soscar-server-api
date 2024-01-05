@@ -1,4 +1,4 @@
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { CreateAddressUseCase } from "./CreateAddressUseCase";

@@ -1,7 +1,7 @@
 import { ICreateNotificationDTO } from "@modules/notifications/dtos/ICreateNotificationDTO";
 import { INotificationsRepository } from "@modules/notifications/repositories/INotificationsRepository";
 import { PrismaClient } from "@prisma/client";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { Notification } from "@modules/notifications/entities/Notification";
 

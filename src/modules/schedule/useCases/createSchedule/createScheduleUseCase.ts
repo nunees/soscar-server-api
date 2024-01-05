@@ -4,7 +4,7 @@ import { ISchedulesRepository } from "@modules/schedule/repositories/ISchedulesR
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IVehiclesRepository } from "@modules/vehicles/repositories/IVehiclesRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { getWeekDay } from "@utils/DateUtils";
 import { inject, injectable } from "tsyringe";
 

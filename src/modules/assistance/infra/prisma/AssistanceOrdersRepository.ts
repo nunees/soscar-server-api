@@ -3,7 +3,7 @@ import { IUpdateAssistanceOrderDTO } from "@modules/assistance/dtos/IUpdateAssis
 import { IAssistanceOrdersRepository } from "@modules/assistance/repositories/IAssistanceOrdersRepository";
 import { AssistanceOrders, PrismaClient } from "@prisma/client";
 import { GetResult } from "@prisma/client/runtime";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { injectable, inject } from "tsyringe";
 
 @injectable()

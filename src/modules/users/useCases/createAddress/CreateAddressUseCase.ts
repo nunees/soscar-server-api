@@ -1,7 +1,7 @@
 import { IAddressRepository } from "@modules/users/repositories/IAddressRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 export interface IRequest {

@@ -5,7 +5,7 @@ import { IUpdateUserDTO } from "@modules/users/dtos/IUserUpdateDTO";
 import { User } from "@modules/users/entities/User";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { PrismaClient } from "@prisma/client";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { message } from "@shared/lang/pt-br/String";
 import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";

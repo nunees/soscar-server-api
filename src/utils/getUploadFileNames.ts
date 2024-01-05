@@ -1,4 +1,4 @@
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 
 export function GetUploadFileNames(documents: Express.Multer.File[]): (string | null)[] {
   const fileNames = documents.map((file) => {

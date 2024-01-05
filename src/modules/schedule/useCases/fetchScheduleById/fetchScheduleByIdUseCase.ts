@@ -1,6 +1,6 @@
 import { Schedule } from "@modules/schedule/entities/Schedule";
 import { ISchedulesRepository } from "@modules/schedule/repositories/ISchedulesRepository";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

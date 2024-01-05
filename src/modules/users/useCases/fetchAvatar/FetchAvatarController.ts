@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { FetchAvatarUseCase } from "./FetchAvatarUseCase";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 
 export class FetchAvatarController {
   async handle(request: Request, response: Response): Promise<Response> {

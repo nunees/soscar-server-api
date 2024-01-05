@@ -3,7 +3,7 @@ import { LegalQuote } from "@modules/quote/entities/LegalQuote";
 import { LegalQuoteDocument } from "@modules/quote/entities/LegalQuoteDocument";
 import { ILegalQuoteRepository } from "@modules/quote/repositories/ILegalQuoteRepository";
 import { PrismaClient } from "@prisma/client";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 type IRequest = {

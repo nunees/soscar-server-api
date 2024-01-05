@@ -1,6 +1,6 @@
 import { ILocationDTO } from "@modules/locations/dtos/ILocationDTO";
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

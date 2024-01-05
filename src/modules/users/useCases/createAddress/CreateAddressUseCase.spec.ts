@@ -1,6 +1,6 @@
 import { AddressesRepositoryInMemory } from "@modules/users/repositories/in-memory/AddressesRepositoryInMemory";
 import { UsersRepositoryInMemory } from "@modules/users/repositories/in-memory/UsersRepositoryInMemory";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 
 import { v4 as uuid } from "uuid";
 import { CreateUserUseCase } from "../createUser/createUserUseCase";

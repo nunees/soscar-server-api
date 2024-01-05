@@ -3,7 +3,7 @@ import { inject, injectable } from "tsyringe";
 
 
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 

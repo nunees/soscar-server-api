@@ -1,3 +1,12 @@
+/**
+ * Class to handle errors
+ * @class AppError
+ * @extends Error
+ * @param {string} message - Error message to be displayed
+ * @param {number} statusCode - Error status code to be displayed, default is 400 (Bad Request)
+ * @returns {AppError} - Returns a new AppError object
+ * @example throw new AppError("User not found", 404);
+ */
 export class AppError {
   public readonly statusCode: number;
   public readonly message: string;
@@ -8,17 +17,3 @@ export class AppError {
   }
 }
 
-// interface fieldErrorStructure {
-//   field: string;
-//   description: string;
-// }
-
-// export class AppError {
-//   public readonly statusCode: number;
-//   public readonly fields: fieldErrorStructure[];
-
-//   constructor(statusCode = 400, fields: fieldErrorStructure[]) {
-//     this.statusCode = statusCode;
-//     this.fields = fields;
-//   }
-// }

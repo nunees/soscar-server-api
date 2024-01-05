@@ -2,7 +2,7 @@ import auth from "@config/auth";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { message } from "@shared/lang/pt-br/String";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";

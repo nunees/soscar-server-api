@@ -4,7 +4,7 @@ import { IUpdateAssistanceStatusDTO } from "@modules/assistance/dtos/IUpdateAssi
 import { AssistanceStatus } from "@modules/assistance/entities/AssistanceStatus";
 import { IAssistanceStatusRepository } from "@modules/assistance/repositories/IAssistanceStatusRepository"
 import { PrismaClient } from "@prisma/client";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

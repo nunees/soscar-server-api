@@ -1,6 +1,6 @@
 import { ILocationsRepository } from "@modules/locations/repositories/ILocationsRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from "@errors/AppError";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
