@@ -6,6 +6,8 @@ type Request = {
   service_id: number;
   milesFee: number;
   price: number;
+  latitude: string;
+  longitude: string;
 }
 
 @injectable()
@@ -15,7 +17,7 @@ export class CreateAssistanceStatusUseCase{
     private assistanceStatusRepository: IAssistanceStatusRepository
   ){}
 
-  async execute({user_id, service_id, milesFee, price}: Request): Promise<void>{
+  async execute({user_id, service_id, milesFee, price, latitude, longitude}: Request): Promise<void>{
     //check if user is already working on a service
     const isAssistanceWorking = await this.assistanceStatusRepository.findByUserId(user_id);
 
@@ -27,7 +29,9 @@ export class CreateAssistanceStatusUseCase{
       user_id,
       service_id,
       milesFee,
-      price
+      price,
+      latitude,
+      longitude
     })
   }
 }

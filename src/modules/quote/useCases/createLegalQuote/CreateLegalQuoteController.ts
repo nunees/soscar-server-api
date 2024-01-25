@@ -14,10 +14,6 @@ export class CreateLegalQuoteController {
       locations,
     } = request.body;
 
-
-
-
-
     const createLegalQuoteUseCase = container.resolve(CreateLegalQuoteUseCase);
 
     const quote = await createLegalQuoteUseCase.execute({

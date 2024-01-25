@@ -4,7 +4,6 @@ import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 import { FindAvailableServiceController } from "@modules/assistance/useCases/findAvailableService/findAvailableServiceController";
 import { CreateAssistanceOrderController } from "@modules/assistance/useCases/createAssistanceOrder/createAssistanceOrderController";
 import { FindAllAssistanceStatusController } from "@modules/assistance/useCases/findAllAssistanceStatus/findAllAssistanceStatusController";
-import { FindAssistanceAlreadyCreatedController } from "@modules/assistance/useCases/findAssistanceAlreadyCreated/findAssistanceAlreadyCreatedController";
 import { FindAssistanceOrderByIdController } from "@modules/assistance/useCases/findAssistanceOrderById/findAssistanceOrderByIdController";
 import { UpdateAssistanceOrderController } from "@modules/assistance/useCases/updateAssistanceOrder/updateAssistanceOrderController";
 import { UpdateAssistanceStatusController } from "@modules/assistance/useCases/updateAssistanceStatus/updateAssistanceStatusController";
@@ -24,7 +23,6 @@ const createAssistanceOrderController = new CreateAssistanceOrderController();
 const findAssistanceOrdersController = new FindAssistanceOrdersController();
 const findAllAssistanceStatusController = new FindAllAssistanceStatusController();
 
-const findAssistanceAlreadyCreatedController = new FindAssistanceAlreadyCreatedController();
 const findAssistanceOrderByIdController = new FindAssistanceOrderByIdController();
 const findAssistanceStatusByIdController = new FindAssistanceStatusByIdController();
 
@@ -44,7 +42,7 @@ assistanceRoutes.get('/order/pending/:assistance_status_id', ensureAuthenticated
 assistanceRoutes.get('/status/all', ensureAuthenticated,findAllAssistanceStatusController.handle);
 assistanceRoutes.get('/order/:id', ensureAuthenticated,findAssistanceOrderByIdController.handle);
 assistanceRoutes.get('/status/:id', ensureAuthenticated,findAssistanceStatusByIdController.handle);
-assistanceRoutes.get('/order/created/:service_id', ensureAuthenticated,findAssistanceAlreadyCreatedController.handle);
+
 assistanceRoutes.get('/order/pending', ensureAuthenticated,findPendingOrdersController.handle);
 
 assistanceRoutes.patch('/order/update/:id', ensureAuthenticated,updateAssistanceOrderController.handle);

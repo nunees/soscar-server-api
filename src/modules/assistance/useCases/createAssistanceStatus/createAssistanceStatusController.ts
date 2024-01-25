@@ -6,8 +6,7 @@ export class CreateAssistanceStatusController{
   async handle(request: Request, response: Response): Promise<Response>{
     const {id} = request.user;
     const {service_id} = request.params;
-    const {milesFee} = request.body;
-    const {price} = request.body;
+    const {milesFee, price, latitude, longitude} = request.body;
 
     const createAssistanceStatusService = container.resolve(CreateAssistanceStatusUseCase);
 
@@ -15,7 +14,9 @@ export class CreateAssistanceStatusController{
       service_id: Number(service_id),
       user_id: id,
       milesFee,
-      price
+      price,
+      latitude,
+      longitude
     });
 
     return response.status(200).send();

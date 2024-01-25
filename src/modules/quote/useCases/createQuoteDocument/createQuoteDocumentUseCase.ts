@@ -5,7 +5,7 @@ import { IQuotesRepository } from "@modules/quote/repositories/IQuotesRepository
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IVehiclesRepository } from "@modules/vehicles/repositories/IVehiclesRepository";
 import { AppError } from "@errors/AppError";
-import { FileExtensionToNumber, GetFiletypes, GetUploadFileNames } from "@utils/getUploadFileNames";
+import { FileExtensionToNumber } from "@utils/getUploadFileNames";
 import { Multer } from "multer";
 import { doc } from "prettier";
 import { inject, injectable } from "tsyringe";

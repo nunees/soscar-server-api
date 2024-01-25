@@ -2,7 +2,6 @@ import { ICreateAssistanceOrderDTO } from "@modules/assistance/dtos/ICreateAssis
 import { IUpdateAssistanceOrderDTO } from "@modules/assistance/dtos/IUpdateAssistanceOrderDTO";
 import { IAssistanceOrdersRepository } from "@modules/assistance/repositories/IAssistanceOrdersRepository";
 import { AssistanceOrders, PrismaClient } from "@prisma/client";
-import { GetResult } from "@prisma/client/runtime";
 import { AppError } from "@errors/AppError";
 import { injectable, inject } from "tsyringe";
 

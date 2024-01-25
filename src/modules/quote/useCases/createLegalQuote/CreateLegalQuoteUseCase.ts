@@ -2,7 +2,6 @@ import { ILocationsRepository } from '@modules/locations/repositories/ILocations
 import { ILegalQuoteRepository } from '@modules/quote/repositories/ILegalQuoteRepository';
 import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
 import { IVehiclesRepository } from '@modules/vehicles/repositories/IVehiclesRepository';
-import { AppError } from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
 
 type IRequest = {
@@ -24,29 +23,19 @@ export class CreateLegalQuoteUseCase {
     private legalQuotesRepository: ILegalQuoteRepository,
     @inject('VehiclesRepository')
     private vehiclesRepository: IVehiclesRepository,
-    @inject('LocationsRepository')
-    private locationsRepository: ILocationsRepository
   ) {}
 
   async execute(quote: IRequest) {
 
-
     const user = await this.usersRepository.findById(quote.user_id);
     if (!user) {
-      throw new Error('Usuario nao encontrado');
+      throw new Error('Usuario não encontrado');
     }
 
     const vehicle = await this.vehiclesRepository.findById(quote.vehicle_id);
     if (!vehicle) {
-      throw new Error('Veiculo nao encontrado');
+      throw new Error('Veiculo não encontrado');
     }
-
-
-    // const locationExists = await this.locationsRepository.findById(location);
-    //   if (!locationExists) {
-    //     throw new Error('Localizacao nao encontrada');
-    //   }
-    //   return locationExists.id;
 
 
     quote.locations.map(async (location) => {
@@ -62,9 +51,8 @@ export class CreateLegalQuoteUseCase {
           insurance_type_id: 1,
         });
       }catch(error){
-        throw new Error('Localizacao nao encontrada');
+        throw new Error('Localizacao não encontrada');
       }
-
       return
     });
   }

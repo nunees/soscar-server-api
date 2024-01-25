@@ -1,7 +1,6 @@
 import { CreateScheduleController } from '@modules/schedule/useCases/createSchedule/createScheduleController';
 import { UploadDocumentsController } from '@modules/schedule/useCases/uploadDocuments/uploadDocumentsController';
 import {Router} from 'express';
-
 import multer from 'multer';
 import uploadConfig from '@config/uploadConfig';
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
